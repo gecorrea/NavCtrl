@@ -21,7 +21,7 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
-    self.companyList = @[@"Apple mobile devices",@"Samsung mobile devices"];
+    self.companyList = @[@"Apple mobile devices", @"Google mobile devices", @"Microsoft mobile devices", @"Samsung mobile devices"];
     self.title = @"Mobile device makers";
     // Do any additional setup after loading the view from its nib.
 }
@@ -112,7 +112,14 @@
     self.productViewController = [[ProductVC alloc]init];
     if (indexPath.row == 0){
         self.productViewController.title = @"Apple mobile devices";
-    } else {
+    }
+    else if (indexPath.row == 1){
+        self.productViewController.title = @"Google mobile devices";
+    }
+    else if (indexPath.row == 2){
+        self.productViewController.title = @"Microsoft mobile devices";
+    }
+    else {
         self.productViewController.title = @"Samsung mobile devices";
     }
     
