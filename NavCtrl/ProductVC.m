@@ -25,16 +25,20 @@
     [super viewWillAppear:animated];
     
     if ([self.title isEqualToString:@"Apple mobile devices"]) {
-        self.products = @[@"iPad", @"iPod Touch",@"iPhone"];
+        self.products = @[@"Apple Watch", @"iPad", @"iPhone"];
+        self.productImages = @[@"Apple Watch.png", @"iPad.png", @"iPhone.png"];
     }
     else if ([self.title isEqualToString:@"Google mobile devices"]) {
         self.products = @[@"Pixel C", @"Daydream View",@"Pixel"];
+        self.productImages = @[@"Pixel C.png", @"Daydream View.png", @"Pixel.png"];
     }
     else if ([self.title isEqualToString:@"Microsoft mobile devices"]) {
-        self.products = @[@"Surface Pro 4", @"HoloLens",@"Lumia 950"];
+        self.products = @[@"HoloLens", @"Lumia 950", @"Surface Pro 4"];
+        self.productImages = @[@"HoloLens.png", @"Lumia 950.png", @"Surface Pro 4.png"];
     }
     else {
-        self.products = @[@"Galaxy S4", @"Galaxy Note", @"Galaxy Tab"];
+        self.products = @[@"Galaxy Note", @"Galaxy S4", @"Galaxy Tab"];
+        self.productImages = @[@"Galaxy Note.png", @"Galaxy S4.png", @"Galaxy Tab.png"];
     }
     [self.tableView reloadData];
 }
@@ -70,6 +74,7 @@
     }
     // Configure the cell...
     cell.textLabel.text = [self.products objectAtIndex:[indexPath row]];
+    cell.imageView.image = [UIImage imageNamed:self.productImages[[indexPath row]]];
     return cell;
 }
 

@@ -25,6 +25,22 @@
 		9E62FF261E4A33F1002D55B8 /* ProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E62FF241E4A33F1002D55B8 /* ProductVC.m */; };
 		9E62FF271E4A33F1002D55B8 /* ProductVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF251E4A33F1002D55B8 /* ProductVC.xib */; };
 		9E62FF291E4A3982002D55B8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */; };
+		AACFEEF41E56083F00D20F88 /* GoogleLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEEF31E56083F00D20F88 /* GoogleLogo.png */; };
+		AACFEEF61E560AFE00D20F88 /* AppleLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEEF51E560AFE00D20F88 /* AppleLogo.png */; };
+		AACFEEF91E560D4F00D20F88 /* MicrosoftLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEEF71E560D4F00D20F88 /* MicrosoftLogo.png */; };
+		AACFEEFA1E560D4F00D20F88 /* SamsungLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEEF81E560D4F00D20F88 /* SamsungLogo.png */; };
+		AACFEF041E56137F00D20F88 /* Apple Watch.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF011E56137F00D20F88 /* Apple Watch.png */; };
+		AACFEF051E56137F00D20F88 /* iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF021E56137F00D20F88 /* iPad.png */; };
+		AACFEF081E5613C200D20F88 /* iPhone.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF071E5613C200D20F88 /* iPhone.png */; };
+		AACFEF121E56192F00D20F88 /* Daydream View.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF0F1E56192F00D20F88 /* Daydream View.png */; };
+		AACFEF131E56192F00D20F88 /* Pixel C.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF101E56192F00D20F88 /* Pixel C.png */; };
+		AACFEF141E56192F00D20F88 /* Pixel.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF111E56192F00D20F88 /* Pixel.png */; };
+		AACFEF191E561CA400D20F88 /* Lumia 950.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF161E561CA400D20F88 /* Lumia 950.png */; };
+		AACFEF1A1E561CA400D20F88 /* Surface Pro 4.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF171E561CA400D20F88 /* Surface Pro 4.png */; };
+		AACFEF1E1E561DF300D20F88 /* HoloLens.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF1D1E561DF300D20F88 /* HoloLens.png */; };
+		AACFEF221E56208700D20F88 /* Galaxy Note.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF1F1E56208700D20F88 /* Galaxy Note.png */; };
+		AACFEF231E56208700D20F88 /* Galaxy S4.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF201E56208700D20F88 /* Galaxy S4.png */; };
+		AACFEF241E56208700D20F88 /* Galaxy Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF211E56208700D20F88 /* Galaxy Tab.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +78,22 @@
 		9E62FF241E4A33F1002D55B8 /* ProductVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductVC.m; sourceTree = "<group>"; };
 		9E62FF251E4A33F1002D55B8 /* ProductVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductVC.xib; sourceTree = "<group>"; };
 		9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		AACFEEF31E56083F00D20F88 /* GoogleLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GoogleLogo.png; sourceTree = "<group>"; };
+		AACFEEF51E560AFE00D20F88 /* AppleLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppleLogo.png; sourceTree = "<group>"; };
+		AACFEEF71E560D4F00D20F88 /* MicrosoftLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MicrosoftLogo.png; sourceTree = "<group>"; };
+		AACFEEF81E560D4F00D20F88 /* SamsungLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SamsungLogo.png; sourceTree = "<group>"; };
+		AACFEF011E56137F00D20F88 /* Apple Watch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apple Watch.png"; sourceTree = "<group>"; };
+		AACFEF021E56137F00D20F88 /* iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPad.png; sourceTree = "<group>"; };
+		AACFEF071E5613C200D20F88 /* iPhone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone.png; sourceTree = "<group>"; };
+		AACFEF0F1E56192F00D20F88 /* Daydream View.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Daydream View.png"; sourceTree = "<group>"; };
+		AACFEF101E56192F00D20F88 /* Pixel C.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pixel C.png"; sourceTree = "<group>"; };
+		AACFEF111E56192F00D20F88 /* Pixel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pixel.png; sourceTree = "<group>"; };
+		AACFEF161E561CA400D20F88 /* Lumia 950.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lumia 950.png"; sourceTree = "<group>"; };
+		AACFEF171E561CA400D20F88 /* Surface Pro 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Surface Pro 4.png"; sourceTree = "<group>"; };
+		AACFEF1D1E561DF300D20F88 /* HoloLens.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HoloLens.png; sourceTree = "<group>"; };
+		AACFEF1F1E56208700D20F88 /* Galaxy Note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Galaxy Note.png"; sourceTree = "<group>"; };
+		AACFEF201E56208700D20F88 /* Galaxy S4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Galaxy S4.png"; sourceTree = "<group>"; };
+		AACFEF211E56208700D20F88 /* Galaxy Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Galaxy Tab.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,7 +196,23 @@
 			children = (
 				48A656BC18163BF200746D36 /* NavCtrl-Info.plist */,
 				48A656BD18163BF200746D36 /* InfoPlist.strings */,
+				AACFEEF51E560AFE00D20F88 /* AppleLogo.png */,
+				AACFEEF31E56083F00D20F88 /* GoogleLogo.png */,
+				AACFEEF71E560D4F00D20F88 /* MicrosoftLogo.png */,
+				AACFEEF81E560D4F00D20F88 /* SamsungLogo.png */,
 				48A656ED1816468000746D36 /* Sunflower.gif */,
+				AACFEF011E56137F00D20F88 /* Apple Watch.png */,
+				AACFEF021E56137F00D20F88 /* iPad.png */,
+				AACFEF071E5613C200D20F88 /* iPhone.png */,
+				AACFEF0F1E56192F00D20F88 /* Daydream View.png */,
+				AACFEF101E56192F00D20F88 /* Pixel C.png */,
+				AACFEF111E56192F00D20F88 /* Pixel.png */,
+				AACFEF1D1E561DF300D20F88 /* HoloLens.png */,
+				AACFEF161E561CA400D20F88 /* Lumia 950.png */,
+				AACFEF171E561CA400D20F88 /* Surface Pro 4.png */,
+				AACFEF1F1E56208700D20F88 /* Galaxy Note.png */,
+				AACFEF201E56208700D20F88 /* Galaxy S4.png */,
+				AACFEF211E56208700D20F88 /* Galaxy Tab.png */,
 				48A656C018163BF200746D36 /* main.m */,
 				48A656C218163BF200746D36 /* NavCtrl-Prefix.pch */,
 				9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */,
@@ -267,10 +315,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E62FF291E4A3982002D55B8 /* Launch Screen.storyboard in Resources */,
+				AACFEF131E56192F00D20F88 /* Pixel C.png in Resources */,
 				48A656EE1816468000746D36 /* Sunflower.gif in Resources */,
 				9E62FF221E4A33DC002D55B8 /* CompanyVC.xib in Resources */,
+				AACFEF081E5613C200D20F88 /* iPhone.png in Resources */,
+				AACFEF041E56137F00D20F88 /* Apple Watch.png in Resources */,
+				AACFEEF61E560AFE00D20F88 /* AppleLogo.png in Resources */,
+				AACFEF121E56192F00D20F88 /* Daydream View.png in Resources */,
+				AACFEF241E56208700D20F88 /* Galaxy Tab.png in Resources */,
+				AACFEF051E56137F00D20F88 /* iPad.png in Resources */,
 				9E62FF271E4A33F1002D55B8 /* ProductVC.xib in Resources */,
+				AACFEF1E1E561DF300D20F88 /* HoloLens.png in Resources */,
+				AACFEEFA1E560D4F00D20F88 /* SamsungLogo.png in Resources */,
+				AACFEEF91E560D4F00D20F88 /* MicrosoftLogo.png in Resources */,
 				48A656BF18163BF200746D36 /* InfoPlist.strings in Resources */,
+				AACFEF221E56208700D20F88 /* Galaxy Note.png in Resources */,
+				AACFEEF41E56083F00D20F88 /* GoogleLogo.png in Resources */,
+				AACFEF141E56192F00D20F88 /* Pixel.png in Resources */,
+				AACFEF1A1E561CA400D20F88 /* Surface Pro 4.png in Resources */,
+				AACFEF231E56208700D20F88 /* Galaxy S4.png in Resources */,
+				AACFEF191E561CA400D20F88 /* Lumia 950.png in Resources */,
 				48A656C718163BF200746D36 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

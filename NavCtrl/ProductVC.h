@@ -12,5 +12,6 @@
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSArray *products;
+@property (nonatomic, retain) NSArray *productImages;
 
 @end

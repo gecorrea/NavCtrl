@@ -13,6 +13,7 @@
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSArray *companyList;
+@property (nonatomic, retain) NSArray *companyLogo;
 @property (nonatomic, retain) ProductVC *productViewController;
 
 @end

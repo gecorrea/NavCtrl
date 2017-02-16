@@ -22,6 +22,7 @@
     
     
     self.companyList = @[@"Apple mobile devices", @"Google mobile devices", @"Microsoft mobile devices", @"Samsung mobile devices"];
+    self.companyLogo = @[@"AppleLogo.png", @"GoogleLogo.png", @"MicrosoftLogo.png", @"SamsungLogo.png"];
     self.title = @"Mobile device makers";
     // Do any additional setup after loading the view from its nib.
 }
@@ -58,7 +59,7 @@
     // Configure the cell...
     
     cell.textLabel.text = [self.companyList objectAtIndex:[indexPath row]];
-    
+    cell.imageView.image = [UIImage imageNamed:self.companyLogo[[indexPath row]]];
     return cell;
 }
 
