@@ -41,6 +41,8 @@
 		AACFEF221E56208700D20F88 /* Galaxy Note.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF1F1E56208700D20F88 /* Galaxy Note.png */; };
 		AACFEF231E56208700D20F88 /* Galaxy S4.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF201E56208700D20F88 /* Galaxy S4.png */; };
 		AACFEF241E56208700D20F88 /* Galaxy Tab.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF211E56208700D20F88 /* Galaxy Tab.png */; };
+		AACFEF361E56531F00D20F88 /* DetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AACFEF341E56531F00D20F88 /* DetailVC.m */; };
+		AACFEF371E56531F00D20F88 /* DetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AACFEF351E56531F00D20F88 /* DetailVC.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,9 @@
 		AACFEF1F1E56208700D20F88 /* Galaxy Note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Galaxy Note.png"; sourceTree = "<group>"; };
 		AACFEF201E56208700D20F88 /* Galaxy S4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Galaxy S4.png"; sourceTree = "<group>"; };
 		AACFEF211E56208700D20F88 /* Galaxy Tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Galaxy Tab.png"; sourceTree = "<group>"; };
+		AACFEF331E56531F00D20F88 /* DetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailVC.h; path = ../DetailVC.h; sourceTree = "<group>"; };
+		AACFEF341E56531F00D20F88 /* DetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailVC.m; path = ../DetailVC.m; sourceTree = "<group>"; };
+		AACFEF351E56531F00D20F88 /* DetailVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailVC.xib; path = ../DetailVC.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +191,7 @@
 				483796CC1BCBF7C70062D5AB /* ParentViewController */,
 				483796CD1BCBF7EB0062D5AB /* ProductViewController */,
 				48A656C618163BF200746D36 /* Images.xcassets */,
+				AACFEF321E564D8C00D20F88 /* DetailViewController */,
 				48A656BB18163BF200746D36 /* Supporting Files */,
 			);
 			path = NavCtrl;
@@ -236,6 +242,16 @@
 				48A656D618163BF200746D36 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AACFEF321E564D8C00D20F88 /* DetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AACFEF331E56531F00D20F88 /* DetailVC.h */,
+				AACFEF341E56531F00D20F88 /* DetailVC.m */,
+				AACFEF351E56531F00D20F88 /* DetailVC.xib */,
+			);
+			name = DetailViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,6 +347,7 @@
 				48A656BF18163BF200746D36 /* InfoPlist.strings in Resources */,
 				AACFEF221E56208700D20F88 /* Galaxy Note.png in Resources */,
 				AACFEEF41E56083F00D20F88 /* GoogleLogo.png in Resources */,
+				AACFEF371E56531F00D20F88 /* DetailVC.xib in Resources */,
 				AACFEF141E56192F00D20F88 /* Pixel.png in Resources */,
 				AACFEF1A1E561CA400D20F88 /* Surface Pro 4.png in Resources */,
 				AACFEF231E56208700D20F88 /* Galaxy S4.png in Resources */,
@@ -355,6 +372,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E62FF211E4A33DC002D55B8 /* CompanyVC.m in Sources */,
+				AACFEF361E56531F00D20F88 /* DetailVC.m in Sources */,
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
 				9E62FF261E4A33F1002D55B8 /* ProductVC.m in Sources */,
