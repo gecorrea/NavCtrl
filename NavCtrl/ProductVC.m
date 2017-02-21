@@ -40,9 +40,9 @@
         self.productURL = @[@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-HoloLens-Development-Edition/productID.5061263800", @"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Lumia-950--Unlocked/productID.326602600", @"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Surface-Pro-4/productID.5072641000"];
     }
     else {
-        self.products = @[@"Galaxy Note", @"Galaxy S4", @"Galaxy Tab"];
+        self.products = @[@"Galaxy Note", @"Galaxy S", @"Galaxy Tab"];
         self.productImages = @[@"Galaxy Note.png", @"Galaxy S4.png", @"Galaxy Tab.png"];
-        self.productURL = @[@"", @"", @""];
+        self.productURL = @[@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/", @"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/", @"http://www.samsung.com/us/mobile/tablets/"];
     }
     [self.tableView reloadData];
 }
@@ -127,7 +127,7 @@
  DetailVC *detailViewController = [[DetailVC alloc] initWithNibName:@"DetailVC" bundle:nil];
  
  // Pass the selected object to the new view controller.
-         NSURL *url=[NSURL URLWithString:self.productURL[[indexPath row]]];
+     NSURL *url=[NSURL URLWithString:self.productURL[[indexPath row]]];
      detailViewController.url = url;
      
  // Push the view controller.
