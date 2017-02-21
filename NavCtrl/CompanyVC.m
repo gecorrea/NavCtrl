@@ -18,7 +18,10 @@
     [super viewDidLoad];
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
+    self.navigationItem.rightBarButtonItem = editButton;
     
     // Do any additional setup after loading the view from its nib.
     self.companyList = [[NSMutableArray alloc] initWithObjects:@"Apple mobile devices", @"Google mobile devices", @"Microsoft mobile devices", @"Samsung mobile devices", nil];
@@ -36,6 +39,17 @@
     self.samsungProducts = [[NSMutableArray alloc] initWithObjects:@"Galaxy Note", @"Galaxy S", @"Galaxy Tab", nil];;
     self.samsungImages = [[NSMutableArray alloc] initWithObjects:@"Galaxy Note.png", @"Galaxy S4.png", @"Galaxy Tab.png", nil];
     self.samsungURLs = [[NSMutableArray alloc] initWithObjects:@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/", @"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/", @"http://www.samsung.com/us/mobile/tablets/", nil];
+}
+
+- (void)toggleEditMode {
+    if (self.tableView.isEditing) {
+        [self.tableView setEditing:NO animated:YES];
+        self.navigationItem.rightBarButtonItem.title = @"Edit";
+    }
+    else {
+        [self.tableView setEditing:YES animated:YES];
+        self.navigationItem.rightBarButtonItem.title = @"Done";
+    }
 }
 
 - (void) didReceiveMemoryWarning {
@@ -91,22 +105,24 @@
      }
 }
 
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
+//********************************************************************************************************************************
+// Allow reordering of cells
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return UITableViewCellEditingStyleNone;
+//}
 
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
 
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+        [self.companyList exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
+        [self.companyLogo exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
+}
+//********************************************************************************************************************************
 
 #pragma mark - Table view delegate
 
