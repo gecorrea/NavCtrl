@@ -13,9 +13,9 @@
 @interface ProductVC : UIViewController<UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) NSArray *products;
-@property (nonatomic, retain) NSArray *productImages;
-@property (nonatomic, retain) NSArray *productURL;
+@property (nonatomic, retain) NSMutableArray *products;
+@property (nonatomic, retain) NSMutableArray *productImages;
+@property (nonatomic, retain) NSMutableArray *productURL;
 
 
 @end
