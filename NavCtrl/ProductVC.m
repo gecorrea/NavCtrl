@@ -16,31 +16,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-  /*
-    if ([self.title isEqualToString:@"Apple mobile devices"]) {
-        self.products = [[NSMutableArray alloc] initWithObjects:@"Apple Watch", @"iPad", @"iPhone", nil];
-        self.productImages = [[NSMutableArray alloc] initWithObjects:@"Apple Watch.png", @"iPad.png", @"iPhone.png", nil];
-        self.productURL = [[NSMutableArray alloc] initWithObjects:@"http://www.apple.com/shop/buy-watch/apple-watch/silver-aluminum-pearl-woven-nylon?preSelect=false&product=MNPK2LL/A&step=detail#", @"http://www.apple.com/shop/buy-ipad/ipad-pro", @"http://www.apple.com/shop/buy-iphone/iphone-7", nil];
-    }
-    else if ([self.title isEqualToString:@"Google mobile devices"]) {
-        self.products = [[NSMutableArray alloc] initWithObjects:@"Pixel C", @"Daydream View",@"Pixel", nil];
-        self.productImages = [[NSMutableArray alloc] initWithObjects:@"Pixel C.png", @"Daydream View.png", @"Pixel.png", nil];
-        self.productURL = [[NSMutableArray alloc] initWithObjects:@"https://store.google.com/product/pixel_c", @"https://store.google.com/product/daydream_view", @"https://store.google.com/product/pixel_phone", nil];
-    }
-    else if ([self.title isEqualToString:@"Microsoft mobile devices"]) {
-        self.products = [[NSMutableArray alloc] initWithObjects:@"HoloLens", @"Lumia 950", @"Surface Pro 4", nil];
-        self.productImages = [[NSMutableArray alloc] initWithObjects:@"HoloLens.png", @"Lumia 950.png", @"Surface Pro 4.png", nil];
-        self.productURL = [[NSMutableArray alloc] initWithObjects:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-HoloLens-Development-Edition/productID.5061263800", @"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Lumia-950--Unlocked/productID.326602600", @"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Surface-Pro-4/productID.5072641000", nil];
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
+    self.navigationItem.rightBarButtonItem = editButton;
+
+    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)toggleEditMode {
+    if (self.tableView.isEditing) {
+        [self.tableView setEditing:NO animated:YES];
+        self.navigationItem.rightBarButtonItem.title = @"Edit";
     }
     else {
-        self.products = [[NSMutableArray alloc] initWithObjects:@"Galaxy Note", @"Galaxy S", @"Galaxy Tab", nil];
-        self.productImages = [[NSMutableArray alloc] initWithObjects:@"Galaxy Note.png", @"Galaxy S4.png", @"Galaxy Tab.png", nil];
-        self.productURL = [[NSMutableArray alloc] initWithObjects:@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/", @"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/", @"http://www.samsung.com/us/mobile/tablets/", nil];
+        [self.tableView setEditing:YES animated:YES];
+        self.navigationItem.rightBarButtonItem.title = @"Done";
     }
-    [self.tableView reloadData];
-   */
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -95,7 +85,7 @@
         // Delete the row from the data source
         [self.products removeObjectAtIndex:indexPath.row];
         [self.productImages removeObjectAtIndex:indexPath.row];
-        [self.productURL removeObjectAtIndex:indexPath.row];
+        [self.productURLs removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -103,21 +93,28 @@
     }
 }
 
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+    NSString *productToMove = self.products[fromIndexPath.row];
+    NSString *imageToMove = self.productImages[fromIndexPath.row];
+    NSString *urlToMove = self.productURLs[fromIndexPath.row];
+    [self.products removeObjectAtIndex:fromIndexPath.row];
+    [self.productImages removeObjectAtIndex:fromIndexPath.row];
+    [self.productURLs removeObjectAtIndex:fromIndexPath.row];
+    [self.products insertObject:productToMove atIndex:toIndexPath.row];
+    [self.productImages insertObject:imageToMove atIndex:toIndexPath.row];
+    [self.productURLs insertObject:urlToMove atIndex:toIndexPath.row];
+    
+}
 
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
+
+
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+// Return NO if you do not want the item to be re-orderable.
+return YES;
+}
+
 
  #pragma mark - Table view delegate
  
@@ -128,7 +125,7 @@
      DetailVC *detailViewController = [[DetailVC alloc] initWithNibName:@"DetailVC" bundle:nil];
  
      // Pass the selected object to the new view controller.
-     NSURL *url=[NSURL URLWithString:self.productURL[[indexPath row]]];
+     NSURL *url=[NSURL URLWithString:self.productURLs[[indexPath row]]];
      detailViewController.url = url;
      
      // Push the view controller.

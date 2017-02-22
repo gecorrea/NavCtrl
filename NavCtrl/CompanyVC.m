@@ -18,14 +18,12 @@
     [super viewDidLoad];
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-//    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(toggleEditMode)];
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItem = editButton;
     
     // Do any additional setup after loading the view from its nib.
     self.companyList = [[NSMutableArray alloc] initWithObjects:@"Apple mobile devices", @"Google mobile devices", @"Microsoft mobile devices", @"Samsung mobile devices", nil];
-    self.companyLogo = [[NSMutableArray alloc] initWithObjects:@"AppleLogo.png", @"GoogleLogo.png", @"MicrosoftLogo.png", @"SamsungLogo.png", nil];
+//    self.companyLogo = [[NSMutableArray alloc] initWithObjects:@"AppleLogo.png", @"GoogleLogo.png", @"MicrosoftLogo.png", @"SamsungLogo.png", nil];
     self.title = @"Mobile device makers";
     self.appleProducts = [[NSMutableArray alloc]initWithObjects:@"Apple Watch", @"iPad", @"iPhone", nil];
     self.appleImages = [[NSMutableArray alloc] initWithObjects:@"Apple Watch.png", @"iPad.png", @"iPhone.png", nil];
@@ -81,7 +79,20 @@
     // Configure the cell...
     
     cell.textLabel.text = [self.companyList objectAtIndex:[indexPath row]];
-    cell.imageView.image = [UIImage imageNamed:self.companyLogo[[indexPath row]]];
+    
+    if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Apple mobile devices"]) {
+        cell.imageView.image = [UIImage imageNamed:@"AppleLogo.png"];
+    }
+    else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Google mobile devices"]) {
+        cell.imageView.image = [UIImage imageNamed:@"GoogleLogo.png"];
+    }
+    else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Microsoft mobile devices"]) {
+        cell.imageView.image = [UIImage imageNamed:@"MicrosoftLogo.png"];
+    }
+    else {
+        cell.imageView.image = [UIImage imageNamed:@"SamsungLogo.png"];
+    }
+    
     return cell;
 }
 
@@ -97,7 +108,6 @@
      if (editingStyle == UITableViewCellEditingStyleDelete) {
          // Delete the row from the data source
          [self.companyList removeObjectAtIndex:indexPath.row];
-         [self.companyLogo removeObjectAtIndex:indexPath.row];
          [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -119,8 +129,9 @@
 
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-        [self.companyList exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
-        [self.companyLogo exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
+    NSString *stringToMove = self.companyList[fromIndexPath.row];
+    [self.companyList removeObjectAtIndex:fromIndexPath.row];
+    [self.companyList insertObject:stringToMove atIndex:toIndexPath.row];
 }
 //********************************************************************************************************************************
 
@@ -133,27 +144,27 @@
         self.productViewController.title = @"Apple mobile devices";
         self.productViewController.products = self.appleProducts;
         self.productViewController.productImages = self.appleImages;
-        self.productViewController.productURL = self.appleURLs;
+        self.productViewController.productURLs = self.appleURLs;
     }
     else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Google mobile devices"]){
         self.productViewController.title = @"Google mobile devices";
         self.productViewController.products = self.googleProducts;
         self.productViewController.productImages = self.googleImages;
-        self.productViewController.productURL = self.googleURLs;
+        self.productViewController.productURLs = self.googleURLs;
         
     }
     else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Microsoft mobile devices"]){
         self.productViewController.title = @"Microsoft mobile devices";
         self.productViewController.products = self.microsoftProducts;
         self.productViewController.productImages = self.microsoftImages;
-        self.productViewController.productURL = self.microsoftURLs;
+        self.productViewController.productURLs = self.microsoftURLs;
         
     }
     else {
         self.productViewController.title = @"Samsung mobile devices";
         self.productViewController.products = self.samsungProducts;
         self.productViewController.productImages = self.samsungImages;
-        self.productViewController.productURL = self.samsungURLs;
+        self.productViewController.productURLs = self.samsungURLs;
     }
     
     [self.navigationController
