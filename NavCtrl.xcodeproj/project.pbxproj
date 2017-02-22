@@ -25,6 +25,8 @@
 		9E62FF261E4A33F1002D55B8 /* ProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E62FF241E4A33F1002D55B8 /* ProductVC.m */; };
 		9E62FF271E4A33F1002D55B8 /* ProductVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF251E4A33F1002D55B8 /* ProductVC.xib */; };
 		9E62FF291E4A3982002D55B8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */; };
+		AAB7528A1E5E060D00BE7D45 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB752891E5E060D00BE7D45 /* Company.m */; };
+		AAB7528D1E5E062500BE7D45 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB7528C1E5E062500BE7D45 /* Product.m */; };
 		AACFEEF41E56083F00D20F88 /* GoogleLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEEF31E56083F00D20F88 /* GoogleLogo.png */; };
 		AACFEEF61E560AFE00D20F88 /* AppleLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEEF51E560AFE00D20F88 /* AppleLogo.png */; };
 		AACFEEF91E560D4F00D20F88 /* MicrosoftLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEEF71E560D4F00D20F88 /* MicrosoftLogo.png */; };
@@ -80,6 +82,10 @@
 		9E62FF241E4A33F1002D55B8 /* ProductVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductVC.m; sourceTree = "<group>"; };
 		9E62FF251E4A33F1002D55B8 /* ProductVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductVC.xib; sourceTree = "<group>"; };
 		9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		AAB752881E5E060D00BE7D45 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
+		AAB752891E5E060D00BE7D45 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
+		AAB7528B1E5E062500BE7D45 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
+		AAB7528C1E5E062500BE7D45 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
 		AACFEEF31E56083F00D20F88 /* GoogleLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GoogleLogo.png; sourceTree = "<group>"; };
 		AACFEEF51E560AFE00D20F88 /* AppleLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppleLogo.png; sourceTree = "<group>"; };
 		AACFEEF71E560D4F00D20F88 /* MicrosoftLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MicrosoftLogo.png; sourceTree = "<group>"; };
@@ -193,6 +199,10 @@
 				48A656C618163BF200746D36 /* Images.xcassets */,
 				AACFEF321E564D8C00D20F88 /* DetailViewController */,
 				48A656BB18163BF200746D36 /* Supporting Files */,
+				AAB752881E5E060D00BE7D45 /* Company.h */,
+				AAB752891E5E060D00BE7D45 /* Company.m */,
+				AAB7528B1E5E062500BE7D45 /* Product.h */,
+				AAB7528C1E5E062500BE7D45 /* Product.m */,
 			);
 			path = NavCtrl;
 			sourceTree = "<group>";
@@ -371,7 +381,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAB7528D1E5E062500BE7D45 /* Product.m in Sources */,
 				9E62FF211E4A33DC002D55B8 /* CompanyVC.m in Sources */,
+				AAB7528A1E5E060D00BE7D45 /* Company.m in Sources */,
 				AACFEF361E56531F00D20F88 /* DetailVC.m in Sources */,
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
