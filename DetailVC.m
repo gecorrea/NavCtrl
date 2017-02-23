@@ -1,11 +1,3 @@
-//
-//  DetailVC.m
-//  NavCtrl
-//
-//  Created by Aditya Narayan on 2/16/17.
-//  Copyright © 2017 Aditya Narayan. All rights reserved.
-//
-
 #import "DetailVC.h"
 
 @interface DetailVC ()

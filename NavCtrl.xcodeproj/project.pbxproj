@@ -196,13 +196,11 @@
 				483796CB1BCBF7A00062D5AB /* AppDelegate */,
 				483796CC1BCBF7C70062D5AB /* ParentViewController */,
 				483796CD1BCBF7EB0062D5AB /* ProductViewController */,
-				48A656C618163BF200746D36 /* Images.xcassets */,
 				AACFEF321E564D8C00D20F88 /* DetailViewController */,
+				AA3F350F1E5F49AA00499A96 /* Company Class */,
+				AA3F35101E5F49D200499A96 /* Product Class */,
 				48A656BB18163BF200746D36 /* Supporting Files */,
-				AAB752881E5E060D00BE7D45 /* Company.h */,
-				AAB752891E5E060D00BE7D45 /* Company.m */,
-				AAB7528B1E5E062500BE7D45 /* Product.h */,
-				AAB7528C1E5E062500BE7D45 /* Product.m */,
+				48A656C618163BF200746D36 /* Images.xcassets */,
 			);
 			path = NavCtrl;
 			sourceTree = "<group>";
@@ -252,6 +250,24 @@
 				48A656D618163BF200746D36 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA3F350F1E5F49AA00499A96 /* Company Class */ = {
+			isa = PBXGroup;
+			children = (
+				AAB752891E5E060D00BE7D45 /* Company.m */,
+				AAB752881E5E060D00BE7D45 /* Company.h */,
+			);
+			name = "Company Class";
+			sourceTree = "<group>";
+		};
+		AA3F35101E5F49D200499A96 /* Product Class */ = {
+			isa = PBXGroup;
+			children = (
+				AAB7528B1E5E062500BE7D45 /* Product.h */,
+				AAB7528C1E5E062500BE7D45 /* Product.m */,
+			);
+			name = "Product Class";
 			sourceTree = "<group>";
 		};
 		AACFEF321E564D8C00D20F88 /* DetailViewController */ = {

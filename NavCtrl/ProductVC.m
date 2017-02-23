@@ -68,8 +68,9 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     // Configure the cell...
-    cell.textLabel.text = [self.products objectAtIndex:[indexPath row]];
-    cell.imageView.image = [UIImage imageNamed:self.productImages[[indexPath row]]];
+    self.product = [self.products objectAtIndex:[indexPath row]];
+    cell.textLabel.text = self.product.name;
+    cell.imageView.image = [UIImage imageNamed:self.product.image];
     return cell;
 }
 
@@ -95,9 +96,10 @@
 
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    NSString *productToMove = self.products[fromIndexPath.row];
-    NSString *imageToMove = self.productImages[fromIndexPath.row];
-    NSString *urlToMove = self.productURLs[fromIndexPath.row];
+    self.product = [self.products objectAtIndex:[fromIndexPath row]];
+    NSString *productToMove = self.product.name;
+    NSString *imageToMove = self.product.image;
+    NSString *urlToMove = self.product.url;
     [self.products removeObjectAtIndex:fromIndexPath.row];
     [self.productImages removeObjectAtIndex:fromIndexPath.row];
     [self.productURLs removeObjectAtIndex:fromIndexPath.row];
@@ -120,16 +122,17 @@ return YES;
  
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-     // Navigation logic may go here, for example:
-     // Create the next view controller.
-     DetailVC *detailViewController = [[DetailVC alloc] initWithNibName:@"DetailVC" bundle:nil];
+    // Navigation logic may go here, for example:
+    // Create the next view controller.
+    DetailVC *detailViewController = [[DetailVC alloc] initWithNibName:@"DetailVC" bundle:nil];
  
-     // Pass the selected object to the new view controller.
-     NSURL *url=[NSURL URLWithString:self.productURLs[[indexPath row]]];
-     detailViewController.url = url;
+    // Pass the selected object to the new view controller.
+    self.product = [self.products objectAtIndex:[indexPath row]];
+    NSURL *url = [NSURL URLWithString:self.product.url];
+    detailViewController.url = url;
      
-     // Push the view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
+    // Push the view controller.
+    [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
 

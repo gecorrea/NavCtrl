@@ -23,25 +23,31 @@
     
     // Do any additional setup after loading the view from its nib.
     Company *apple = [[Company alloc] initWithName:@"Apple"];
-    Company *google =[[Company alloc] initWithName:@"Google"];
+    Company *google = [[Company alloc] initWithName:@"Google"];
     Company *microsoft = [[Company alloc] initWithName:@"Microsoft"];
     Company *samsung = [[Company alloc] initWithName:@"Samsung"];
     
+    Product *appleWatch = [[Product alloc] initWithName:@"Apple Watch" andURL:@"http://www.apple.com/shop/buy-watch/apple-watch/silver-aluminum-pearl-woven-nylon?preSelect=false&product=MNPK2LL/A&step=detail#"];
+    Product *iPad = [[Product alloc] initWithName:@"iPad" andURL:@"http://www.apple.com/shop/buy-ipad/ipad-pro"];
+    Product *iPhone = [[Product alloc] initWithName:@"iPhone" andURL:@"http://www.apple.com/shop/buy-iphone/iphone-7"];
+    Product *pixelC = [[Product alloc] initWithName:@"Pixel C" andURL:@"https://store.google.com/product/pixel_c"];
+    Product *daydreamView = [[Product alloc] initWithName:@"Daydream View" andURL:@"https://store.google.com/product/daydream_view"];
+    Product *pixel = [[Product alloc] initWithName:@"Pixel" andURL:@"https://store.google.com/product/pixel_phone"];
+    Product *holoLens = [[Product alloc] initWithName:@"HoloLens" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-HoloLens-Development-Edition/productID.5061263800"];
+    Product *lumia950 = [[Product alloc] initWithName:@"Lumia 950" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Lumia-950--Unlocked/productID.326602600"];
+    Product *surfacePro4 = [[Product alloc] initWithName:@"Surface Pro 4" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Surface-Pro-4/productID.5072641000"];
+    Product *galaxyNote = [[Product alloc] initWithName:@"Galaxy Note" andURL:@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/"];
+    Product *galaxyS = [[Product alloc] initWithName:@"Galaxy S" andURL:@"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/"];
+    Product *galaxyTab = [[Product alloc] initWithName:@"Galaxy Tab" andURL:@"http://www.samsung.com/us/mobile/tablets/"];
+    
+    
 //    self.companyList = [[NSMutableArray alloc] initWithObjects:@"Apple mobile devices", @"Google mobile devices", @"Microsoft mobile devices", @"Samsung mobile devices", nil];
     self.companyList = [[NSMutableArray alloc] initWithObjects:apple, google, microsoft, samsung, nil];
+    apple.products = [[NSMutableArray alloc] initWithObjects:appleWatch, iPad, iPhone, nil];
+    google.products = [[NSMutableArray alloc] initWithObjects:pixelC, daydreamView, pixel, nil];
+    microsoft.products = [[NSMutableArray alloc] initWithObjects:holoLens, lumia950, surfacePro4, nil];
+    samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
     self.title = @"Mobile device makers";
-//    self.appleProducts = [[NSMutableArray alloc]initWithObjects:@"Apple Watch", @"iPad", @"iPhone", nil];
-//    self.appleImages = [[NSMutableArray alloc] initWithObjects:@"Apple Watch.png", @"iPad.png", @"iPhone.png", nil];
-//    self.appleURLs = [[NSMutableArray alloc] initWithObjects:@"http://www.apple.com/shop/buy-watch/apple-watch/silver-aluminum-pearl-woven-nylon?preSelect=false&product=MNPK2LL/A&step=detail#", @"http://www.apple.com/shop/buy-ipad/ipad-pro", @"http://www.apple.com/shop/buy-iphone/iphone-7", nil];
-//    self.googleProducts = [[NSMutableArray alloc] initWithObjects:@"Pixel C", @"Daydream View",@"Pixel", nil];
-//    self.googleImages = [[NSMutableArray alloc] initWithObjects:@"Pixel C.png", @"Daydream View.png", @"Pixel.png", nil];
-//    self. googleURLs = [[NSMutableArray alloc] initWithObjects:@"https://store.google.com/product/pixel_c", @"https://store.google.com/product/daydream_view", @"https://store.google.com/product/pixel_phone", nil];
-//    self.microsoftProducts = [[NSMutableArray alloc] initWithObjects:@"HoloLens", @"Lumia 950", @"Surface Pro 4", nil];
-//    self.microsoftImages = [[NSMutableArray alloc] initWithObjects:@"HoloLens.png", @"Lumia 950.png", @"Surface Pro 4.png", nil];
-//    self.microsoftURLs = [[NSMutableArray alloc] initWithObjects:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-HoloLens-Development-Edition/productID.5061263800", @"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Lumia-950--Unlocked/productID.326602600", @"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Surface-Pro-4/productID.5072641000", nil];
-//    self.samsungProducts = [[NSMutableArray alloc] initWithObjects:@"Galaxy Note", @"Galaxy S", @"Galaxy Tab", nil];;
-//    self.samsungImages = [[NSMutableArray alloc] initWithObjects:@"Galaxy Note.png", @"Galaxy S4.png", @"Galaxy Tab.png", nil];
-//    self.samsungURLs = [[NSMutableArray alloc] initWithObjects:@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/", @"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/", @"http://www.samsung.com/us/mobile/tablets/", nil];
 }
 
 - (void)toggleEditMode {
@@ -82,24 +88,11 @@
     }
     
     // Configure the cell...
-    for (int i = 0; i <= indexPath.row; i++) {
-        Company *company = self.companyList[indexPath.row];
-        cell.textLabel.text = company.companyName;
-        cell.imageView.image = [UIImage imageNamed:company.companyLogo];
-        
-//        if ([company.companyName isEqualToString:@"Apple mobile devices"]) {
-//            cell.imageView.image = [UIImage imageNamed:@"AppleLogo.png"];
-//        }
-//        else if ([company.companyName isEqualToString:@"Google mobile devices"]) {
-//            cell.imageView.image = [UIImage imageNamed:@"GoogleLogo.png"];
-//        }
-//        else if ([[self.companyList objectAtIndex:[indexPath row]] isEqualToString:@"Microsoft mobile devices"]) {
-//        cell.imageView.image = [UIImage imageNamed:@"MicrosoftLogo.png"];
-//        }
-//        else {
-//            cell.imageView.image = [UIImage imageNamed:@"SamsungLogo.png"];
-//        }
-    }
+    
+    self.company = self.companyList[indexPath.row];
+    cell.textLabel.text = self.company.name;
+    cell.imageView.image = [UIImage imageNamed:self.company.logo];
+    
     return cell;
 }
 
@@ -136,7 +129,8 @@
 
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    NSString *stringToMove = self.companyList[fromIndexPath.row];
+    self.company = self.companyList[fromIndexPath.row];
+    NSString *stringToMove = self.company.name;
     [self.companyList removeObjectAtIndex:fromIndexPath.row];
     [self.companyList insertObject:stringToMove atIndex:toIndexPath.row];
 }
@@ -147,33 +141,9 @@
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.productViewController = [[ProductVC alloc]init];
-    Company *company = self.companyList[indexPath.row];
-    if ([company.companyName isEqualToString:@"Apple mobile devices"]){
-        self.productViewController.title = company.companyName;
-        self.productViewController.products = self.apple.product.products;
-        self.productViewController.productImages = self.apple.product.images;
-        self.productViewController.productURLs = self.apple.product.urls;
-    }
-    else if ([company.companyName isEqualToString:@"Google mobile devices"]){
-        self.productViewController.title = @"Google mobile devices";
-        self.productViewController.products = self.google.product.products;
-        self.productViewController.productImages = self.google.product.images;
-        self.productViewController.productURLs = self.google.product.urls;
-        
-    }
-    else if ([company.companyName isEqualToString:@"Microsoft mobile devices"]){
-        self.productViewController.title = @"Microsoft mobile devices";
-        self.productViewController.products = self.microsoft.product.products;
-        self.productViewController.productImages = self.microsoft.product.images;
-        self.productViewController.productURLs = self.microsoft.product.urls;
-        
-    }
-    else {
-        self.productViewController.title = @"Samsung mobile devices";
-        self.productViewController.products = self.samsung.product.products;
-        self.productViewController.productImages = self.samsung.product.images;
-        self.productViewController.productURLs = self.samsung.product.urls;
-    }
+    self.company = self.companyList[indexPath.row];
+    self.productViewController.title = self.company.name;
+    self.productViewController.products = self.company.products;
     
     [self.navigationController
      pushViewController:self.productViewController
