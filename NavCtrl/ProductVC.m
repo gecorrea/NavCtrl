@@ -85,8 +85,6 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [self.products removeObjectAtIndex:indexPath.row];
-        [self.productImages removeObjectAtIndex:indexPath.row];
-        [self.productURLs removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -97,16 +95,9 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     self.product = [self.products objectAtIndex:[fromIndexPath row]];
-    NSString *productToMove = self.product.name;
-    NSString *imageToMove = self.product.image;
-    NSString *urlToMove = self.product.url;
+    Product *productToMove = self.product;
     [self.products removeObjectAtIndex:fromIndexPath.row];
-    [self.productImages removeObjectAtIndex:fromIndexPath.row];
-    [self.productURLs removeObjectAtIndex:fromIndexPath.row];
     [self.products insertObject:productToMove atIndex:toIndexPath.row];
-    [self.productImages insertObject:imageToMove atIndex:toIndexPath.row];
-    [self.productURLs insertObject:urlToMove atIndex:toIndexPath.row];
-    
 }
 
 

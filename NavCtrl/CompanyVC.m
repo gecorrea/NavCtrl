@@ -16,17 +16,19 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // Display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItem = editButton;
     
-    // Do any additional setup after loading the view from its nib.
+    // Create companies
     Company *apple = [[Company alloc] initWithName:@"Apple"];
     Company *google = [[Company alloc] initWithName:@"Google"];
     Company *microsoft = [[Company alloc] initWithName:@"Microsoft"];
     Company *samsung = [[Company alloc] initWithName:@"Samsung"];
-    
+
+    // Create products
     Product *appleWatch = [[Product alloc] initWithName:@"Apple Watch" andURL:@"http://www.apple.com/shop/buy-watch/apple-watch/silver-aluminum-pearl-woven-nylon?preSelect=false&product=MNPK2LL/A&step=detail#"];
     Product *iPad = [[Product alloc] initWithName:@"iPad" andURL:@"http://www.apple.com/shop/buy-ipad/ipad-pro"];
     Product *iPhone = [[Product alloc] initWithName:@"iPhone" andURL:@"http://www.apple.com/shop/buy-iphone/iphone-7"];
@@ -39,17 +41,21 @@
     Product *galaxyNote = [[Product alloc] initWithName:@"Galaxy Note" andURL:@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/"];
     Product *galaxyS = [[Product alloc] initWithName:@"Galaxy S" andURL:@"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/"];
     Product *galaxyTab = [[Product alloc] initWithName:@"Galaxy Tab" andURL:@"http://www.samsung.com/us/mobile/tablets/"];
-    
-    
-//    self.companyList = [[NSMutableArray alloc] initWithObjects:@"Apple mobile devices", @"Google mobile devices", @"Microsoft mobile devices", @"Samsung mobile devices", nil];
+
+    // Create an array of companies.
     self.companyList = [[NSMutableArray alloc] initWithObjects:apple, google, microsoft, samsung, nil];
+    
+    // Creat arrays of products by company
     apple.products = [[NSMutableArray alloc] initWithObjects:appleWatch, iPad, iPhone, nil];
     google.products = [[NSMutableArray alloc] initWithObjects:pixelC, daydreamView, pixel, nil];
     microsoft.products = [[NSMutableArray alloc] initWithObjects:holoLens, lumia950, surfacePro4, nil];
     samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
+    
+    // Title of CompanyVC
     self.title = @"Mobile device makers";
 }
 
+// Allow toggling of edit mode for CompanyVC.
 - (void)toggleEditMode {
     if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
@@ -88,7 +94,6 @@
     }
     
     // Configure the cell...
-    
     self.company = self.companyList[indexPath.row];
     cell.textLabel.text = self.company.name;
     cell.imageView.image = [UIImage imageNamed:self.company.logo];
@@ -115,12 +120,7 @@
      }
 }
 
-//********************************************************************************************************************************
 // Allow reordering of cells
-//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return UITableViewCellEditingStyleNone;
-//}
-
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the item to be re-orderable.
@@ -130,11 +130,10 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
     self.company = self.companyList[fromIndexPath.row];
-    NSString *stringToMove = self.company.name;
+    Company *companyToMove = self.company;
     [self.companyList removeObjectAtIndex:fromIndexPath.row];
-    [self.companyList insertObject:stringToMove atIndex:toIndexPath.row];
+    [self.companyList insertObject:companyToMove atIndex:toIndexPath.row];
 }
-//********************************************************************************************************************************
 
 #pragma mark - Table view delegate
 

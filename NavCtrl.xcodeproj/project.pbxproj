@@ -255,8 +255,8 @@
 		AA3F350F1E5F49AA00499A96 /* Company Class */ = {
 			isa = PBXGroup;
 			children = (
-				AAB752891E5E060D00BE7D45 /* Company.m */,
 				AAB752881E5E060D00BE7D45 /* Company.h */,
+				AAB752891E5E060D00BE7D45 /* Company.m */,
 			);
 			name = "Company Class";
 			sourceTree = "<group>";

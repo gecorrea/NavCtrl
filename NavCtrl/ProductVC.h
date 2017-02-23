@@ -15,8 +15,6 @@
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *products;
-@property (nonatomic, retain) NSMutableArray *productImages;
-@property (nonatomic, retain) NSMutableArray *productURLs;
 @property (nonatomic, retain) Product *product;
 
 @end
