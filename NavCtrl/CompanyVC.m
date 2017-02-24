@@ -10,6 +10,8 @@
 
 @interface CompanyVC ()
 
+@property (nonatomic, retain) DAO *dataManager;
+
 @end
 
 @implementation CompanyVC
@@ -22,34 +24,7 @@
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItem = editButton;
     
-    // Create companies
-    Company *apple = [[Company alloc] initWithName:@"Apple"];
-    Company *google = [[Company alloc] initWithName:@"Google"];
-    Company *microsoft = [[Company alloc] initWithName:@"Microsoft"];
-    Company *samsung = [[Company alloc] initWithName:@"Samsung"];
-
-    // Create products
-    Product *appleWatch = [[Product alloc] initWithName:@"Apple Watch" andURL:@"http://www.apple.com/shop/buy-watch/apple-watch/silver-aluminum-pearl-woven-nylon?preSelect=false&product=MNPK2LL/A&step=detail#"];
-    Product *iPad = [[Product alloc] initWithName:@"iPad" andURL:@"http://www.apple.com/shop/buy-ipad/ipad-pro"];
-    Product *iPhone = [[Product alloc] initWithName:@"iPhone" andURL:@"http://www.apple.com/shop/buy-iphone/iphone-7"];
-    Product *pixelC = [[Product alloc] initWithName:@"Pixel C" andURL:@"https://store.google.com/product/pixel_c"];
-    Product *daydreamView = [[Product alloc] initWithName:@"Daydream View" andURL:@"https://store.google.com/product/daydream_view"];
-    Product *pixel = [[Product alloc] initWithName:@"Pixel" andURL:@"https://store.google.com/product/pixel_phone"];
-    Product *holoLens = [[Product alloc] initWithName:@"HoloLens" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-HoloLens-Development-Edition/productID.5061263800"];
-    Product *lumia950 = [[Product alloc] initWithName:@"Lumia 950" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Lumia-950--Unlocked/productID.326602600"];
-    Product *surfacePro4 = [[Product alloc] initWithName:@"Surface Pro 4" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Surface-Pro-4/productID.5072641000"];
-    Product *galaxyNote = [[Product alloc] initWithName:@"Galaxy Note" andURL:@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/"];
-    Product *galaxyS = [[Product alloc] initWithName:@"Galaxy S" andURL:@"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/"];
-    Product *galaxyTab = [[Product alloc] initWithName:@"Galaxy Tab" andURL:@"http://www.samsung.com/us/mobile/tablets/"];
-
-    // Create an array of companies.
-    self.companyList = [[NSMutableArray alloc] initWithObjects:apple, google, microsoft, samsung, nil];
-    
-    // Creat arrays of products by company
-    apple.products = [[NSMutableArray alloc] initWithObjects:appleWatch, iPad, iPhone, nil];
-    google.products = [[NSMutableArray alloc] initWithObjects:pixelC, daydreamView, pixel, nil];
-    microsoft.products = [[NSMutableArray alloc] initWithObjects:holoLens, lumia950, surfacePro4, nil];
-    samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
+    self.dataManager = [DAO sharedInstance];
     
     // Title of CompanyVC
     self.title = @"Mobile device makers";
@@ -83,7 +58,7 @@
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return [self.companyList count];
+    return [self.dataManager.companyList count];
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -94,7 +69,7 @@
     }
     
     // Configure the cell...
-    self.company = self.companyList[indexPath.row];
+    self.company = self.dataManager.companyList[indexPath.row];
     cell.textLabel.text = self.company.name;
     cell.imageView.image = [UIImage imageNamed:self.company.logo];
     
@@ -112,7 +87,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
      if (editingStyle == UITableViewCellEditingStyleDelete) {
          // Delete the row from the data source
-         [self.companyList removeObjectAtIndex:indexPath.row];
+         [self.dataManager.companyList removeObjectAtIndex:indexPath.row];
          [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -129,10 +104,10 @@
 
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    self.company = self.companyList[fromIndexPath.row];
+    self.company = self.dataManager.companyList[fromIndexPath.row];
     Company *companyToMove = self.company;
-    [self.companyList removeObjectAtIndex:fromIndexPath.row];
-    [self.companyList insertObject:companyToMove atIndex:toIndexPath.row];
+    [self.dataManager.companyList removeObjectAtIndex:fromIndexPath.row];
+    [self.dataManager.companyList insertObject:companyToMove atIndex:toIndexPath.row];
 }
 
 #pragma mark - Table view delegate
@@ -140,9 +115,10 @@
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.productViewController = [[ProductVC alloc]init];
-    self.company = self.companyList[indexPath.row];
+    self.company = self.dataManager.companyList[indexPath.row];
     self.productViewController.title = self.company.name;
-    self.productViewController.products = self.company.products;
+    Company *currentCompany = self.dataManager.companyList[indexPath.row];
+    self.productViewController.products = currentCompany.products;
     
     [self.navigationController
      pushViewController:self.productViewController

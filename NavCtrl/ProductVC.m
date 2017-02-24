@@ -10,6 +10,8 @@
 
 @interface ProductVC ()
 
+@property (nonatomic, retain) DAO *dataManager;
+
 @end
 
 @implementation ProductVC
@@ -20,6 +22,7 @@
     self.navigationItem.rightBarButtonItem = editButton;
 
     // Do any additional setup after loading the view from its nib.
+    self.dataManager = [DAO sharedInstance];
 }
 
 - (void)toggleEditMode {
@@ -36,9 +39,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    
-
-    
 }
 
 

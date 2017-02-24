@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DetailVC.h"
 #import <WebKit/WebKit.h>
-#import "Product.h"
+#import "DAO.h"
 
 @interface ProductVC : UIViewController<UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate>
 
