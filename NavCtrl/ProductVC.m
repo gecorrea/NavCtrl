@@ -18,23 +18,38 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
-    self.navigationItem.rightBarButtonItem = editButton;
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
+    self.navigationItem.rightBarButtonItem = addButton;
 
     // Do any additional setup after loading the view from its nib.
     self.dataManager = [DAO sharedInstance];
 }
 
-- (void)toggleEditMode {
+- (void)toggleInsertMode {
     if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
-        self.navigationItem.rightBarButtonItem.title = @"Edit";
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemAdd;
     }
     else {
-        [self.tableView setEditing:YES animated:YES];
-        self.navigationItem.rightBarButtonItem.title = @"Done";
+        self.insertViewController = [[InsertVC alloc] init];
+        self.insertViewController.title = @"Add Product";
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
+        [self.navigationController
+         pushViewController:self.insertViewController
+         animated:YES];
     }
 }
+
+//- (void)toggleEditMode {
+//    if (self.tableView.isEditing) {
+//        [self.tableView setEditing:NO animated:YES];
+//        self.navigationItem.rightBarButtonItem.title = @"Edit";
+//    }
+//    else {
+//        [self.tableView setEditing:YES animated:YES];
+//        self.navigationItem.rightBarButtonItem.title = @"Done";
+//    }
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
     

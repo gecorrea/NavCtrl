@@ -22,7 +22,9 @@
     
     // Display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
-    self.navigationItem.rightBarButtonItem = editButton;
+    self.navigationItem.leftBarButtonItem = editButton;
+    UIBarButtonItem *insertButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
+    self.navigationItem.rightBarButtonItem = insertButton;
     
     self.dataManager = [DAO sharedInstance];
     
@@ -34,11 +36,26 @@
 - (void)toggleEditMode {
     if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
-        self.navigationItem.rightBarButtonItem.title = @"Edit";
+        self.navigationItem.leftBarButtonItem.title = @"Edit";
     }
     else {
         [self.tableView setEditing:YES animated:YES];
-        self.navigationItem.rightBarButtonItem.title = @"Done";
+        self.navigationItem.leftBarButtonItem.title = @"Done";
+    }
+}
+
+- (void)toggleInsertMode {
+    if (self.tableView.isEditing) {
+        [self.tableView setEditing:NO animated:YES];
+        self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemAdd;
+    }
+    else {
+        self.insertViewController = [[InsertVC alloc] init];
+        self.insertViewController.title = @"Add Company";
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
+        [self.navigationController
+         pushViewController:self.insertViewController
+         animated:YES];
     }
 }
 

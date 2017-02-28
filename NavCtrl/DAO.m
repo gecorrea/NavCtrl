@@ -50,6 +50,9 @@
     samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
 }
 
+- (void) addName:(NSString *) name andURL:(NSString *) url andImageURL:(NSString *) imageURL isCompany:(BOOL) iscomp  {
+}
+
 //- (void)dealloc {
 //    // Should never be called, but just here for clarity really.
 //    [self.someProperty release];

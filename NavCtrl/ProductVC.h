@@ -10,11 +10,13 @@
 #import "DetailVC.h"
 #import <WebKit/WebKit.h>
 #import "DAO.h"
+#import "InsertVC.h"
 
 @interface ProductVC : UIViewController<UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *products;
 @property (nonatomic, retain) Product *product;
+@property (nonatomic, retain) InsertVC *insertViewController;
 
 @end

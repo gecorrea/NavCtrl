@@ -26,6 +26,8 @@
 		9E62FF271E4A33F1002D55B8 /* ProductVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF251E4A33F1002D55B8 /* ProductVC.xib */; };
 		9E62FF291E4A3982002D55B8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */; };
 		AA06CD0D1E60977E0004A9A9 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = AA06CD0C1E60977E0004A9A9 /* DAO.m */; };
+		AA06CD121E64C5160004A9A9 /* InsertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA06CD101E64C5160004A9A9 /* InsertVC.m */; };
+		AA06CD131E64C5160004A9A9 /* InsertVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA06CD111E64C5160004A9A9 /* InsertVC.xib */; };
 		AAB7528A1E5E060D00BE7D45 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB752891E5E060D00BE7D45 /* Company.m */; };
 		AAB7528D1E5E062500BE7D45 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB7528C1E5E062500BE7D45 /* Product.m */; };
 		AACFEEF41E56083F00D20F88 /* GoogleLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AACFEEF31E56083F00D20F88 /* GoogleLogo.png */; };
@@ -85,6 +87,9 @@
 		9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		AA06CD0B1E60977E0004A9A9 /* DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAO.h; sourceTree = "<group>"; };
 		AA06CD0C1E60977E0004A9A9 /* DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAO.m; sourceTree = "<group>"; };
+		AA06CD0F1E64C5160004A9A9 /* InsertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertVC.h; sourceTree = "<group>"; };
+		AA06CD101E64C5160004A9A9 /* InsertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertVC.m; sourceTree = "<group>"; };
+		AA06CD111E64C5160004A9A9 /* InsertVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InsertVC.xib; sourceTree = "<group>"; };
 		AAB752881E5E060D00BE7D45 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		AAB752891E5E060D00BE7D45 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		AAB7528B1E5E062500BE7D45 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
@@ -200,6 +205,7 @@
 				483796CC1BCBF7C70062D5AB /* ParentViewController */,
 				483796CD1BCBF7EB0062D5AB /* ProductViewController */,
 				AACFEF321E564D8C00D20F88 /* DetailViewController */,
+				AA06CD141E64C52C0004A9A9 /* InsertViewController */,
 				AA3F350F1E5F49AA00499A96 /* Company Class */,
 				AA3F35101E5F49D200499A96 /* Product Class */,
 				AA06CD0E1E6097A60004A9A9 /* DAO */,
@@ -263,6 +269,16 @@
 				AA06CD0C1E60977E0004A9A9 /* DAO.m */,
 			);
 			name = DAO;
+			sourceTree = "<group>";
+		};
+		AA06CD141E64C52C0004A9A9 /* InsertViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA06CD0F1E64C5160004A9A9 /* InsertVC.h */,
+				AA06CD101E64C5160004A9A9 /* InsertVC.m */,
+				AA06CD111E64C5160004A9A9 /* InsertVC.xib */,
+			);
+			name = InsertViewController;
 			sourceTree = "<group>";
 		};
 		AA3F350F1E5F49AA00499A96 /* Company Class */ = {
@@ -380,6 +396,7 @@
 				AACFEF241E56208700D20F88 /* Galaxy Tab.png in Resources */,
 				AACFEF051E56137F00D20F88 /* iPad.png in Resources */,
 				9E62FF271E4A33F1002D55B8 /* ProductVC.xib in Resources */,
+				AA06CD131E64C5160004A9A9 /* InsertVC.xib in Resources */,
 				AACFEF1E1E561DF300D20F88 /* HoloLens.png in Resources */,
 				AACFEEFA1E560D4F00D20F88 /* SamsungLogo.png in Resources */,
 				AACFEEF91E560D4F00D20F88 /* MicrosoftLogo.png in Resources */,
@@ -417,6 +434,7 @@
 				AA06CD0D1E60977E0004A9A9 /* DAO.m in Sources */,
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
+				AA06CD121E64C5160004A9A9 /* InsertVC.m in Sources */,
 				9E62FF261E4A33F1002D55B8 /* ProductVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
