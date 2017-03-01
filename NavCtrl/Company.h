@@ -7,6 +7,7 @@
 @property (nonatomic, retain) NSString *logo;
 @property (nonatomic, retain) NSMutableArray *products;
 
-- (instancetype) initWithName: (NSString *)name;
+- (instancetype) initWithName:(NSString *)name;
+- (instancetype) initWithNewCompanyName:(NSString *)name;
 
 @end

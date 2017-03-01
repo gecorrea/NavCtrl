@@ -10,6 +10,8 @@
 
 @interface InsertVC ()
 
+@property (nonatomic, retain) DAO *dataManager;
+
 @end
 
 @implementation InsertVC
@@ -17,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.dataManager = [DAO sharedInstance];
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveInfo)];
     self.navigationItem.rightBarButtonItem = saveButton;
     
@@ -24,20 +27,40 @@
     self.insertURL.textAlignment = NSTextAlignmentCenter;
     self.insertImageURL.textAlignment = NSTextAlignmentCenter;
     self.insertName.placeholder = @"Insert Name";
-    self.insertImageURL.placeholder = @"Insert Image URL";
     if ([self.title isEqualToString:@"Add Product"]) {
+        self.insertImageURL.placeholder = @"Insert Image URL";
         self.insertURL.placeholder = @"Insert URL";
+        self.isCompany = NO;
     }
     else {
+        [self.insertImageURL isHidden];
         [self.insertURL isHidden];
+        self.isCompany = YES;
     }
-    self.name = self.insertName.text;
-    self.imageURL = self.insertImageURL.text;
-    self.url = self.insertURL.text;
 }
 
 - (void) saveInfo {
-    
+    if(self.isCompany == YES){
+//        for (Company *company in self.dataManager.companyList) {
+//            if([company.name isEqualToString:self.name]) {
+//                [self showSimpleAlert];
+//                break;
+//            }
+//        }
+            [self.dataManager addName:self.insertName.text andImageURL:self.insertImageURL.text andURL:self.insertURL.text isCompany:self.isCompany forCurrentCompany:nil];
+    }
+    else {
+//        for (Product *product in self.dataManager.products) {
+//            if([product.name isEqualToString:self.name]) {
+//                [self showSimpleAlert];
+//                break;
+//            }
+//            else {
+                [self.dataManager addName:self.insertName.text andImageURL:self.insertImageURL.text andURL:self.insertURL.text isCompany:self.isCompany forCurrentCompany:self.currentCompany];
+//            }
+//        }
+    }
+    [self.navigationController popViewControllerAnimated:true];
 }
 
 // Hides keyboard when tap out of text field.
@@ -48,6 +71,24 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showSimpleAlert {
+    NSString *title = NSLocalizedString(@"ERROR", nil);
+    NSString *message = NSLocalizedString(@"Company or product was not added because it already exist.", nil);
+    NSString *cancelButtonTitle = NSLocalizedString(@"OK", nil);
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    // Create the action.
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"The simple alert's cancel action occured.");
+    }];
+    
+    // Add the action.
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 /*

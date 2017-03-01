@@ -32,6 +32,10 @@
     self.title = @"Mobile device makers";
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 // Allow toggling of edit mode for CompanyVC.
 - (void)toggleEditMode {
     if (self.tableView.isEditing) {
@@ -94,8 +98,7 @@
 }
 
 // Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
  // Return NO if you do not want the specified item to be editable.
  return YES;
 }
@@ -134,8 +137,9 @@
     self.productViewController = [[ProductVC alloc]init];
     self.company = self.dataManager.companyList[indexPath.row];
     self.productViewController.title = self.company.name;
-    Company *currentCompany = self.dataManager.companyList[indexPath.row];
-    self.productViewController.products = currentCompany.products;
+    self.currentCompany = self.dataManager.companyList[indexPath.row];
+    self.productViewController.currentCompany = self.currentCompany;
+    self.productViewController.products = self.currentCompany.products;
     
     [self.navigationController
      pushViewController:self.productViewController

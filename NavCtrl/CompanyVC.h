@@ -12,10 +12,11 @@
 #import "DAO.h"
 #import "InsertVC.h"
 
-@interface CompanyVC : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface CompanyVC : UIViewController<UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) Company *company;
+@property (nonatomic, retain) Company *currentCompany;
 @property (nonatomic, retain) ProductVC *productViewController;
 @property (nonatomic, retain) InsertVC *insertViewController;
 

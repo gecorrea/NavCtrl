@@ -33,6 +33,7 @@
     else {
         self.insertViewController = [[InsertVC alloc] init];
         self.insertViewController.title = @"Add Product";
+        self.insertViewController.currentCompany = self.currentCompany;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
         [self.navigationController
          pushViewController:self.insertViewController
@@ -52,8 +53,8 @@
 //}
 
 - (void)viewWillAppear:(BOOL)animated {
-    
-    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+//    [super viewWillAppear:animated];
 }
 
 

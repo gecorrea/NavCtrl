@@ -14,8 +14,7 @@
 @property (nonatomic, retain) IBOutlet UITextField *insertName;
 @property (nonatomic, retain) IBOutlet UITextField *insertImageURL;
 @property (nonatomic, retain) IBOutlet UITextField *insertURL;
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *url;
-@property (nonatomic, retain) NSString *imageURL;
+@property (nonatomic, retain) Company *currentCompany;
+@property (nonatomic) BOOL isCompany;
 
 @end

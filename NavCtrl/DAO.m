@@ -50,8 +50,20 @@
     samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
 }
 
-- (void) addName:(NSString *) name andURL:(NSString *) url andImageURL:(NSString *) imageURL isCompany:(BOOL) iscomp  {
+- (void)addName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany {
+    if(isCompany == YES) {
+        Company *newCompany = [[Company alloc] initWithNewCompanyName:name];
+        [self.companyList addObject:newCompany];
+    }
+    else {
+        Product *newProduct = [[Product alloc] initWithNewProductName:name andURL:url];
+        //[self.products addObject:newProduct];
+        [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
+        
+    }
 }
+
+
 
 //- (void)dealloc {
 //    // Should never be called, but just here for clarity really.
