@@ -57,10 +57,24 @@
     }
     else {
         Product *newProduct = [[Product alloc] initWithNewProductName:name andURL:url];
-        //[self.products addObject:newProduct];
         [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
         
     }
+}
+
+- (void)editName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct {
+    if(isCompany == YES) {
+        Company *companyToEdit = [self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]];
+        companyToEdit.name = name;
+        companyToEdit.logo = imageURL;
+    }
+    else {
+        Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[self.products indexOfObject:currentProduct]];
+        productToEdit.name = name;
+        productToEdit.image = imageURL;
+        productToEdit.url = url;
+    }
+    
 }
 
 

@@ -44,6 +44,7 @@
     }
     else {
         [self.tableView setEditing:YES animated:YES];
+        [self.tableView setAllowsSelectionDuringEditing:true];
         self.navigationItem.leftBarButtonItem.title = @"Done";
     }
 }
@@ -55,7 +56,7 @@
     }
     else {
         self.insertViewController = [[InsertVC alloc] init];
-        self.insertViewController.title = @"Add Company";
+        self.insertViewController.title = @"New Company";
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
         [self.navigationController
          pushViewController:self.insertViewController
@@ -134,16 +135,29 @@
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    self.productViewController = [[ProductVC alloc]init];
-    self.company = self.dataManager.companyList[indexPath.row];
-    self.productViewController.title = self.company.name;
-    self.currentCompany = self.dataManager.companyList[indexPath.row];
-    self.productViewController.currentCompany = self.currentCompany;
-    self.productViewController.products = self.currentCompany.products;
-    
-    [self.navigationController
-     pushViewController:self.productViewController
-     animated:YES];
+    if(self.tableView.isEditing == false) {
+        self.productViewController = [[ProductVC alloc]init];
+        self.company = self.dataManager.companyList[indexPath.row];
+        NSString *title = [[NSString alloc] init];
+        title = [self.company.name stringByAppendingString:@" Products"];
+        self.productViewController.title = title;
+        self.currentCompany = self.dataManager.companyList[indexPath.row];
+        self.productViewController.currentCompany = self.currentCompany;
+        self.productViewController.products = self.currentCompany.products;
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
+        [self.navigationController pushViewController:self.productViewController animated:YES];
+    }
+    else {
+        self.editViewController = [[EditVC alloc] init];
+        self.editViewController.title = @"Edit Company";
+        self.currentCompany = self.dataManager.companyList[indexPath.row];
+        self.editViewController.currentCompany = self.currentCompany;
+        self.editViewController.name = self.currentCompany.name;
+        self.editViewController.imgeURL = self.currentCompany.logo;
+        [self.editViewController.editURL isHidden];
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
+        [self.navigationController pushViewController:self.editViewController animated:YES];
+    }
 }
 
 /*

@@ -28,6 +28,8 @@
 		AA06CD0D1E60977E0004A9A9 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = AA06CD0C1E60977E0004A9A9 /* DAO.m */; };
 		AA06CD121E64C5160004A9A9 /* InsertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA06CD101E64C5160004A9A9 /* InsertVC.m */; };
 		AA06CD131E64C5160004A9A9 /* InsertVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA06CD111E64C5160004A9A9 /* InsertVC.xib */; };
+		AA0B96271E687993001A0339 /* EditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0B96251E687993001A0339 /* EditVC.m */; };
+		AA0B96281E687993001A0339 /* EditVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0B96261E687993001A0339 /* EditVC.xib */; };
 		AA5A38CF1E6734FB009037ED /* defaultCompanyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AA5A38CE1E6734FB009037ED /* defaultCompanyLogo.png */; };
 		AAB7528A1E5E060D00BE7D45 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB752891E5E060D00BE7D45 /* Company.m */; };
 		AAB7528D1E5E062500BE7D45 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB7528C1E5E062500BE7D45 /* Product.m */; };
@@ -92,6 +94,9 @@
 		AA06CD0F1E64C5160004A9A9 /* InsertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertVC.h; sourceTree = "<group>"; };
 		AA06CD101E64C5160004A9A9 /* InsertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertVC.m; sourceTree = "<group>"; };
 		AA06CD111E64C5160004A9A9 /* InsertVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InsertVC.xib; sourceTree = "<group>"; };
+		AA0B96241E687993001A0339 /* EditVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditVC.h; sourceTree = "<group>"; };
+		AA0B96251E687993001A0339 /* EditVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditVC.m; sourceTree = "<group>"; };
+		AA0B96261E687993001A0339 /* EditVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditVC.xib; sourceTree = "<group>"; };
 		AA5A38CE1E6734FB009037ED /* defaultCompanyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultCompanyLogo.png; sourceTree = "<group>"; };
 		AAB752881E5E060D00BE7D45 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		AAB752891E5E060D00BE7D45 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
@@ -210,6 +215,7 @@
 				483796CD1BCBF7EB0062D5AB /* ProductViewController */,
 				AACFEF321E564D8C00D20F88 /* DetailViewController */,
 				AA06CD141E64C52C0004A9A9 /* InsertViewController */,
+				AA0B96231E68795B001A0339 /* EditViewController */,
 				AA3F350F1E5F49AA00499A96 /* Company Class */,
 				AA3F35101E5F49D200499A96 /* Product Class */,
 				AA06CD0E1E6097A60004A9A9 /* DAO */,
@@ -285,6 +291,16 @@
 				AA06CD111E64C5160004A9A9 /* InsertVC.xib */,
 			);
 			name = InsertViewController;
+			sourceTree = "<group>";
+		};
+		AA0B96231E68795B001A0339 /* EditViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AA0B96241E687993001A0339 /* EditVC.h */,
+				AA0B96251E687993001A0339 /* EditVC.m */,
+				AA0B96261E687993001A0339 /* EditVC.xib */,
+			);
+			name = EditViewController;
 			sourceTree = "<group>";
 		};
 		AA3F350F1E5F49AA00499A96 /* Company Class */ = {
@@ -417,6 +433,7 @@
 				AACFEF231E56208700D20F88 /* Galaxy S.png in Resources */,
 				AACFEF191E561CA400D20F88 /* Lumia 950.png in Resources */,
 				48A656C718163BF200746D36 /* Images.xcassets in Resources */,
+				AA0B96281E687993001A0339 /* EditVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +460,7 @@
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
 				AA06CD121E64C5160004A9A9 /* InsertVC.m in Sources */,
+				AA0B96271E687993001A0339 /* EditVC.m in Sources */,
 				9E62FF261E4A33F1002D55B8 /* ProductVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

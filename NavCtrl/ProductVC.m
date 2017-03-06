@@ -11,6 +11,7 @@
 @interface ProductVC ()
 
 @property (nonatomic, retain) DAO *dataManager;
+@property (nonatomic, retain) UIBarButtonItem *editButton;
 
 @end
 
@@ -19,8 +20,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
-    self.navigationItem.rightBarButtonItem = addButton;
-
+    self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
+    self.navigationItem.rightBarButtonItems = @[addButton, self.editButton];
     // Do any additional setup after loading the view from its nib.
     self.dataManager = [DAO sharedInstance];
 }
@@ -35,22 +36,21 @@
         self.insertViewController.title = @"Add Product";
         self.insertViewController.currentCompany = self.currentCompany;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController
-         pushViewController:self.insertViewController
-         animated:YES];
+        [self.navigationController pushViewController:self.insertViewController animated:YES];
     }
 }
 
-//- (void)toggleEditMode {
-//    if (self.tableView.isEditing) {
-//        [self.tableView setEditing:NO animated:YES];
-//        self.navigationItem.rightBarButtonItem.title = @"Edit";
-//    }
-//    else {
-//        [self.tableView setEditing:YES animated:YES];
-//        self.navigationItem.rightBarButtonItem.title = @"Done";
-//    }
-//}
+- (void)toggleEditMode {
+    if (self.tableView.isEditing) {
+        [self.tableView setEditing:NO animated:YES];
+        [[self.navigationItem.rightBarButtonItems objectAtIndex:[self.navigationItem.rightBarButtonItems indexOfObject:self.editButton]] setTitle:@"Edit"];
+    }
+    else {
+        [self.tableView setEditing:YES animated:YES];
+        [self.tableView setAllowsSelectionDuringEditing:true];
+        [[self.navigationItem.rightBarButtonItems objectAtIndex:[self.navigationItem.rightBarButtonItems indexOfObject:self.editButton]] setTitle:@"Done"];
+    }
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
@@ -131,15 +131,27 @@ return YES;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here, for example:
     // Create the next view controller.
-    DetailVC *detailViewController = [[DetailVC alloc] initWithNibName:@"DetailVC" bundle:nil];
- 
-    // Pass the selected object to the new view controller.
-    self.product = [self.products objectAtIndex:[indexPath row]];
-    NSURL *url = [NSURL URLWithString:self.product.url];
-    detailViewController.url = url;
-     
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    if(self.tableView.isEditing == false) {
+        DetailVC *detailViewController = [[DetailVC alloc] initWithNibName:@"DetailVC" bundle:nil];
+        // Pass the selected object to the new view controller.
+        self.product = [self.products objectAtIndex:[indexPath row]];
+        NSURL *url = [NSURL URLWithString:self.product.url];
+        detailViewController.url = url;
+        // Push the view controller.
+        [self.navigationController pushViewController:detailViewController animated:YES];
+    }
+    else {
+        self.editViewController = [[EditVC alloc] init];
+        self.editViewController.title = @"Edit Product";
+        self.product = [self.products objectAtIndex:[indexPath row]];
+        self.editViewController.currentCompany = self.currentCompany;
+        self.editViewController.currentProduct = self.product;
+        self.editViewController.name = self.product.name;
+        self.editViewController.imgeURL = self.product.image;
+        self.editViewController.url = self.product.url;
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
+        [self.navigationController pushViewController:self.editViewController animated:YES];
+    }
 }
 
 
