@@ -37,6 +37,10 @@
         [self.insertURL isHidden];
         self.isCompany = YES;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void) saveInfo {
@@ -63,14 +67,41 @@
     [self.navigationController popViewControllerAnimated:true];
 }
 
-// Hides keyboard when tap out of text field.
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)keyboardWillShow:(NSNotification*)aNotification {
+    [UIView animateWithDuration:0.25 animations:^
+     {
+         CGRect newFrame = [self.view frame];
+         newFrame.origin.y -= 50; // tweak here to adjust the moving position
+         [self.view setFrame:newFrame];
+         
+     }completion:^(BOOL finished)
+     {
+         
+     }];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    [UIView animateWithDuration:0.25 animations:^
+     {
+         CGRect newFrame = [self.view frame];
+         newFrame.origin.y += 50; // tweak here to adjust the moving position
+         [self.view setFrame:newFrame];
+         
+     }completion:^(BOOL finished)
+     {
+         
+     }];
+    
+}
+
+// Hides keyboard when tap out of text field.
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 - (void)showSimpleAlert {

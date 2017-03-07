@@ -37,6 +37,10 @@
     else {
         self.isCompany = YES;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,6 +56,37 @@
         [self.dataManager editName:self.editName.text andImageURL:self.editImageURL.text andURL:self.editURL.text isCompany:self.isCompany forCurrentCompany:self.currentCompany forCurrentProduct:self.currentProduct];
     }
     [self.navigationController popViewControllerAnimated:true];
+}
+
+- (void)keyboardWillShow:(NSNotification*)aNotification {
+    [UIView animateWithDuration:0.25 animations:^
+     {
+         CGRect newFrame = [self.view frame];
+         newFrame.origin.y -= 50; // tweak here to adjust the moving position
+         [self.view setFrame:newFrame];
+         
+     }completion:^(BOOL finished)
+     {
+         
+     }];
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+    [UIView animateWithDuration:0.25 animations:^
+     {
+         CGRect newFrame = [self.view frame];
+         newFrame.origin.y += 50; // tweak here to adjust the moving position
+         [self.view setFrame:newFrame];
+         
+     }completion:^(BOOL finished)
+     {
+         
+     }];
+    
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:YES];
 }
 
 /*

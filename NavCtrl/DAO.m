@@ -69,7 +69,7 @@
         companyToEdit.logo = imageURL;
     }
     else {
-        Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[self.products indexOfObject:currentProduct]];
+        Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] indexOfObject:currentProduct]];
         productToEdit.name = name;
         productToEdit.image = imageURL;
         productToEdit.url = url;
