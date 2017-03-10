@@ -4,10 +4,12 @@
 @interface Company : NSObject
 
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *logo;
+@property (nonatomic, retain) NSString *logoURLString;
+@property (nonatomic, retain) NSString *price;
 @property (nonatomic, retain) NSMutableArray *products;
+@property (nonatomic, retain) NSString *ticker;
 
-- (instancetype) initWithName:(NSString *)name;
+- (instancetype) initWithName:(NSString *)name andLogoURLString:(NSString *)logoURLString;
 - (instancetype) initWithNewCompanyName:(NSString *)name;
 
 @end

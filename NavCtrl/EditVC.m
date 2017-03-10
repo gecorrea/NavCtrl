@@ -62,7 +62,7 @@
     [UIView animateWithDuration:0.25 animations:^
      {
          CGRect newFrame = [self.view frame];
-         newFrame.origin.y -= 50; // tweak here to adjust the moving position
+         newFrame.origin.y = -50; // tweak here to adjust the moving position
          [self.view setFrame:newFrame];
          
      }completion:^(BOOL finished)
@@ -75,7 +75,7 @@
     [UIView animateWithDuration:0.25 animations:^
      {
          CGRect newFrame = [self.view frame];
-         newFrame.origin.y += 50; // tweak here to adjust the moving position
+         newFrame.origin.y = 0; // tweak here to adjust the moving position
          [self.view setFrame:newFrame];
          
      }completion:^(BOOL finished)

@@ -27,7 +27,7 @@
     self.navigationItem.rightBarButtonItem = insertButton;
     
     self.dataManager = [DAO sharedInstance];
-    
+    self.dataManager.delegate = self;
     // Title of CompanyVC
     self.title = @"Mobile device makers";
 }
@@ -87,14 +87,18 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
     self.company = self.dataManager.companyList[indexPath.row];
     cell.textLabel.text = self.company.name;
-    cell.imageView.image = [UIImage imageNamed:self.company.logo];
+    cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.company.logoURLString]]];
+    cell.detailTextLabel.text = self.company.price;
     
+    
+    
+//    imageNamed:self.company.logo
     return cell;
 }
 
@@ -153,11 +157,15 @@
         self.currentCompany = self.dataManager.companyList[indexPath.row];
         self.editViewController.currentCompany = self.currentCompany;
         self.editViewController.name = self.currentCompany.name;
-        self.editViewController.imgeURL = self.currentCompany.logo;
+        self.editViewController.imgeURL = self.currentCompany.logoURLString;
         [self.editViewController.editURL isHidden];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
         [self.navigationController pushViewController:self.editViewController animated:YES];
     }
+}
+
+- (void)receivedPrices {
+    [self.tableView reloadData];
 }
 
 /*

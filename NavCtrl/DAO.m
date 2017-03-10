@@ -16,16 +16,17 @@
 - (id)init {
     if (self = [super init]) {
         [self loadData];
+        [self getCompanyData];
     }
     return self;
 }
 
 - (void) loadData {
     // Create companies
-    Company *apple = [[Company alloc] initWithName:@"Apple"];
-    Company *google = [[Company alloc] initWithName:@"Google"];
-    Company *microsoft = [[Company alloc] initWithName:@"Microsoft"];
-    Company *samsung = [[Company alloc] initWithName:@"Samsung"];
+    Company *apple = [[Company alloc] initWithName:@"Apple" andLogoURLString:@"https://cdn1.iconfinder.com/data/icons/company-identity/100/apple-classic-logo-vector-128.png"];
+    Company *google = [[Company alloc] initWithName:@"Google" andLogoURLString:@"https://cdn1.iconfinder.com/data/icons/company-identity/100/new-google-favicon-128.png"];
+    Company *microsoft = [[Company alloc] initWithName:@"Microsoft" andLogoURLString:@"https://cdn2.iconfinder.com/data/icons/social-icons-color/512/windows-128.png"];
+    Company *samsung = [[Company alloc] initWithName:@"Samsung" andLogoURLString:@"https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/samsung-128.png"];
     
     // Create products
     Product *appleWatch = [[Product alloc] initWithName:@"Apple Watch" andURL:@"http://www.apple.com/shop/buy-watch/apple-watch/silver-aluminum-pearl-woven-nylon?preSelect=false&product=MNPK2LL/A&step=detail#"];
@@ -66,7 +67,7 @@
     if(isCompany == YES) {
         Company *companyToEdit = [self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]];
         companyToEdit.name = name;
-        companyToEdit.logo = imageURL;
+        companyToEdit.logoURLString = imageURL;
     }
     else {
         Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] indexOfObject:currentProduct]];
@@ -79,10 +80,55 @@
 
 
 
+- (void)getCompanyData {
+    NSURL *url = [NSURL URLWithString:@"http://finance.yahoo.com/d/quotes.csv?s=AAPL+GOOG+MSFT+SSNLF&f=na"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
+    request.HTTPMethod = @"GET";
+    
+    [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if(error != nil){
+            
+        }
+        else {
+            NSString *dataString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            NSString *separators = @"\n,";
+            NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:separators];
+            dataString = [dataString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+            NSArray *tempArray = [dataString componentsSeparatedByCharactersInSet:set];
+            NSMutableArray *dataArray = [[NSMutableArray alloc] initWithArray:tempArray];
+            [dataArray removeLastObject];
+            NSLog(@"%@", dataArray);
+            
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                int index = 0;
+                for(int i=0; i<dataArray.count; i += 2) {
+                    Company *curCompany = self.companyList[index];
+                    curCompany.name = dataArray[i];
+                    if([dataArray[i+1] isEqualToString:@"N/A"]) {
+                        curCompany.price = dataArray[i+1];
+                    }
+                    else {
+                        curCompany.price = @"$";
+                        curCompany.price = [curCompany.price stringByAppendingString:dataArray[i+1]];
+                    }
+                    index++;
+                }
+                [self.delegate receivedPrices];
+                
+            });
+        }
+    }] resume];
+}
+
+    
+
 //- (void)dealloc {
 //    // Should never be called, but just here for clarity really.
 //    [self.someProperty release];
 //    [super dealloc];
 //}
-
+    
+    
 @end

@@ -13,7 +13,7 @@
 #import "InsertVC.h"
 #import "EditVC.h"
 
-@interface CompanyVC : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface CompanyVC : UIViewController<UITableViewDelegate, UITableViewDataSource, CompanyDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) Company *company;
