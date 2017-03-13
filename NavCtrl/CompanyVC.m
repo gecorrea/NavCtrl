@@ -168,7 +168,7 @@
     }
 }
 
-- (void)receivedPrices {
+- (void)receivedNamesAndPrices {
     [self.tableView reloadData];
 }
 

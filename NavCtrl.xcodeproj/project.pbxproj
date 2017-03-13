@@ -30,6 +30,7 @@
 		AA06CD131E64C5160004A9A9 /* InsertVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA06CD111E64C5160004A9A9 /* InsertVC.xib */; };
 		AA0B96271E687993001A0339 /* EditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AA0B96251E687993001A0339 /* EditVC.m */; };
 		AA0B96281E687993001A0339 /* EditVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0B96261E687993001A0339 /* EditVC.xib */; };
+		AA0B964E1E76EB64001A0339 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA0B964C1E76EB64001A0339 /* Model.xcdatamodeld */; };
 		AA5A38CF1E6734FB009037ED /* defaultCompanyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = AA5A38CE1E6734FB009037ED /* defaultCompanyLogo.png */; };
 		AAB7528A1E5E060D00BE7D45 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB752891E5E060D00BE7D45 /* Company.m */; };
 		AAB7528D1E5E062500BE7D45 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB7528C1E5E062500BE7D45 /* Product.m */; };
@@ -97,6 +98,7 @@
 		AA0B96241E687993001A0339 /* EditVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditVC.h; sourceTree = "<group>"; };
 		AA0B96251E687993001A0339 /* EditVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditVC.m; sourceTree = "<group>"; };
 		AA0B96261E687993001A0339 /* EditVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditVC.xib; sourceTree = "<group>"; };
+		AA0B964D1E76EB64001A0339 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		AA5A38CE1E6734FB009037ED /* defaultCompanyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultCompanyLogo.png; sourceTree = "<group>"; };
 		AAB752881E5E060D00BE7D45 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		AAB752891E5E060D00BE7D45 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 			children = (
 				AA06CD0B1E60977E0004A9A9 /* DAO.h */,
 				AA06CD0C1E60977E0004A9A9 /* DAO.m */,
+				AA0B964C1E76EB64001A0339 /* Model.xcdatamodeld */,
 			);
 			name = DAO;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				48A656C118163BF200746D36 /* main.m in Sources */,
 				AA06CD121E64C5160004A9A9 /* InsertVC.m in Sources */,
 				AA0B96271E687993001A0339 /* EditVC.m in Sources */,
+				AA0B964E1E76EB64001A0339 /* Model.xcdatamodeld in Sources */,
 				9E62FF261E4A33F1002D55B8 /* ProductVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -691,6 +695,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AA0B964C1E76EB64001A0339 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AA0B964D1E76EB64001A0339 /* Model.xcdatamodel */,
+			);
+			currentVersion = AA0B964D1E76EB64001A0339 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 48A656A918163BF200746D36 /* Project object */;
 }

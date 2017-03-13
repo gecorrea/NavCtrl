@@ -15,7 +15,9 @@
 
 - (id)init {
     if (self = [super init]) {
+        //if app first run
         [self loadData];
+        //else fetch from core data
         [self getCompanyData];
     }
     return self;
@@ -49,6 +51,8 @@
     google.products = [[NSMutableArray alloc] initWithObjects:pixelC, daydreamView, pixel, nil];
     microsoft.products = [[NSMutableArray alloc] initWithObjects:holoLens, lumia950, surfacePro4, nil];
     samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
+    
+    //create managedCompanyList based off of company list
 }
 
 - (void)addName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany {
@@ -80,9 +84,13 @@
     
 }
 
-
-
 - (void)getCompanyData {
+    NSString *urlString = [self getURLString];
+    NSURL *url = [NSURL URLWithString:urlString];
+    [self setCompanyNamesAndPricesWithURL:url];
+}
+
+- (NSString *)getURLString {
     NSString *urlString = [[NSString alloc] initWithString:@"http://finance.yahoo.com/d/quotes.csv?s="];
     for (int i=0; i<self.companyList.count; i++) {
         Company *currentCompany = self.companyList[i];
@@ -96,7 +104,10 @@
         }
         
     }
-    NSURL *url = [NSURL URLWithString:urlString];
+    return urlString;
+}
+
+- (void)setCompanyNamesAndPricesWithURL:(NSURL *) url {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:nil];
@@ -113,7 +124,7 @@
             NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithArray:tempArray];
             [mutableArray removeLastObject];
             NSMutableArray *dataArray = [[NSMutableArray alloc] init];
-
+            
             for (NSString *element in mutableArray) {
                 NSArray *sortingArray = [element componentsSeparatedByString:@","];
                 NSString *stringToSort = @"";
@@ -143,7 +154,7 @@
                     }
                     index++;
                 }
-                [self.delegate receivedPrices];
+                [self.delegate receivedNamesAndPrices];
                 
             });
         }

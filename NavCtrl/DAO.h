@@ -3,7 +3,7 @@
 
 @protocol CompanyDelegate <NSObject>
 
-- (void)receivedPrices;
+- (void)receivedNamesAndPrices;
 
 @end
 
