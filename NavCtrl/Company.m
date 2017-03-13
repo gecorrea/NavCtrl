@@ -2,14 +2,14 @@
 
 @implementation Company
 
-- (instancetype) initWithName:(NSString *)name andLogoURLString:(NSString *)logoURLString{
+- (instancetype) initWithStockSymbol:(NSString *)stockSymbol andLogoURLString:(NSString *)logoURLString{
     self = [super init];
     if (self) {
 //        NSData *data = [NSData dataWithContentsOfURL:url];
 //        NSArray *AResults = [[NSArray alloc] initWithContentsOfURL:url];
 //        NSString *results = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 //        NSLog(@"results: %@", data);
-        self.name = name;
+        self.stockSymbol = stockSymbol;
         self.logoURLString = logoURLString;
     }
     return self;

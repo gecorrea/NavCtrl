@@ -92,7 +92,11 @@
     
     // Configure the cell...
     self.company = self.dataManager.companyList[indexPath.row];
-    cell.textLabel.text = self.company.name;
+    NSString *cellText = self.company.name;
+    cellText = [cellText stringByAppendingString:@" (" ];
+    cellText = [cellText stringByAppendingString:self.company.stockSymbol];
+    cellText = [cellText stringByAppendingString:@")"];
+    cell.textLabel.text = cellText;
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.company.logoURLString]]];
     cell.detailTextLabel.text = self.company.price;
     

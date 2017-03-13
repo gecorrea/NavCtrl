@@ -26,14 +26,15 @@
     self.insertName.textAlignment = NSTextAlignmentCenter;
     self.insertURL.textAlignment = NSTextAlignmentCenter;
     self.insertImageURL.textAlignment = NSTextAlignmentCenter;
-    self.insertName.placeholder = @"Insert Name";
     if ([self.title isEqualToString:@"Add Product"]) {
+        self.insertName.placeholder = @"Insert Product Name";
         self.insertImageURL.placeholder = @"Insert Image URL";
         self.insertURL.placeholder = @"Insert URL";
         self.isCompany = NO;
     }
     else {
-        [self.insertImageURL isHidden];
+        self.insertName.placeholder = @"Insert Company Stock Symbol";
+        self.insertImageURL.placeholder = @"Insert Company Logo URL";
         [self.insertURL isHidden];
         self.isCompany = YES;
     }
@@ -51,7 +52,7 @@
 //                break;
 //            }
 //        }
-            [self.dataManager addName:self.insertName.text andImageURL:self.insertImageURL.text andURL:self.insertURL.text isCompany:self.isCompany forCurrentCompany:nil];
+            [self.dataManager addName:self.insertName.text andImageURL:self.insertImageURL.text andURL:nil isCompany:self.isCompany forCurrentCompany:nil];
     }
     else {
 //        for (Product *product in self.dataManager.products) {
@@ -76,7 +77,7 @@
     [UIView animateWithDuration:0.25 animations:^
      {
          CGRect newFrame = [self.view frame];
-         newFrame.origin.y -= 50; // tweak here to adjust the moving position
+         newFrame.origin.y = -50; // tweak here to adjust the moving position
          [self.view setFrame:newFrame];
          
      }completion:^(BOOL finished)
@@ -89,7 +90,7 @@
     [UIView animateWithDuration:0.25 animations:^
      {
          CGRect newFrame = [self.view frame];
-         newFrame.origin.y += 50; // tweak here to adjust the moving position
+         newFrame.origin.y = 0; // tweak here to adjust the moving position
          [self.view setFrame:newFrame];
          
      }completion:^(BOOL finished)
@@ -104,23 +105,23 @@
     [self.view endEditing:YES];
 }
 
-- (void)showSimpleAlert {
-    NSString *title = NSLocalizedString(@"ERROR", nil);
-    NSString *message = NSLocalizedString(@"Company or product was not added because it already exist.", nil);
-    NSString *cancelButtonTitle = NSLocalizedString(@"OK", nil);
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    // Create the action.
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        NSLog(@"The simple alert's cancel action occured.");
-    }];
-    
-    // Add the action.
-    [alertController addAction:cancelAction];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-}
+//- (void)showSimpleAlert {
+//    NSString *title = NSLocalizedString(@"ERROR", nil);
+//    NSString *message = NSLocalizedString(@"Company or product was not added because it already exist.", nil);
+//    NSString *cancelButtonTitle = NSLocalizedString(@"OK", nil);
+//    
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+//    
+//    // Create the action.
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+//        NSLog(@"The simple alert's cancel action occured.");
+//    }];
+//    
+//    // Add the action.
+//    [alertController addAction:cancelAction];
+//    
+//    [self presentViewController:alertController animated:YES completion:nil];
+//}
 
 /*
 #pragma mark - Navigation
