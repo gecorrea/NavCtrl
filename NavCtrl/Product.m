@@ -2,11 +2,11 @@
 
 @implementation Product
 
-- (instancetype) initWithName:(NSString *)name andURL:(NSString *)url {
+- (instancetype) initWithName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url {
     self = [super init];
     if (self) {
         self.name = name;
-        self.image = [name stringByAppendingString:@".png"];
+        self.imageURL = imageURL;
         self.url = url;
     }
     return self;
@@ -16,7 +16,7 @@
     self = [super init];
     if(self) {
         self.name = name;
-        self.image = @"defaultProductImage.png";
+        self.imageURL = @"defaultProductImage.png";
         self.url = url;
     }
     return self;

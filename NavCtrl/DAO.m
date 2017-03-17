@@ -1,13 +1,11 @@
 #import "DAO.h"
-#import <CoreData/CoreData.h>
-
-#import "ManagedCompany+CoreDataClass.h"
-#import "ManagedCompany+CoreDataProperties.h"
-#import "ManagedProduct+CoreDataClass.h"
-#import "ManagedProduct+CoreDataProperties.h"
-
 
 @implementation DAO
+
+//@dynamic name;
+//@dynamic stockSymbol;
+//@dynamic logoURL;
+//@dynamic price;
 
 
 + (instancetype)sharedInstance {
@@ -22,9 +20,19 @@
 
 - (id)init {
     if (self = [super init]) {
-        //if app first run
-        [self loadData];
-        //else fetch from core data
+        [self initializeCoreData];
+        
+        BOOL hasRan = [[NSUserDefaults standardUserDefaults]boolForKey:@"hasRun"];
+        // if app first run
+        if (!hasRan) {
+            [self loadData];
+            [[NSUserDefaults standardUserDefaults]setBool:true forKey:@"hasRun"];
+        }
+        else {
+        // else fetch from core data
+            [self loadCoreData];
+        }
+        
         [self getCompanyData];
     }
     return self;
@@ -38,18 +46,18 @@
     Company *samsung = [[Company alloc] initWithStockSymbol:@"SSNLF" andLogoURLString:@"https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/samsung-128.png"];
     
     // Create products
-    Product *appleWatch = [[Product alloc] initWithName:@"Apple Watch" andURL:@"http://www.apple.com/shop/buy-watch/apple-watch/silver-aluminum-pearl-woven-nylon?preSelect=false&product=MNPK2LL/A&step=detail#"];
-    Product *iPad = [[Product alloc] initWithName:@"iPad" andURL:@"http://www.apple.com/shop/buy-ipad/ipad-pro"];
-    Product *iPhone = [[Product alloc] initWithName:@"iPhone" andURL:@"http://www.apple.com/shop/buy-iphone/iphone-7"];
-    Product *pixelC = [[Product alloc] initWithName:@"Pixel C" andURL:@"https://store.google.com/product/pixel_c"];
-    Product *daydreamView = [[Product alloc] initWithName:@"Daydream View" andURL:@"https://store.google.com/product/daydream_view"];
-    Product *pixel = [[Product alloc] initWithName:@"Pixel" andURL:@"https://store.google.com/product/pixel_phone"];
-    Product *holoLens = [[Product alloc] initWithName:@"HoloLens" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-HoloLens-Development-Edition/productID.5061263800"];
-    Product *lumia950 = [[Product alloc] initWithName:@"Lumia 950" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Lumia-950--Unlocked/productID.326602600"];
-    Product *surfacePro4 = [[Product alloc] initWithName:@"Surface Pro 4" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Surface-Pro-4/productID.5072641000"];
-    Product *galaxyNote = [[Product alloc] initWithName:@"Galaxy Note" andURL:@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/"];
-    Product *galaxyS = [[Product alloc] initWithName:@"Galaxy S" andURL:@"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/"];
-    Product *galaxyTab = [[Product alloc] initWithName:@"Galaxy Tab" andURL:@"http://www.samsung.com/us/mobile/tablets/"];
+    Product *appleWatch = [[Product alloc] initWithName:@"Apple Watch" andImageURL:@"https://store.storeimages.cdn-apple.com/4974/as-images.apple.com/is/image/AppleInc/aos/published/images/2/up/2up/alu/2up-alu-silver-nylon-pearl-select_GEO_US?wid=470&hei=556&fmt=jpeg&qlt=95&op_sharpen=0&resMode=bicub&op_usm=0.5,0.5,0,0&iccEmbed=0&layer=comp&.v=1476315575611" andURL:@"http://www.apple.com/shop/buy-watch/apple-watch/silver-aluminum-pearl-woven-nylon?preSelect=false&product=MNPK2LL/A&step=detail#"];
+    Product *iPad = [[Product alloc] initWithName:@"iPad" andImageURL:@"https://store.storeimages.cdn-apple.com/4974/as-images.apple.com/is/image/AppleInc/aos/published/images/i/pa/ipad/pro/ipad-pro-201603-gallery3_GEO_US?wid=2000&amp;hei=1536&amp;fmt=jpeg&amp;qlt=95&amp;op_sharpen=0&amp;resMode=bicub&amp;op_usm=0.5,0.5,0,0&amp;iccEmbed=0&amp;layer=comp&amp;.v=1473455607405" andURL:@"http://www.apple.com/shop/buy-ipad/ipad-pro"];
+    Product *iPhone = [[Product alloc] initWithName:@"iPhone" andImageURL:@"https://store.storeimages.cdn-apple.com/4974/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone7/select/iphone7-select-2016?wid=222&hei=305&fmt=png-alpha&qlt=95&.v=1471892660314" andURL:@"http://www.apple.com/shop/buy-iphone/iphone-7"];
+    Product *pixelC = [[Product alloc] initWithName:@"Pixel C" andImageURL:@"https://lh3.googleusercontent.com/45xc3JbXBkh_Bw81rwFLYLZlx9MPcfgicXPasuv9eS1Lhk17MpRTuT6DFFdkHdzjhg" andURL:@"https://store.google.com/product/pixel_c"];
+    Product *daydreamView = [[Product alloc] initWithName:@"Daydream View" andImageURL:@"https://lh3.googleusercontent.com/FZm8MihgUmIlp-ru-g-KnvIIGt_BZxA6maadXuO-PF_Rx_2h3rMDROlXk6oIxuzXIqs" andURL:@"https://store.google.com/product/daydream_view"];
+    Product *pixel = [[Product alloc] initWithName:@"Pixel" andImageURL:@"https://lh3.googleusercontent.com/PIVpB9f0-2sMc44exUz83yArl7EFuAH33_YkJrAbgT4S2upNYu_fMTj6txOv3WFOQEc" andURL:@"https://store.google.com/product/pixel_phone"];
+    Product *holoLens = [[Product alloc] initWithName:@"HoloLens" andImageURL:@"https://compass-ssl.surface.com/assets/f5/2a/f52a1f76-0640-4a37-a650-51b0902f8427.jpg?n=Buy_Panel_1920.jpg" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-HoloLens-Development-Edition/productID.5061263800"];
+    Product *lumia950 = [[Product alloc] initWithName:@"Lumia 950" andImageURL:@"https://compass-ssl.microsoft.com/assets/f2/2f/f22f364c-2bef-43ac-a420-1343b72cd437.jpg?n=hero-desktop.jpg" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Lumia-950--Unlocked/productID.326602600"];
+    Product *surfacePro4 = [[Product alloc] initWithName:@"Surface Pro 4" andImageURL:@"https://dri1.img.digitalrivercontent.net/Storefront/Company/msintl/images/English/en-INTL-Surface-Pro4-Refresh-SU3-00001/en-INTL-XL-Surface-Pro4-Refresh-SU3-00001-RM1-mnco.jpg" andURL:@"https://www.microsoftstore.com/store/msusa/en_US/pdp/Microsoft-Surface-Pro-4/productID.5072641000"];
+    Product *galaxyNote = [[Product alloc] initWithName:@"Galaxy Note" andImageURL:@"http://s7d2.scene7.com/is/image/SamsungUS/Pdpkeyfeature-sm-n920rzkeusc-600x600-C1-062016?$product-details-jpg$" andURL:@"http://www.samsung.com/us/mobile/phones/galaxy-note/s/_/n-10+11+hv1rp+zq1xb/"];
+    Product *galaxyS = [[Product alloc] initWithName:@"Galaxy S" andImageURL:@"http://drop.ndtv.com/TECH/product_database/images/48201652044PM_635_samsung_galaxy_s.jpeg" andURL:@"http://www.samsung.com/us/mobile/phones/all-phones/s/galaxy_s/_/n-10+11+hv1rp+zq1xa/"];
+    Product *galaxyTab = [[Product alloc] initWithName:@"Galaxy Tab" andImageURL:@"http://thegioiipad.tk/wp-content/uploads/2016/06/12.png" andURL:@"http://www.samsung.com/us/mobile/tablets/"];
     
     self.companyList = [[NSMutableArray alloc] initWithObjects:apple, google, microsoft, samsung, nil];
     
@@ -61,12 +69,25 @@
     
     // create managedCompanyList based off of company list
     for (Company *company in self.companyList) {
-        ManagedCompany *managedCompany = [NSEntityDescription entityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
+//        ManagedCompany *managedCompany = [NSEntityDescription entityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
+        ManagedCompany *managedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
+        managedCompany.name = company.name;
+        managedCompany.stockSymbol = company.stockSymbol;
+        managedCompany.logoURL = company.logoURLString;
+        managedCompany.price = company.price;
+//        [managedCompany setValue:company.name forKey:@"name"];
+//        [managedCompany setValue:company.stockSymbol forKey:@"stockSymbol"];
+//        [managedCompany setValue:company.logoURLString forKey:@"logoURL"];
+//        [managedCompany setValue:company.price forKey:@"price"];
         
+        for (Product *product in company.products) {
+//            ManagedProduct *managedProduct = [NSEntityDescription entityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
+            ManagedProduct *managedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
+            [managedProduct setValue:product.name forKey:@"name"];
+            [managedProduct setValue:product.imageURL forKey:@"imageURL"];
+            [managedProduct setValue:product.url forKey:@"url"];
+        }
     }
-    
-    
-    
 }
 
 - (void)addName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany {
@@ -76,7 +97,7 @@
         [self getCompanyData];
     }
     else {
-        Product *newProduct = [[Product alloc] initWithNewProductName:name andURL:url];
+        Product *newProduct = [[Product alloc] initWithName:name andImageURL:imageURL andURL:url];
         [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
         
     }
@@ -92,7 +113,7 @@
     else {
         Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] indexOfObject:currentProduct]];
         productToEdit.name = name;
-        productToEdit.image = imageURL;
+        productToEdit.imageURL = imageURL;
         productToEdit.url = url;
     }
     
@@ -199,7 +220,24 @@
     });
 }
 
+- (void)saveCoreData {
+    NSError *error = nil;
+    if ([[self managedObjectContext] save:&error] == NO) {
+        NSAssert(NO, @"Error saving context: %@\n%@", [error localizedDescription], [error userInfo]);
+    }
+}
 
+- (void)loadCoreData {
+//    NSManagedObjectContext *moc = …;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ManagedCompany"];
+    
+    NSError *error = nil;
+    NSArray *companies = [self.managedObjectContext executeFetchRequest:request error:&error];
+    if (!companies) {
+        NSLog(@"Error fetching Managed Company objects: %@\n%@", [error localizedDescription], [error userInfo]);
+        abort();
+    }
+}
 
 
     

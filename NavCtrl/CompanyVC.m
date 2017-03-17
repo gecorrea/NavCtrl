@@ -98,11 +98,10 @@
     cellText = [cellText stringByAppendingString:@")"];
     cell.textLabel.text = cellText;
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.company.logoURLString]]];
+    [cell.imageView sizeToFit];
+    [cell.imageView clipsToBounds];
     cell.detailTextLabel.text = self.company.price;
     
-    
-    
-//    imageNamed:self.company.logo
     return cell;
 }
 

@@ -44,29 +44,46 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void) saveInfo {
-    if(self.isCompany == YES){
-//        for (Company *company in self.dataManager.companyList) {
-//            if([company.name isEqualToString:self.name]) {
-//                [self showSimpleAlert];
-//                break;
-//            }
-//        }
-            [self.dataManager addName:self.insertName.text andImageURL:self.insertImageURL.text andURL:nil isCompany:self.isCompany forCurrentCompany:nil];
-    }
-    else {
-//        for (Product *product in self.dataManager.products) {
-//            if([product.name isEqualToString:self.name]) {
-//                [self showSimpleAlert];
-//                break;
-//            }
-//            else {
-                [self.dataManager addName:self.insertName.text andImageURL:self.insertImageURL.text andURL:self.insertURL.text isCompany:self.isCompany forCurrentCompany:self.currentCompany];
-//            }
-//        }
-    }
+- (void)saveInfo {
+//    if ([self checkIfDuplicate] == false) {
+         [self.dataManager addName:self.insertName.text andImageURL:self.insertImageURL.text andURL:self.insertURL.text isCompany:self.isCompany forCurrentCompany:self.currentCompany];
+//    }
     [self.navigationController popViewControllerAnimated:true];
 }
+
+//- (BOOL)checkIfDuplicate {
+//    
+//    switch (<#expression#>) {
+//        case <#constant#>:
+//            <#statements#>
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//    if(self.isCompany == YES) {
+//        for (Company *company in self.dataManager.companyList) {
+//            if([company.stockSymbol isEqualToString:self.insertName.text]) {
+//                [self showSimpleAlert];
+//                return true;
+//            }
+//            else {
+//                return false;
+//            }
+//        }
+//    }
+//    else {
+//        for (Product *product in self.currentCompany.products) {
+//            if([product.name isEqualToString:self.insertName.text]) {
+//                [self showSimpleAlert];
+//                return true;
+//            }
+//            else {
+//                return false;
+//            }
+//        }
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -105,23 +122,23 @@
     [self.view endEditing:YES];
 }
 
-//- (void)showSimpleAlert {
-//    NSString *title = NSLocalizedString(@"ERROR", nil);
-//    NSString *message = NSLocalizedString(@"Company or product was not added because it already exist.", nil);
-//    NSString *cancelButtonTitle = NSLocalizedString(@"OK", nil);
-//    
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-//    
-//    // Create the action.
-//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-//        NSLog(@"The simple alert's cancel action occured.");
-//    }];
-//    
-//    // Add the action.
-//    [alertController addAction:cancelAction];
-//    
-//    [self presentViewController:alertController animated:YES completion:nil];
-//}
+- (void)showSimpleAlert {
+    NSString *title = NSLocalizedString(@"ERROR", nil);
+    NSString *message = NSLocalizedString(@"Company or product was not added because it already exist.", nil);
+    NSString *cancelButtonTitle = NSLocalizedString(@"OK", nil);
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    // Create the action.
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:cancelButtonTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"The simple alert's cancel action occured.");
+    }];
+    
+    // Add the action.
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 
 /*
 #pragma mark - Navigation

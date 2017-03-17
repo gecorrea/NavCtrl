@@ -1,5 +1,10 @@
 #import <Foundation/Foundation.h>
 #import "Company.h"
+#import <CoreData/CoreData.h>
+#import "ManagedCompany+CoreDataClass.h"
+#import "ManagedCompany+CoreDataProperties.h"
+#import "ManagedProduct+CoreDataClass.h"
+#import "ManagedProduct+CoreDataProperties.h"
 
 @protocol CompanyDelegate <NSObject>
 
@@ -13,6 +18,10 @@
 @property (nonatomic, retain) NSMutableArray *products;
 @property (nonatomic, retain) id<CompanyDelegate>delegate;
 @property (strong) NSManagedObjectContext *managedObjectContext;
+//@property (nonatomic, strong) NSString *name;
+//@property (nonatomic, strong) NSString *stockSymbol;
+//@property (nonatomic, strong) NSString *logoURL;
+//@property (nonatomic, strong) NSString *price;
 
 
 - (void)initializeCoreData;
