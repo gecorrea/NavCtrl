@@ -27,6 +27,7 @@
         if (!hasRan) {
             [self loadData];
             [[NSUserDefaults standardUserDefaults]setBool:true forKey:@"hasRun"];
+            [self saveCoreData];
         }
         else {
         // else fetch from core data
@@ -69,23 +70,17 @@
     
     // create managedCompanyList based off of company list
     for (Company *company in self.companyList) {
-//        ManagedCompany *managedCompany = [NSEntityDescription entityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
         ManagedCompany *managedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
         managedCompany.name = company.name;
         managedCompany.stockSymbol = company.stockSymbol;
         managedCompany.logoURL = company.logoURLString;
         managedCompany.price = company.price;
-//        [managedCompany setValue:company.name forKey:@"name"];
-//        [managedCompany setValue:company.stockSymbol forKey:@"stockSymbol"];
-//        [managedCompany setValue:company.logoURLString forKey:@"logoURL"];
-//        [managedCompany setValue:company.price forKey:@"price"];
         
         for (Product *product in company.products) {
-//            ManagedProduct *managedProduct = [NSEntityDescription entityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
             ManagedProduct *managedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
-            [managedProduct setValue:product.name forKey:@"name"];
-            [managedProduct setValue:product.imageURL forKey:@"imageURL"];
-            [managedProduct setValue:product.url forKey:@"url"];
+            managedProduct.name = product.name;
+            managedProduct.imageURL = product.imageURL;
+            managedProduct.url = product.url;
         }
     }
 }
@@ -101,6 +96,8 @@
         [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
         
     }
+    if(self.managedObjectContext.hasChanges)
+       [self saveCoreData];
 }
 
 - (void)editName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct {
