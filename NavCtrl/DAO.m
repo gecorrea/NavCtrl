@@ -90,10 +90,19 @@
         Company *newCompany = [[Company alloc] initWithStockSymbol:name andLogoURLString:imageURL];
         [self.companyList addObject:newCompany];
         [self getCompanyData];
+        ManagedCompany *newManagedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
+        newManagedCompany.name = newCompany.name;
+        newManagedCompany.stockSymbol = newCompany.stockSymbol;
+        newManagedCompany.logoURL = newCompany.logoURLString;
+        newManagedCompany.price = newCompany.price;
     }
     else {
         Product *newProduct = [[Product alloc] initWithName:name andImageURL:imageURL andURL:url];
         [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
+        ManagedProduct *newManagedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
+        newManagedProduct.name = newProduct.name;
+        newManagedProduct.imageURL = newProduct.imageURL;
+        newManagedProduct.url = newProduct.url;
         
     }
     if(self.managedObjectContext.hasChanges)
@@ -229,10 +238,33 @@
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ManagedCompany"];
     
     NSError *error = nil;
-    NSArray *companies = [self.managedObjectContext executeFetchRequest:request error:&error];
-    if (!companies) {
-        NSLog(@"Error fetching Managed Company objects: %@\n%@", [error localizedDescription], [error userInfo]);
+    NSArray *results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"Error fetching objects: %@\n%@", [error localizedDescription], [error userInfo]);
         abort();
+    }
+    else {
+        self.companyList = [[NSMutableArray alloc] init];
+        self.products = [[NSMutableArray alloc] init];
+        NSLog(@"%@", results);
+        for (ManagedCompany *mC in results) {
+            Company *company = [[Company alloc] init];
+            company.name = mC.name;
+            company.stockSymbol = mC.stockSymbol;
+            company.logoURLString = mC.logoURL;
+            company.price = mC.price;
+            
+            [self.companyList addObject:company];
+            
+            for (ManagedProduct *mP in mC.products) {
+                Product *product = [[Product alloc] init];
+                product.name = mP.name;
+                product.imageURL = mP.imageURL;
+                product.url = mP.url;
+                
+                
+            }
+        }
     }
 }
 
