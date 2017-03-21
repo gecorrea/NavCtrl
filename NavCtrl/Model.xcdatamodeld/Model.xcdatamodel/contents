@@ -5,7 +5,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stockSymbol" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="products" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ManagedProduct" inverseName="company" inverseEntity="ManagedProduct" syncable="YES"/>
+        <relationship name="products" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ManagedProduct" inverseName="company" inverseEntity="ManagedProduct" syncable="YES"/>
     </entity>
     <entity name="ManagedProduct" representedClassName="ManagedProduct" syncable="YES" codeGenerationType="class">
         <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>

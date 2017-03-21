@@ -1,11 +1,3 @@
-//
-//  InsertVC.m
-//  NavCtrl
-//
-//  Created by Aditya Narayan on 2/27/17.
-//  Copyright © 2017 Aditya Narayan. All rights reserved.
-//
-
 #import "InsertVC.h"
 
 @interface InsertVC ()
@@ -45,45 +37,59 @@
 }
 
 - (void)saveInfo {
-//    if ([self checkIfDuplicate] == false) {
-         [self.dataManager addName:self.insertName.text andImageURL:self.insertImageURL.text andURL:self.insertURL.text isCompany:self.isCompany forCurrentCompany:self.currentCompany];
-//    }
+    BOOL isDuplicate = NO;
+    if (self.isCompany == YES) {
+        isDuplicate = [self checkIfDuplicateCompany:self.insertName.text];
+        if (isDuplicate == NO) {
+            [self saveCompany];
+        }
+    }
+    else {
+        isDuplicate = [self checkIfDuplicateProduct:self.insertName.text forCompany:self.currentCompany];
+        if (isDuplicate == NO) {
+            [self saveProduct];
+        }
+    }
     [self.navigationController popViewControllerAnimated:true];
 }
 
-//- (BOOL)checkIfDuplicate {
-//    
-//    switch (<#expression#>) {
-//        case <#constant#>:
-//            <#statements#>
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//    if(self.isCompany == YES) {
-//        for (Company *company in self.dataManager.companyList) {
-//            if([company.stockSymbol isEqualToString:self.insertName.text]) {
-//                [self showSimpleAlert];
-//                return true;
-//            }
-//            else {
-//                return false;
-//            }
-//        }
-//    }
-//    else {
-//        for (Product *product in self.currentCompany.products) {
-//            if([product.name isEqualToString:self.insertName.text]) {
-//                [self showSimpleAlert];
-//                return true;
-//            }
-//            else {
-//                return false;
-//            }
-//        }
-//    }
-//}
+- (BOOL)checkIfDuplicateCompany:(NSString *)name {
+    BOOL returnValue = NO;
+    for (Company *company in self.dataManager.companyList) {
+        if ([company.stockSymbol isEqualToString:name]){
+            [self showSimpleAlert];
+            returnValue = YES;
+            break;
+        }
+        else {
+            returnValue = NO;
+        }
+    }
+    return returnValue;
+}
+
+- (BOOL)checkIfDuplicateProduct:(NSString *)name forCompany:(Company *)company {
+    BOOL returnValue = NO;
+    for (Product *product in company.products) {
+        if ([product.name isEqualToString:name]) {
+            [self showSimpleAlert];
+            returnValue = YES;
+            break;
+        }
+        else {
+            returnValue = NO;
+        }
+    }
+    return returnValue;
+}
+
+- (void)saveCompany {
+    [self.dataManager addCompany:self.insertName.text andImageURL:self.insertImageURL.text];
+}
+
+- (void)saveProduct {
+    [self.dataManager addProduct:self.insertName.text andImageURL:self.insertImageURL.text andURL:self.insertURL.text forCurrentCompany:self.currentCompany];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -114,7 +120,6 @@
      {
          
      }];
-    
 }
 
 // Hides keyboard when tap out of text field.

@@ -2,12 +2,6 @@
 
 @implementation DAO
 
-//@dynamic name;
-//@dynamic stockSymbol;
-//@dynamic logoURL;
-//@dynamic price;
-
-
 + (instancetype)sharedInstance {
     static DAO *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -70,59 +64,63 @@
     
     // create managedCompanyList based off of company list
     for (Company *company in self.companyList) {
+        self.managedCompanies = [[NSMutableArray alloc] init];
         ManagedCompany *managedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
         managedCompany.name = company.name;
         managedCompany.stockSymbol = company.stockSymbol;
         managedCompany.logoURL = company.logoURLString;
         managedCompany.price = company.price;
         
+        [self.managedCompanies addObject:managedCompany];
+        
         for (Product *product in company.products) {
             ManagedProduct *managedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
             managedProduct.name = product.name;
             managedProduct.imageURL = product.imageURL;
             managedProduct.url = product.url;
+            
+            [managedCompany addProductsObject:managedProduct];
         }
     }
 }
 
-- (void)addName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany {
-    if(isCompany == YES) {
-        Company *newCompany = [[Company alloc] initWithStockSymbol:name andLogoURLString:imageURL];
-        [self.companyList addObject:newCompany];
-        [self getCompanyData];
-        ManagedCompany *newManagedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
-        newManagedCompany.name = newCompany.name;
-        newManagedCompany.stockSymbol = newCompany.stockSymbol;
-        newManagedCompany.logoURL = newCompany.logoURLString;
-        newManagedCompany.price = newCompany.price;
-    }
-    else {
-        Product *newProduct = [[Product alloc] initWithName:name andImageURL:imageURL andURL:url];
-        [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
-        ManagedProduct *newManagedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
-        newManagedProduct.name = newProduct.name;
-        newManagedProduct.imageURL = newProduct.imageURL;
-        newManagedProduct.url = newProduct.url;
-        
-    }
+- (void)addCompany:(NSString *)name andImageURL:(NSString *)imageURL {
+    Company *newCompany = [[Company alloc] initWithStockSymbol:name andLogoURLString:imageURL];
+    [self.companyList addObject:newCompany];
+    [self getCompanyData];
+    ManagedCompany *newManagedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
+    newManagedCompany.name = newCompany.name;
+    newManagedCompany.stockSymbol = newCompany.stockSymbol;
+    newManagedCompany.logoURL = newCompany.logoURLString;
+    newManagedCompany.price = newCompany.price;
+    [self.managedCompanies addObject:newCompany];
     if(self.managedObjectContext.hasChanges)
        [self saveCoreData];
 }
 
-- (void)editName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct {
-    if(isCompany == YES) {
-        Company *companyToEdit = [self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]];
-        companyToEdit.name = name;
-        companyToEdit.logoURLString = imageURL;
-        [self getCompanyData];
-    }
-    else {
-        Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] indexOfObject:currentProduct]];
-        productToEdit.name = name;
-        productToEdit.imageURL = imageURL;
-        productToEdit.url = url;
-    }
-    
+- (void)addProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany {
+    Product *newProduct = [[Product alloc] initWithName:name andImageURL:imageURL andURL:url];
+    [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
+    ManagedProduct *newManagedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
+    newManagedProduct.name = newProduct.name;
+    newManagedProduct.imageURL = newProduct.imageURL;
+    newManagedProduct.url = newProduct.url;
+    if(self.managedObjectContext.hasChanges)
+        [self saveCoreData];
+}
+
+- (void)editCompany:(NSString *)name andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany {
+    Company *companyToEdit = [self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]];
+    companyToEdit.name = name;
+    companyToEdit.logoURLString = imageURL;
+    [self getCompanyData];
+}
+
+- (void)editProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct {
+    Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] indexOfObject:currentProduct]];
+    productToEdit.name = name;
+    productToEdit.imageURL = imageURL;
+    productToEdit.url = url;
 }
 
 - (void)getCompanyData {
@@ -245,9 +243,9 @@
     }
     else {
         self.companyList = [[NSMutableArray alloc] init];
-        self.products = [[NSMutableArray alloc] init];
-        NSLog(@"%@", results);
+        self.managedCompanies = [[NSMutableArray alloc] initWithArray:results];
         for (ManagedCompany *mC in results) {
+            self.products = [[NSMutableArray alloc] init];
             Company *company = [[Company alloc] init];
             company.name = mC.name;
             company.stockSymbol = mC.stockSymbol;
@@ -261,9 +259,9 @@
                 product.name = mP.name;
                 product.imageURL = mP.imageURL;
                 product.url = mP.url;
-                
-                
+                [self.products addObject:product];
             }
+            company.products = [[NSMutableArray alloc] initWithArray:self.products];
         }
     }
 }

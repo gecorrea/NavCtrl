@@ -1,11 +1,3 @@
-//
-//  EditVC.h
-//  NavCtrl
-//
-//  Created by Aditya Narayan on 3/2/17.
-//  Copyright © 2017 Aditya Narayan. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 #import "DAO.h"
 

@@ -18,15 +18,13 @@
 @property (nonatomic, retain) NSMutableArray *products;
 @property (nonatomic, retain) id<CompanyDelegate>delegate;
 @property (strong) NSManagedObjectContext *managedObjectContext;
-//@property (nonatomic, strong) NSString *name;
-//@property (nonatomic, strong) NSString *stockSymbol;
-//@property (nonatomic, strong) NSString *logoURL;
-//@property (nonatomic, strong) NSString *price;
-
+@property (nonatomic, retain) NSMutableArray *managedCompanies;
 
 - (void)initializeCoreData;
 + (instancetype)sharedInstance;
-- (void)addName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany;
-- (void)editName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url isCompany:(BOOL)isCompany forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct;
+- (void)addCompany:(NSString *)name andImageURL:(NSString *)imageURL;
+- (void)addProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany;
+- (void)editCompany:(NSString *)name andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany;
+- (void)editProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct;
 
 @end

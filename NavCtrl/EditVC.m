@@ -1,11 +1,3 @@
-//
-//  EditVC.m
-//  NavCtrl
-//
-//  Created by Aditya Narayan on 3/2/17.
-//  Copyright © 2017 Aditya Narayan. All rights reserved.
-//
-
 #import "EditVC.h"
 
 @interface EditVC ()
@@ -50,10 +42,10 @@
 
 - (void) saveInfo {
     if(self.isCompany == YES) {
-        [self.dataManager editName:self.editName.text andImageURL:self.editImageURL.text andURL:self.editURL.text isCompany:self.isCompany forCurrentCompany:self.currentCompany forCurrentProduct:nil];
+        [self.dataManager editCompany:self.editName.text andImageURL:self.editImageURL.text forCurrentCompany:self.currentCompany];
     }
     else {
-        [self.dataManager editName:self.editName.text andImageURL:self.editImageURL.text andURL:self.editURL.text isCompany:self.isCompany forCurrentCompany:self.currentCompany forCurrentProduct:self.currentProduct];
+        [self.dataManager editProduct:self.editName.text andImageURL:self.editImageURL.text andURL:self.editURL.text forCurrentCompany:self.currentCompany forCurrentProduct:self.currentProduct];
     }
     [self.navigationController popViewControllerAnimated:true];
 }
@@ -82,7 +74,6 @@
      {
          
      }];
-    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
