@@ -12,14 +12,4 @@
     return self;
 }
 
-- (instancetype) initWithNewProductName:(NSString *)name andURL:(NSString *)url {
-    self = [super init];
-    if(self) {
-        self.name = name;
-        self.imageURL = @"defaultProductImage.png";
-        self.url = url;
-    }
-    return self;
-}
-
 @end

@@ -62,7 +62,7 @@
     microsoft.products = [[NSMutableArray alloc] initWithObjects:holoLens, lumia950, surfacePro4, nil];
     samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
     
-    // create managedCompanyList based off of company list
+    // create managedCompanyList based off of companyList
     for (Company *company in self.companyList) {
         self.managedCompanies = [[NSMutableArray alloc] init];
         ManagedCompany *managedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
@@ -84,8 +84,8 @@
     }
 }
 
-- (void)addCompany:(NSString *)name andImageURL:(NSString *)imageURL {
-    Company *newCompany = [[Company alloc] initWithStockSymbol:name andLogoURLString:imageURL];
+- (void)addCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL {
+    Company *newCompany = [[Company alloc] initWithStockSymbol:stockSymbol andLogoURLString:imageURL];
     [self.companyList addObject:newCompany];
     [self getCompanyData];
     ManagedCompany *newManagedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
@@ -93,34 +93,54 @@
     newManagedCompany.stockSymbol = newCompany.stockSymbol;
     newManagedCompany.logoURL = newCompany.logoURLString;
     newManagedCompany.price = newCompany.price;
-    [self.managedCompanies addObject:newCompany];
-    if(self.managedObjectContext.hasChanges)
-       [self saveCoreData];
+    [self.managedCompanies addObject:newManagedCompany];
+    [self saveCoreData];
 }
 
 - (void)addProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany {
     Product *newProduct = [[Product alloc] initWithName:name andImageURL:imageURL andURL:url];
+    NSLog (@"%lu", (unsigned long)[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] count]);
     [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
+    NSLog (@"%lu", (unsigned long)[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] count]);
     ManagedProduct *newManagedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
     newManagedProduct.name = newProduct.name;
     newManagedProduct.imageURL = newProduct.imageURL;
     newManagedProduct.url = newProduct.url;
-    if(self.managedObjectContext.hasChanges)
-        [self saveCoreData];
+    [[self.managedCompanies objectAtIndex:[self.companyList indexOfObject:currentCompany]] addProductsObject:newManagedProduct];
+    [self saveCoreData];
 }
 
-- (void)editCompany:(NSString *)name andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany {
+- (void)editCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany {
     Company *companyToEdit = [self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]];
-    companyToEdit.name = name;
-    companyToEdit.logoURLString = imageURL;
-    [self getCompanyData];
+    for (ManagedCompany *mC in self.managedCompanies) {
+        if (mC.stockSymbol == currentCompany.stockSymbol) {
+            companyToEdit.stockSymbol = stockSymbol;
+            companyToEdit.logoURLString = imageURL;
+            [self getCompanyData];
+            
+            mC.name = companyToEdit.name;
+            mC.stockSymbol = companyToEdit.stockSymbol;
+            mC.logoURL = companyToEdit.logoURLString;
+            mC.price = companyToEdit.price;
+        }
+    }
+    [self saveCoreData];
 }
 
 - (void)editProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct {
     Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] indexOfObject:currentProduct]];
+    ManagedCompany *currentManagedCompany = [self.managedCompanies objectAtIndex:[self.companyList indexOfObject:currentCompany]];
+    for (ManagedProduct *mP in currentManagedCompany.products) {
+        if(mP.name == currentProduct.name) {
+            mP.name = name;
+            mP.imageURL = imageURL;
+            mP.url = url;
+        }
+    }
     productToEdit.name = name;
     productToEdit.imageURL = imageURL;
     productToEdit.url = url;
+    [self saveCoreData];
 }
 
 - (void)getCompanyData {
@@ -232,7 +252,6 @@
 }
 
 - (void)loadCoreData {
-//    NSManagedObjectContext *moc = …;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"ManagedCompany"];
     
     NSError *error = nil;
@@ -266,8 +285,26 @@
     }
 }
 
+- (void)deletedCompanyAtIndex:(NSUInteger)indexPathRow {
+    [self.managedObjectContext deleteObject:[self.managedCompanies objectAtIndex:indexPathRow]];
+    [self.managedCompanies removeObjectAtIndex:indexPathRow];
+    [self.companyList removeObjectAtIndex:indexPathRow];
+    [self saveCoreData];
+}
 
-    
+- (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany {
+    ManagedCompany *currentMC = [self.managedCompanies objectAtIndex:[self.companyList indexOfObject:currentCompany]];
+    for (ManagedProduct *mP in currentMC.products) {
+        Product *currentProduct = [currentCompany.products objectAtIndex:indexPathRow];
+        if ([mP.name isEqualToString:currentProduct.name]) {
+            [self.managedObjectContext deleteObject:mP];
+        }
+    }
+    [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] removeObjectAtIndex:indexPathRow];
+    [self saveCoreData];
+}
+
+
 
 //- (void)dealloc {
 //    // Should never be called, but just here for clarity really.

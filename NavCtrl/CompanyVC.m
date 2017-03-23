@@ -115,7 +115,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
      if (editingStyle == UITableViewCellEditingStyleDelete) {
          // Delete the row from the data source
-         [self.dataManager.companyList removeObjectAtIndex:indexPath.row];
+         [self.dataManager deletedCompanyAtIndex:indexPath.row];
          [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -159,7 +159,7 @@
         self.editViewController.title = @"Edit Company";
         self.currentCompany = self.dataManager.companyList[indexPath.row];
         self.editViewController.currentCompany = self.currentCompany;
-        self.editViewController.name = self.currentCompany.name;
+        self.editViewController.name = self.currentCompany.stockSymbol;
         self.editViewController.imgeURL = self.currentCompany.logoURLString;
         [self.editViewController.editURL isHidden];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.

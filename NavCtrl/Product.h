@@ -7,6 +7,5 @@
 @property (nonatomic, retain) NSString *url;
 
 - (instancetype) initWithName:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url;
-- (instancetype) initWithNewProductName:(NSString *)name andURL:(NSString *)url;
 
 @end

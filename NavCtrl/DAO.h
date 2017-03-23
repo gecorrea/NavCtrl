@@ -22,9 +22,12 @@
 
 - (void)initializeCoreData;
 + (instancetype)sharedInstance;
-- (void)addCompany:(NSString *)name andImageURL:(NSString *)imageURL;
+- (void)addCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL;
 - (void)addProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany;
-- (void)editCompany:(NSString *)name andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany;
+- (void)editCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany;
 - (void)editProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct;
+- (void)saveCoreData;
+- (void)deletedCompanyAtIndex:(NSUInteger)indexPathRow;
+- (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany;
 
 @end
