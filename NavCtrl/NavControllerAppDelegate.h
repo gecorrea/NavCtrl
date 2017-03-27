@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import "DAO.h"
 
 @interface NavControllerAppDelegate : UIResponder <UIApplicationDelegate>
 

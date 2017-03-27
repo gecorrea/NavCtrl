@@ -17,14 +17,13 @@
         [self initializeCoreData];
         
         BOOL hasRan = [[NSUserDefaults standardUserDefaults]boolForKey:@"hasRun"];
-        // if app first run
+        // If app first run
         if (!hasRan) {
             [self loadData];
             [[NSUserDefaults standardUserDefaults]setBool:true forKey:@"hasRun"];
-            [self saveCoreData];
         }
         else {
-        // else fetch from core data
+        // Else fetch from core data
             [self loadCoreData];
         }
         
@@ -62,7 +61,7 @@
     microsoft.products = [[NSMutableArray alloc] initWithObjects:holoLens, lumia950, surfacePro4, nil];
     samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
     
-    // create managedCompanyList based off of companyList
+    // Create managedCompanyList based off of companyList
     for (Company *company in self.companyList) {
         self.managedCompanies = [[NSMutableArray alloc] init];
         ManagedCompany *managedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
@@ -73,6 +72,7 @@
         
         [self.managedCompanies addObject:managedCompany];
         
+        // Create managedProducts based off company.products
         for (Product *product in company.products) {
             ManagedProduct *managedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
             managedProduct.name = product.name;
@@ -94,7 +94,6 @@
     newManagedCompany.logoURL = newCompany.logoURLString;
     newManagedCompany.price = newCompany.price;
     [self.managedCompanies addObject:newManagedCompany];
-    [self saveCoreData];
 }
 
 - (void)addProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany {
@@ -107,7 +106,6 @@
     newManagedProduct.imageURL = newProduct.imageURL;
     newManagedProduct.url = newProduct.url;
     [[self.managedCompanies objectAtIndex:[self.companyList indexOfObject:currentCompany]] addProductsObject:newManagedProduct];
-    [self saveCoreData];
 }
 
 - (void)editCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany {
@@ -124,7 +122,6 @@
             mC.price = companyToEdit.price;
         }
     }
-    [self saveCoreData];
 }
 
 - (void)editProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct {
@@ -140,7 +137,6 @@
     productToEdit.name = name;
     productToEdit.imageURL = imageURL;
     productToEdit.url = url;
-    [self saveCoreData];
 }
 
 - (void)getCompanyData {
@@ -289,7 +285,6 @@
     [self.managedObjectContext deleteObject:[self.managedCompanies objectAtIndex:indexPathRow]];
     [self.managedCompanies removeObjectAtIndex:indexPathRow];
     [self.companyList removeObjectAtIndex:indexPathRow];
-    [self saveCoreData];
 }
 
 - (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany {
@@ -301,7 +296,6 @@
         }
     }
     [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] removeObjectAtIndex:indexPathRow];
-    [self saveCoreData];
 }
 
 

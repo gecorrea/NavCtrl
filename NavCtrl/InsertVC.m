@@ -12,6 +12,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.dataManager = [DAO sharedInstance];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveInfo)];
     self.navigationItem.rightBarButtonItem = saveButton;
     
@@ -27,7 +30,7 @@
     else {
         self.insertName.placeholder = @"Insert Company Stock Symbol";
         self.insertImageURL.placeholder = @"Insert Company Logo URL";
-        [self.insertURL isHidden];
+        self.insertURL.hidden = YES;
         self.isCompany = YES;
     }
     

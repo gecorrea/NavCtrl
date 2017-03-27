@@ -30,6 +30,9 @@
     self.dataManager.delegate = self;
     // Title of CompanyVC
     self.title = @"Mobile device makers";
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -117,6 +120,10 @@
          // Delete the row from the data source
          [self.dataManager deletedCompanyAtIndex:indexPath.row];
          [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+         
+         NSUndoManager *undoManager = [[self tableView] undoManager];
+         [undoManager setLevelsOfUndo:5];
+         
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
          // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

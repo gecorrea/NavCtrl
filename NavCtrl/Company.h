@@ -11,6 +11,5 @@
 @property (nonatomic, retain) NSString *ticker;
 
 - (instancetype) initWithStockSymbol:(NSString *)stockSymbol andLogoURLString:(NSString *)logoURLString;
-- (instancetype) initWithNewCompanyName:(NSString *)name;
 
 @end

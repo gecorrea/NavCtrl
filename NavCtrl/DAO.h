@@ -27,6 +27,7 @@
 - (void)editCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany;
 - (void)editProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct;
 - (void)saveCoreData;
+- (void)loadCoreData;
 - (void)deletedCompanyAtIndex:(NSUInteger)indexPathRow;
 - (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany;
 

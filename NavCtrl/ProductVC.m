@@ -1,11 +1,3 @@
-//
-//  ProductVC.m
-//  NavCtrl
-//
-//  Created by Jesse Sahli on 2/7/17.
-//  Copyright © 2017 Aditya Narayan. All rights reserved.
-//
-
 #import "ProductVC.h"
 
 @interface ProductVC ()
@@ -24,6 +16,9 @@
     self.navigationItem.rightBarButtonItems = @[addButton, self.editButton];
     // Do any additional setup after loading the view from its nib.
     self.dataManager = [DAO sharedInstance];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
 - (void)toggleInsertMode {
