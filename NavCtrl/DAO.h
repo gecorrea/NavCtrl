@@ -19,6 +19,7 @@
 @property (nonatomic, retain) id<CompanyDelegate>delegate;
 @property (strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSMutableArray *managedCompanies;
+@property (nonatomic, retain) NSUndoManager *undoManager;
 
 - (void)initializeCoreData;
 + (instancetype)sharedInstance;

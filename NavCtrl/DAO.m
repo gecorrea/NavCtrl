@@ -78,7 +78,6 @@
             managedProduct.name = product.name;
             managedProduct.imageURL = product.imageURL;
             managedProduct.url = product.url;
-            
             [managedCompany addProductsObject:managedProduct];
         }
     }
@@ -98,9 +97,8 @@
 
 - (void)addProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany {
     Product *newProduct = [[Product alloc] initWithName:name andImageURL:imageURL andURL:url];
-    NSLog (@"%lu", (unsigned long)[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] count]);
-    [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] addObject:newProduct];
-    NSLog (@"%lu", (unsigned long)[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] count]);
+    [currentCompany.products addObject:newProduct];
+    
     ManagedProduct *newManagedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedProduct" inManagedObjectContext:self.managedObjectContext];
     newManagedProduct.name = newProduct.name;
     newManagedProduct.imageURL = newProduct.imageURL;
@@ -109,23 +107,23 @@
 }
 
 - (void)editCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany {
-    Company *companyToEdit = [self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]];
     for (ManagedCompany *mC in self.managedCompanies) {
         if (mC.stockSymbol == currentCompany.stockSymbol) {
-            companyToEdit.stockSymbol = stockSymbol;
-            companyToEdit.logoURLString = imageURL;
+            // set stockSymbol and logoURLString for NSObject (currentCompany)
+            currentCompany.stockSymbol = stockSymbol;
+            currentCompany.logoURLString = imageURL;
+            // call getCompanyData to get name and price for currentComapny
             [self getCompanyData];
-            
-            mC.name = companyToEdit.name;
-            mC.stockSymbol = companyToEdit.stockSymbol;
-            mC.logoURL = companyToEdit.logoURLString;
-            mC.price = companyToEdit.price;
+            // set name, stockSymbol, logoURLString and price to ManagedCompany (mC) from currentCompany
+            mC.name = currentCompany.name;
+            mC.stockSymbol = currentCompany.stockSymbol;
+            mC.logoURL = currentCompany.logoURLString;
+            mC.price = currentCompany.price;
         }
     }
 }
 
 - (void)editProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct {
-    Product *productToEdit = [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] objectAtIndex:[[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] indexOfObject:currentProduct]];
     ManagedCompany *currentManagedCompany = [self.managedCompanies objectAtIndex:[self.companyList indexOfObject:currentCompany]];
     for (ManagedProduct *mP in currentManagedCompany.products) {
         if(mP.name == currentProduct.name) {
@@ -134,9 +132,9 @@
             mP.url = url;
         }
     }
-    productToEdit.name = name;
-    productToEdit.imageURL = imageURL;
-    productToEdit.url = url;
+    currentProduct.name = name;
+    currentProduct.imageURL = imageURL;
+    currentProduct.url = url;
 }
 
 - (void)getCompanyData {
@@ -285,6 +283,8 @@
     [self.managedObjectContext deleteObject:[self.managedCompanies objectAtIndex:indexPathRow]];
     [self.managedCompanies removeObjectAtIndex:indexPathRow];
     [self.companyList removeObjectAtIndex:indexPathRow];
+    
+    self.undoManager
 }
 
 - (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany {
