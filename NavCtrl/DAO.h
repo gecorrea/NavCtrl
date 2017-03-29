@@ -19,7 +19,6 @@
 @property (nonatomic, retain) id<CompanyDelegate>delegate;
 @property (strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSMutableArray *managedCompanies;
-@property (nonatomic, retain) NSUndoManager *undoManager;
 
 - (void)initializeCoreData;
 + (instancetype)sharedInstance;
@@ -29,6 +28,7 @@
 - (void)editProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany forCurrentProduct:(Product *)currentProduct;
 - (void)saveCoreData;
 - (void)loadCoreData;
+- (void)getCompanyData;
 - (void)deletedCompanyAtIndex:(NSUInteger)indexPathRow;
 - (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany;
 

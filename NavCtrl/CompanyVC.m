@@ -26,17 +26,28 @@
     UIBarButtonItem *insertButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
     self.navigationItem.rightBarButtonItem = insertButton;
     
-    self.dataManager = [DAO sharedInstance];
-    self.dataManager.delegate = self;
-    // Title of CompanyVC
-    self.title = @"Mobile device makers";
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    self.dataManager = [DAO sharedInstance];
+    self.dataManager.delegate = self;
+    self.dataManager.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
+    // make undo and redo buttons hidden
+    self.redoButton.hidden = YES;
+    self.undoButton.hidden = YES;
+    
+    // Title of CompanyVC
+    self.title = @"Mobile device makers";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self.dataManager getCompanyData];
     [self.tableView reloadData];
+    if(self.tableView.isEditing) {
+        [self allowUndo];
+        [self allowRedo];
+    }
 }
 
 // Allow toggling of edit mode for CompanyVC.
@@ -44,11 +55,17 @@
     if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
         self.navigationItem.leftBarButtonItem.title = @"Edit";
+        self.redoButton.hidden = YES;
+        self.undoButton.hidden = YES;
     }
     else {
         [self.tableView setEditing:YES animated:YES];
         [self.tableView setAllowsSelectionDuringEditing:true];
         self.navigationItem.leftBarButtonItem.title = @"Done";
+        
+        // make redo and undo buttons visiable only if a redo/undo action can be done.
+        [self allowRedo];
+        [self allowUndo];
     }
 }
 
@@ -75,13 +92,11 @@
 #pragma mark - Table view data source
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [self.dataManager.companyList count];
 }
@@ -120,9 +135,11 @@
          // Delete the row from the data source
          [self.dataManager deletedCompanyAtIndex:indexPath.row];
          [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-         
-         NSUndoManager *undoManager = [[self tableView] undoManager];
-         [undoManager setLevelsOfUndo:5];
+         if(self.tableView.isEditing) {
+             [self allowUndo];
+             [self allowRedo];
+         }
+         //call that method that hides or shows redo
          
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -143,6 +160,10 @@
     Company *companyToMove = self.company;
     [self.dataManager.companyList removeObjectAtIndex:fromIndexPath.row];
     [self.dataManager.companyList insertObject:companyToMove atIndex:toIndexPath.row];
+    if(self.tableView.isEditing) {
+        [self allowUndo];
+        [self allowRedo];
+    }
 }
 
 #pragma mark - Table view delegate
@@ -192,4 +213,32 @@
     [_tableView release];
     [super dealloc];
 }
+- (IBAction)redoChanges:(UIButton *)sender {
+    [self.dataManager.managedObjectContext redo];
+    [self.dataManager loadCoreData];
+    [self.dataManager getCompanyData];
+    [self allowUndo];
+    if (self.dataManager.managedObjectContext.undoManager.canRedo == NO)
+        self.redoButton.hidden = YES;
+}
+
+- (IBAction)undoChanges:(UIButton *)sender {
+    [self.dataManager.managedObjectContext undo];
+    [self.dataManager loadCoreData];
+    [self.dataManager getCompanyData];
+    [self allowRedo];
+    if (self.dataManager.managedObjectContext.undoManager.canUndo == NO)
+        self.undoButton.hidden = YES;
+}
+
+- (void)allowUndo {
+    if (self.dataManager.managedObjectContext.undoManager.canUndo == YES)
+        self.undoButton.hidden = NO;
+}
+
+- (void)allowRedo {
+    if (self.dataManager.managedObjectContext.undoManager.canRedo == YES)
+        self.redoButton.hidden = NO;
+}
+
 @end

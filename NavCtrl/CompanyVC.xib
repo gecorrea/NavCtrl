@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CompanyVC">
             <connections>
+                <outlet property="redoButton" destination="auI-Bt-9Bh" id="TSA-Bg-2aE"/>
                 <outlet property="tableView" destination="b9s-ce-C0v" id="jhV-HN-9fx"/>
+                <outlet property="undoButton" destination="bFR-Xf-sLd" id="jFq-zL-8TU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,14 +31,43 @@
                         <outlet property="delegate" destination="-1" id="rfX-ae-JqV"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auI-Bt-9Bh">
+                    <rect key="frame" x="0.0" y="633.5" width="187.5" height="33.5"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="Redo">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="redoChanges:" destination="-1" eventType="touchUpInside" id="7BI-dN-aMM"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bFR-Xf-sLd">
+                    <rect key="frame" x="187.5" y="633.5" width="187.5" height="33.5"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="Undo">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="undoChanges:" destination="-1" eventType="touchUpInside" id="aVX-W3-pDw"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="auI-Bt-9Bh" secondAttribute="bottom" id="GbW-M0-vFJ"/>
+                <constraint firstAttribute="trailing" secondItem="bFR-Xf-sLd" secondAttribute="trailing" id="LWo-27-sd5"/>
+                <constraint firstItem="auI-Bt-9Bh" firstAttribute="height" secondItem="bFR-Xf-sLd" secondAttribute="height" id="R4w-17-E7F"/>
+                <constraint firstAttribute="bottom" secondItem="bFR-Xf-sLd" secondAttribute="bottom" id="Uhn-H8-Ihs"/>
                 <constraint firstItem="b9s-ce-C0v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bEQ-Zw-aaw"/>
+                <constraint firstItem="bFR-Xf-sLd" firstAttribute="width" secondItem="b9s-ce-C0v" secondAttribute="width" multiplier="1:2" id="eQ4-61-0An"/>
                 <constraint firstAttribute="trailing" secondItem="b9s-ce-C0v" secondAttribute="trailing" id="ebp-qQ-E2j"/>
+                <constraint firstItem="bFR-Xf-sLd" firstAttribute="height" secondItem="b9s-ce-C0v" secondAttribute="height" multiplier="1:20" id="iyn-Ln-Pmh"/>
+                <constraint firstItem="auI-Bt-9Bh" firstAttribute="width" secondItem="bFR-Xf-sLd" secondAttribute="width" id="jxM-lA-TgS"/>
+                <constraint firstItem="auI-Bt-9Bh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kzG-3Z-Z4d"/>
                 <constraint firstAttribute="bottom" secondItem="b9s-ce-C0v" secondAttribute="bottom" id="l6Y-x6-gSp"/>
                 <constraint firstItem="b9s-ce-C0v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="vPr-cD-R1S"/>
             </constraints>
+            <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
 </document>

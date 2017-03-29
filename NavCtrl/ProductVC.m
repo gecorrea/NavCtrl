@@ -14,11 +14,17 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
     self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItems = @[addButton, self.editButton];
-    // Do any additional setup after loading the view from its nib.
-    self.dataManager = [DAO sharedInstance];
+    
     [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    // Do any additional setup after loading the view from its nib.
+    self.dataManager = [DAO sharedInstance];
+    self.dataManager.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
+    // make undo and redo buttons hidden
+    self.redoButton.hidden = YES;
+    self.undoButton.hidden = YES;
 }
 
 - (void)toggleInsertMode {
@@ -44,12 +50,19 @@
         [self.tableView setEditing:YES animated:YES];
         [self.tableView setAllowsSelectionDuringEditing:true];
         [[self.navigationItem.rightBarButtonItems objectAtIndex:[self.navigationItem.rightBarButtonItems indexOfObject:self.editButton]] setTitle:@"Done"];
+        
+        // make redo and undo buttons visiable only if a redo/undo action can be done.
+        [self allowRedo];
+        [self allowUndo];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
-//    [super viewWillAppear:animated];
+    if(self.tableView.isEditing) {
+        [self allowUndo];
+        [self allowRedo];
+    }
 }
 
 
@@ -59,15 +72,12 @@
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [self.products count];
 }
@@ -100,6 +110,11 @@
         // Delete the row from the data source
         [self.dataManager deleteProductAtIndex:indexPath.row forCompany:self.currentCompany];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        if(self.tableView.isEditing) {
+            [self allowUndo];
+            [self allowRedo];
+        }
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -112,16 +127,18 @@
     Product *productToMove = self.product;
     [self.products removeObjectAtIndex:fromIndexPath.row];
     [self.products insertObject:productToMove atIndex:toIndexPath.row];
+    
+    if(self.tableView.isEditing) {
+        [self allowUndo];
+        [self allowRedo];
+    }
 }
-
-
 
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
 // Return NO if you do not want the item to be re-orderable.
 return YES;
 }
-
 
  #pragma mark - Table view delegate
  
@@ -152,10 +169,47 @@ return YES;
     }
 }
 
-
-
 - (void)dealloc {
     [_tableView release];
+    [_redoButton release];
+    [_undoButton release];
     [super dealloc];
 }
+
+- (IBAction)redoChanges:(UIButton *)sender {
+    [self.dataManager.managedObjectContext redo];
+    [self.dataManager loadCoreData];
+    
+    for (Company *comp in self.dataManager.companyList) {
+        if ([comp.stockSymbol isEqualToString:self.currentCompany.stockSymbol]) {
+            self.products = comp.products;
+            [self.tableView reloadData];
+        }
+    }
+    [self allowUndo];
+}
+
+- (IBAction)undoChanges:(UIButton *)sender {
+    [self.dataManager.managedObjectContext undo];
+    [self.dataManager loadCoreData];
+    
+    for (Company *comp in self.dataManager.companyList) {
+        if ([comp.stockSymbol isEqualToString:self.currentCompany.stockSymbol]) {
+            self.products = comp.products;
+            [self.tableView reloadData];
+        }
+    }
+    [self allowRedo];
+}
+
+- (void)allowUndo {
+    if(self.dataManager.managedObjectContext.undoManager.canUndo == YES)
+        self.undoButton.hidden = NO;
+}
+
+- (void)allowRedo {
+    if(self.dataManager.managedObjectContext.undoManager.canRedo == YES)
+        self.redoButton.hidden = NO;
+}
+
 @end

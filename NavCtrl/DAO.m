@@ -61,9 +61,10 @@
     microsoft.products = [[NSMutableArray alloc] initWithObjects:holoLens, lumia950, surfacePro4, nil];
     samsung.products = [[NSMutableArray alloc] initWithObjects:galaxyNote, galaxyS, galaxyTab, nil];
     
+    self.managedCompanies = [[NSMutableArray alloc] init];
     // Create managedCompanyList based off of companyList
     for (Company *company in self.companyList) {
-        self.managedCompanies = [[NSMutableArray alloc] init];
+        
         ManagedCompany *managedCompany = [NSEntityDescription insertNewObjectForEntityForName:@"ManagedCompany" inManagedObjectContext:self.managedObjectContext];
         managedCompany.name = company.name;
         managedCompany.stockSymbol = company.stockSymbol;
@@ -81,6 +82,7 @@
             [managedCompany addProductsObject:managedProduct];
         }
     }
+    [self.managedObjectContext save:nil];
 }
 
 - (void)addCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL {
@@ -226,6 +228,7 @@
     NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [moc setPersistentStoreCoordinator:psc];
     [self setManagedObjectContext:moc];
+    self.managedObjectContext.undoManager = [[NSUndoManager alloc]init];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSURL *storeURL = [documentsURL URLByAppendingPathComponent:@"Model.sqlite"];
@@ -283,8 +286,6 @@
     [self.managedObjectContext deleteObject:[self.managedCompanies objectAtIndex:indexPathRow]];
     [self.managedCompanies removeObjectAtIndex:indexPathRow];
     [self.companyList removeObjectAtIndex:indexPathRow];
-    
-    self.undoManager
 }
 
 - (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany {

@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductVC">
             <connections>
+                <outlet property="redoButton" destination="Rd3-VL-eVG" id="3Vs-Ym-PZI"/>
                 <outlet property="tableView" destination="gNa-zb-Lno" id="F2M-E8-BMo"/>
+                <outlet property="undoButton" destination="PjO-gO-EN6" id="zbZ-MH-aFo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,21 +23,46 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gNa-zb-Lno">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gNa-zb-Lno">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="fsA-aI-Xkg"/>
                         <outlet property="delegate" destination="-1" id="Q5v-vc-9YK"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rd3-VL-eVG">
+                    <rect key="frame" x="0.0" y="633" width="187.5" height="33.5"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="Redo">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="redoChanges:" destination="-1" eventType="touchUpInside" id="2La-yh-6AU"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PjO-gO-EN6">
+                    <rect key="frame" x="187" y="633" width="187.5" height="33.5"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="Undo">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="undoChanges:" destination="-1" eventType="touchUpInside" id="YMs-RL-ct6"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="gNa-zb-Lno" secondAttribute="trailing" id="60x-h6-FvE"/>
-                <constraint firstAttribute="bottom" secondItem="gNa-zb-Lno" secondAttribute="bottom" id="IC3-hj-k0o"/>
-                <constraint firstItem="gNa-zb-Lno" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Iu8-tu-oAb"/>
-                <constraint firstItem="gNa-zb-Lno" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="UFv-IL-Rlu"/>
+                <constraint firstItem="PjO-gO-EN6" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="1:20" id="L92-3M-mjz"/>
+                <constraint firstItem="Rd3-VL-eVG" firstAttribute="width" secondItem="PjO-gO-EN6" secondAttribute="width" id="Ta8-xl-sKj"/>
+                <constraint firstAttribute="bottom" secondItem="Rd3-VL-eVG" secondAttribute="bottom" id="cjm-g3-zhx"/>
+                <constraint firstAttribute="bottom" secondItem="PjO-gO-EN6" secondAttribute="bottom" id="dFd-3a-m6z"/>
+                <constraint firstAttribute="trailing" secondItem="PjO-gO-EN6" secondAttribute="trailing" id="qQq-4Y-njS"/>
+                <constraint firstItem="PjO-gO-EN6" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="1:2" id="wFS-Ve-2Py"/>
+                <constraint firstItem="Rd3-VL-eVG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ygt-6T-OAE"/>
+                <constraint firstItem="Rd3-VL-eVG" firstAttribute="height" secondItem="PjO-gO-EN6" secondAttribute="height" id="ys9-l1-g00"/>
             </constraints>
         </view>
     </objects>
