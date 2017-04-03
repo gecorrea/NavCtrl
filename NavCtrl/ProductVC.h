@@ -16,7 +16,7 @@
 @property (retain, nonatomic) IBOutlet UIButton *redoButton;
 @property (retain, nonatomic) IBOutlet UIButton *undoButton;
 
-- (IBAction)redoChanges:(UIButton *)sender;
-- (IBAction)undoChanges:(UIButton *)sender;
+//- (IBAction)redoChanges:(UIButton *)sender;
+//- (IBAction)undoChanges:(UIButton *)sender;
 
 @end
