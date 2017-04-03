@@ -12,4 +12,13 @@
     return self;
 }
 
+- (void) dealloc {
+    [_name release];
+    [_stockSymbol release];
+    [_logoURLString release];
+    [_price release];
+    [_products release];
+    [super dealloc];
+}
+
 @end

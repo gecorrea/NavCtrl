@@ -8,7 +8,6 @@
 @property (nonatomic, retain) NSString *logoURLString;
 @property (nonatomic, retain) NSString *price;
 @property (nonatomic, retain) NSMutableArray *products;
-@property (nonatomic, retain) NSString *ticker;
 
 - (instancetype) initWithStockSymbol:(NSString *)stockSymbol andLogoURLString:(NSString *)logoURLString;
 

@@ -12,4 +12,11 @@
     return self;
 }
 
+- (void) dealloc {
+    [_name release];
+    [_imageURL release];
+    [_url release];
+    [super dealloc];
+}
+
 @end
