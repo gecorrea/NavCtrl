@@ -268,8 +268,6 @@
             company.logoURLString = mC.logoURL;
             company.price = mC.price;
             
-            [self.companyList addObject:company];
-            
             for (ManagedProduct *mP in mC.products) {
                 Product *product = [[Product alloc] init];
                 product.name = mP.name;
@@ -278,6 +276,7 @@
                 [self.products addObject:product];
             }
             company.products = [[NSMutableArray alloc] initWithArray:self.products];
+            [self.companyList addObject:company];
         }
     }
 }
@@ -289,14 +288,22 @@
 }
 
 - (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany {
-    ManagedCompany *currentMC = [self.managedCompanies objectAtIndex:[self.companyList indexOfObject:currentCompany]];
-    for (ManagedProduct *mP in currentMC.products) {
-        Product *currentProduct = [currentCompany.products objectAtIndex:indexPathRow];
-        if ([mP.name isEqualToString:currentProduct.name]) {
-            [self.managedObjectContext deleteObject:mP];
-        }
-    }
-    [[[self.companyList objectAtIndex:[self.companyList indexOfObject:currentCompany]] products] removeObjectAtIndex:indexPathRow];
+    NSUInteger companyIndex = [self.companyList indexOfObject:currentCompany];
+    ManagedCompany *currentMC = [self.managedCompanies objectAtIndex:companyIndex];
+    ManagedProduct *productToDelete = [[currentMC.products allObjects] objectAtIndex:indexPathRow];
+//    for (ManagedProduct *mP in currentMC.products) {
+//        Product *currentProduct = [currentCompany.products objectAtIndex:indexPathRow];
+//        if ([mP.name isEqualToString:currentProduct.name]) {
+//            //[self.managedObjectContext deleteObject:mP];
+//        
+//            [currentMC removeProductsObject:mP];
+//        }
+//    }
+    
+    NSMutableSet *mutableSet = [currentMC.products mutableCopy];
+    [mutableSet removeObject:productToDelete];
+    currentMC.products = [mutableSet copy];
+    [currentCompany.products removeObjectAtIndex:indexPathRow];
 }
 
 

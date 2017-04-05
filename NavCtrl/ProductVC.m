@@ -109,12 +109,13 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [self.dataManager deleteProductAtIndex:indexPath.row forCompany:self.currentCompany];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
+        // [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        self.currentCompany = [self.dataManager.companyList objectAtIndex:self.dataManager.currentIndexofCompany];
         if(self.tableView.isEditing) {
             [self allowUndo];
             [self allowRedo];
         }
+        [self.tableView reloadData];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -192,6 +193,7 @@ return YES;
 - (IBAction)undoChanges:(UIButton *)sender {
     [self.dataManager.managedObjectContext undo];
     [self.dataManager loadCoreData];
+    self.currentCompany = [self.dataManager.companyList objectAtIndex:self.dataManager.currentIndexofCompany];
     
     for (Company *comp in self.dataManager.companyList) {
         if ([comp.stockSymbol isEqualToString:self.currentCompany.stockSymbol]) {

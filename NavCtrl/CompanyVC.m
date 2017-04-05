@@ -139,6 +139,7 @@
              [self allowUndo];
              [self allowRedo];
          }
+         
          //call that method that hides or shows redo
          
      }
@@ -170,6 +171,7 @@
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.dataManager.currentIndexofCompany = indexPath.row;
     if(self.tableView.isEditing == false) {
         self.productViewController = [[ProductVC alloc]init];
         self.company = self.dataManager.companyList[indexPath.row];
