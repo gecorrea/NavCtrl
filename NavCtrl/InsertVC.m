@@ -148,6 +148,15 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void) dealloc {
+    [_dataManager release];
+    [_insertName release];
+    [_insertImageURL release];
+    [_insertURL release];
+    [_currentCompany release];
+    [super dealloc];
+}
+
 /*
 #pragma mark - Navigation
 

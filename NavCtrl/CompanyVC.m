@@ -32,7 +32,7 @@
     
     self.dataManager = [DAO sharedInstance];
     self.dataManager.delegate = self;
-    self.dataManager.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
+    self.dataManager.managedObjectContext.undoManager = [[[NSUndoManager alloc] init] autorelease];
     // make undo and redo buttons hidden
     self.redoButton.hidden = YES;
     self.undoButton.hidden = YES;
@@ -42,6 +42,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     [self.dataManager getCompanyData];
     [self.tableView reloadData];
     if(self.tableView.isEditing) {
@@ -75,11 +76,11 @@
         self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemAdd;
     }
     else {
-        self.insertViewController = [[InsertVC alloc] init];
-        self.insertViewController.title = @"New Company";
+        InsertVC *insertViewController = [[InsertVC alloc] init];
+        insertViewController.title = @"New Company";
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
         [self.navigationController
-         pushViewController:self.insertViewController
+         pushViewController:insertViewController
          animated:YES];
     }
 }
@@ -171,27 +172,26 @@
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if(self.tableView.isEditing == false) {
-        self.productViewController = [[ProductVC alloc]init];
+        ProductVC *productViewController = [[ProductVC alloc]init];
         self.company = self.dataManager.companyList[indexPath.row];
-        NSString *title = [[NSString alloc] init];
-        title = [self.company.name stringByAppendingString:@" Products"];
-        self.productViewController.title = title;
+        NSString *title = [self.company.name stringByAppendingString:@" Products"];
+        productViewController.title = title;
         self.currentCompany = self.dataManager.companyList[indexPath.row];
-        self.productViewController.currentCompany = self.currentCompany;
-        self.productViewController.products = self.currentCompany.products;
+        productViewController.currentCompany = self.currentCompany;
+        productViewController.products = self.currentCompany.products;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController pushViewController:self.productViewController animated:YES];
+        [self.navigationController pushViewController:productViewController animated:YES];
     }
     else {
-        self.editViewController = [[EditVC alloc] init];
-        self.editViewController.title = @"Edit Company";
+        EditVC *editViewController = [[EditVC alloc] init];
+        editViewController.title = @"Edit Company";
         self.currentCompany = self.dataManager.companyList[indexPath.row];
-        self.editViewController.currentCompany = self.currentCompany;
-        self.editViewController.name = self.currentCompany.stockSymbol;
-        self.editViewController.imgeURL = self.currentCompany.logoURLString;
-        [self.editViewController.editURL isHidden];
+        editViewController.currentCompany = self.currentCompany;
+        editViewController.name = self.currentCompany.stockSymbol;
+        editViewController.imgeURL = self.currentCompany.logoURLString;
+        editViewController.editURL.hidden = YES;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController pushViewController:self.editViewController animated:YES];
+        [self.navigationController pushViewController:editViewController animated:YES];
     }
 }
 

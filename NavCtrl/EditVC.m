@@ -80,6 +80,19 @@
     [self.view endEditing:YES];
 }
 
+- (void) dealloc {
+    [_dataManager release];
+    [_name release];
+    [_imgeURL release];
+    [_url release];
+    [_editName release];
+    [_editImageURL release];
+    [_editURL release];
+    [_currentCompany release];
+    [_currentProduct release];
+    [super dealloc];
+}
+
 /*
 #pragma mark - Navigation
 

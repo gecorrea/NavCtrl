@@ -7,7 +7,7 @@
     if (self) {
         self.stockSymbol = stockSymbol;
         self.logoURLString = logoURLString;
-        self.products = [[NSMutableArray alloc] init];
+        self.products = [[[NSMutableArray alloc] init] autorelease];
     }
     return self;
 }

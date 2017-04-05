@@ -63,4 +63,11 @@
     [self.dataManager saveCoreData];
 }
 
+- (void) dealloc {
+//    [_navigationController release];
+//    [_dataManager release];
+//    [_window release];
+    [super dealloc];
+}
+
 @end
