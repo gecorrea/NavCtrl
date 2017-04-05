@@ -33,11 +33,11 @@
         self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemAdd;
     }
     else {
-        self.insertViewController = [[InsertVC alloc] init];
-        self.insertViewController.title = @"Add Product";
-        self.insertViewController.currentCompany = self.currentCompany;
+        InsertVC *insertViewController = [[InsertVC alloc] init];
+        insertViewController.title = @"Add Product";
+        insertViewController.currentCompany = self.currentCompany;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController pushViewController:self.insertViewController animated:YES];
+        [self.navigationController pushViewController:insertViewController animated:YES];
     }
 }
 
@@ -167,16 +167,16 @@ return YES;
         [self.navigationController pushViewController:detailViewController animated:YES];
     }
     else {
-        self.editViewController = [[EditVC alloc] init];
-        self.editViewController.title = @"Edit Product";
+        EditVC *editViewController = [[EditVC alloc] init];
+        editViewController.title = @"Edit Product";
         self.product = [self.products objectAtIndex:[indexPath row]];
-        self.editViewController.currentCompany = self.currentCompany;
-        self.editViewController.currentProduct = self.product;
-        self.editViewController.name = self.product.name;
-        self.editViewController.imgeURL = self.product.imageURL;
-        self.editViewController.url = self.product.url;
+        editViewController.currentCompany = self.currentCompany;
+        editViewController.currentProduct = self.product;
+        editViewController.name = self.product.name;
+        editViewController.imgeURL = self.product.imageURL;
+        editViewController.url = self.product.url;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController pushViewController:self.editViewController animated:YES];
+        [self.navigationController pushViewController:editViewController animated:YES];
     }
 }
 

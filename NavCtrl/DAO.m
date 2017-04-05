@@ -146,7 +146,7 @@
 }
 
 - (NSString *)getURLString {
-    NSString *urlString = [[NSString alloc] initWithString:@"http://finance.yahoo.com/d/quotes.csv?s="];
+    NSString *urlString = [[[NSString alloc] initWithString:@"http://finance.yahoo.com/d/quotes.csv?s="] autorelease];
     for (int i=0; i<self.companyList.count; i++) {
         Company *currentCompany = self.companyList[i];
         if (currentCompany == [self.companyList lastObject]) {
@@ -173,12 +173,15 @@
             
         }
         else {
-            NSString *dataString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            NSString *dataString = [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
             dataString = [dataString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
             NSArray *tempArray = [dataString componentsSeparatedByString:@"\n"];
+            
             NSMutableArray *mutableArray = [[NSMutableArray alloc] initWithArray:tempArray];
+            
+            
             [mutableArray removeLastObject];
-            NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+            self.dataArray = [[NSMutableArray alloc] init];
             
             for (NSString *element in mutableArray) {
                 NSArray *sortingArray = [element componentsSeparatedByString:@","];
@@ -191,25 +194,32 @@
                 else {
                     stringToSort = [sortingArray firstObject];
                 }
-                [dataArray addObject:stringToSort];
-                [dataArray addObject:[sortingArray lastObject]];
+                [self.dataArray addObject:stringToSort];
+                [self.dataArray addObject:[sortingArray lastObject]];
             }
+            
+            [mutableArray release];
+            
+            
+            
+            
             
             dispatch_async(dispatch_get_main_queue(), ^(){
                 int index = 0;
-                for(int i=0; i<dataArray.count; i += 2) {
+                for(int i=0; i<self.dataArray.count; i += 2) {
                     Company *currentCompany = self.companyList[index];
-                    currentCompany.name = dataArray[i];
-                    if([dataArray[i+1] isEqualToString:@"N/A"]) {
-                        currentCompany.price = dataArray[i+1];
+                    currentCompany.name = self.dataArray[i];
+                    if([self.dataArray[i+1] isEqualToString:@"N/A"]) {
+                        currentCompany.price = self.dataArray[i+1];
                     }
                     else {
                         currentCompany.price = @"$";
-                        currentCompany.price = [currentCompany.price stringByAppendingString:dataArray[i+1]];
+                        currentCompany.price = [currentCompany.price stringByAppendingString:self.dataArray[i+1]];
                     }
                     index++;
                 }
                 [self.delegate receivedNamesAndPrices];
+                
                 
             });
         }
@@ -225,9 +235,12 @@
     NSAssert(mom != nil, @"Error initializing Managed Object Model");
     
     NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
+//    [mom release];
     NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [moc setPersistentStoreCoordinator:psc];
+//    [psc release];
     [self setManagedObjectContext:moc];
+//    [moc release];
     self.managedObjectContext.undoManager = [[NSUndoManager alloc]init];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -261,7 +274,7 @@
         self.companyList = [[NSMutableArray alloc] init];
         self.managedCompanies = [[NSMutableArray alloc] initWithArray:results];
         for (ManagedCompany *mC in results) {
-            self.products = [[NSMutableArray alloc] init];
+            self.products = [[[NSMutableArray alloc] init] autorelease];
             Company *company = [[Company alloc] init];
             company.name = mC.name;
             company.stockSymbol = mC.stockSymbol;
@@ -299,11 +312,16 @@
 
 
 
-//- (void)dealloc {
-//    // Should never be called, but just here for clarity really.
-//    [self.someProperty release];
-//    [super dealloc];
-//}
-    
+- (void)dealloc {
+    // Should never be called, but just here for clarity really.
+    [_companyList release];
+    [_products release];
+    [_managedCompanies release];
+    [_dataArray release];
+    [_managedObjectContext release];
+    [_delegate release];
+    [super dealloc];
+}
+
     
 @end

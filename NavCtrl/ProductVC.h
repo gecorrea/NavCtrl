@@ -11,8 +11,8 @@
 @property (nonatomic, retain) NSMutableArray *products;
 @property (nonatomic, retain) Company *currentCompany;
 @property (nonatomic, retain) Product *product;
-@property (nonatomic, retain) InsertVC *insertViewController;
-@property (nonatomic, retain) EditVC *editViewController;
+//@property (nonatomic, retain) InsertVC *insertViewController;
+//@property (nonatomic, retain) EditVC *editViewController;
 @property (retain, nonatomic) IBOutlet UIButton *redoButton;
 @property (retain, nonatomic) IBOutlet UIButton *undoButton;
 

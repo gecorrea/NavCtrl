@@ -20,6 +20,8 @@
 @property (strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSMutableArray *managedCompanies;
 @property NSInteger currentIndexofCompany;
+@property (nonatomic, retain) NSMutableArray *dataArray;
+
 
 - (void)initializeCoreData;
 + (instancetype)sharedInstance;
