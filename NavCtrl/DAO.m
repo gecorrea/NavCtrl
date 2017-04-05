@@ -81,6 +81,7 @@
             managedProduct.url = product.url;
             [managedCompany addProductsObject:managedProduct];
         }
+        [company release];
     }
     [self.managedObjectContext save:nil];
 }
@@ -95,6 +96,7 @@
     newManagedCompany.logoURL = newCompany.logoURLString;
     newManagedCompany.price = newCompany.price;
     [self.managedCompanies addObject:newManagedCompany];
+    [newCompany release];
 }
 
 - (void)addProduct:(NSString *)name andImageURL:(NSString *)imageURL andURL:(NSString *)url forCurrentCompany:(Company *)currentCompany {
@@ -106,6 +108,7 @@
     newManagedProduct.imageURL = newProduct.imageURL;
     newManagedProduct.url = newProduct.url;
     [[self.managedCompanies objectAtIndex:[self.companyList indexOfObject:currentCompany]] addProductsObject:newManagedProduct];
+    [newProduct release];
 }
 
 - (void)editCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany {
@@ -199,8 +202,6 @@
             }
             
             [mutableArray release];
-            
-            
             
             
             

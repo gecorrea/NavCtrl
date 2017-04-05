@@ -15,11 +15,6 @@
     self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItems = @[addButton, self.editButton];
     
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
-    // Do any additional setup after loading the view from its nib.
     self.dataManager = [DAO sharedInstance];
     self.dataManager.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
     // make undo and redo buttons hidden
@@ -52,17 +47,18 @@
         [[self.navigationItem.rightBarButtonItems objectAtIndex:[self.navigationItem.rightBarButtonItems indexOfObject:self.editButton]] setTitle:@"Done"];
         
         // make redo and undo buttons visiable only if a redo/undo action can be done.
-//        [self allowRedo];
-//        [self allowUndo];
+        [self allowRedo];
+        [self allowUndo];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
     [self.tableView reloadData];
-//    if(self.tableView.isEditing) {
-//        [self allowUndo];
-//        [self allowRedo];
-//    }
+    if(self.tableView.isEditing) {
+        [self allowUndo];
+        [self allowRedo];
+    }
 }
 
 
@@ -139,10 +135,10 @@
     [self.products removeObjectAtIndex:fromIndexPath.row];
     [self.products insertObject:productToMove atIndex:toIndexPath.row];
     
-//    if(self.tableView.isEditing) {
-//        [self allowUndo];
-//        [self allowRedo];
-//    }
+    if(self.tableView.isEditing) {
+        [self allowUndo];
+        [self allowRedo];
+    }
 }
 
 // Override to support conditional rearranging of the table view.
@@ -182,8 +178,13 @@ return YES;
 
 - (void)dealloc {
     [_tableView release];
-//    [_redoButton release];
-//    [_undoButton release];
+    [_redoButton release];
+    [_undoButton release];
+    [_currentCompany release];
+    [_editButton release];
+    [_dataManager release];
+    [_product release];
+    [_products release];
     [super dealloc];
 }
 

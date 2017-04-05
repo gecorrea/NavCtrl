@@ -28,6 +28,7 @@
     }
     else {
         self.isCompany = YES;
+        [self.editURL setHidden:YES];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardDidShowNotification object:nil];

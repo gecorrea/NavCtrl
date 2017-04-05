@@ -26,10 +26,6 @@
     UIBarButtonItem *insertButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
     self.navigationItem.rightBarButtonItem = insertButton;
     
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    
     self.dataManager = [DAO sharedInstance];
     self.dataManager.delegate = self;
     self.dataManager.managedObjectContext.undoManager = [[[NSUndoManager alloc] init] autorelease];
@@ -79,9 +75,7 @@
         InsertVC *insertViewController = [[InsertVC alloc] init];
         insertViewController.title = @"New Company";
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController
-         pushViewController:insertViewController
-         animated:YES];
+        [self.navigationController pushViewController:insertViewController animated:YES];
     }
 }
 
@@ -213,6 +207,11 @@
 
 - (void) dealloc {
     [_tableView release];
+    [_company release];
+    [_currentCompany release];
+    [_dataManager release];
+    [_redoButton release];
+    [_undoButton release];
     [super dealloc];
 }
 - (IBAction)redoChanges:(UIButton *)sender {

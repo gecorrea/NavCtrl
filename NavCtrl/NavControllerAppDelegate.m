@@ -13,25 +13,20 @@
     
     
     // Override point for customization after application launch.
-    CompanyVC *rootController = [[CompanyVC alloc]init];
+    CompanyVC *rootController = [[[CompanyVC alloc]init] autorelease];
     self.navigationController = [[UINavigationController alloc]
                             initWithRootViewController:rootController];
     
-    self.window = [[UIWindow alloc]
-                   initWithFrame:[[UIScreen mainScreen] bounds]];
+    // Set nav controller text color and nav controller bar color.
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setRootViewController:self.navigationController];
     [self.window makeKeyAndVisible];
     self.dataManager = [DAO sharedInstance];
     return YES;
-    
-    
-    /*
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    return YES;
-     */
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -64,9 +59,9 @@
 }
 
 - (void) dealloc {
-//    [_navigationController release];
-//    [_dataManager release];
-//    [_window release];
+    [_navigationController release];
+    [_dataManager release];
+    [_window release];
     [super dealloc];
 }
 
