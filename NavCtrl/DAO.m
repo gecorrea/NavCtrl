@@ -290,16 +290,7 @@
 - (void)deleteProductAtIndex:(NSUInteger)indexPathRow forCompany:(Company *)currentCompany {
     NSUInteger companyIndex = [self.companyList indexOfObject:currentCompany];
     ManagedCompany *currentMC = [self.managedCompanies objectAtIndex:companyIndex];
-    ManagedProduct *productToDelete = [[currentMC.products allObjects] objectAtIndex:indexPathRow];
-//    for (ManagedProduct *mP in currentMC.products) {
-//        Product *currentProduct = [currentCompany.products objectAtIndex:indexPathRow];
-//        if ([mP.name isEqualToString:currentProduct.name]) {
-//            //[self.managedObjectContext deleteObject:mP];
-//        
-//            [currentMC removeProductsObject:mP];
-//        }
-//    }
-    
+    ManagedProduct *productToDelete = [[currentMC.products allObjects] objectAtIndex:indexPathRow];    
     NSMutableSet *mutableSet = [currentMC.products mutableCopy];
     [mutableSet removeObject:productToDelete];
     currentMC.products = [mutableSet copy];

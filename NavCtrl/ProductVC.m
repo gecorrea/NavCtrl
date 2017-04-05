@@ -52,17 +52,17 @@
         [[self.navigationItem.rightBarButtonItems objectAtIndex:[self.navigationItem.rightBarButtonItems indexOfObject:self.editButton]] setTitle:@"Done"];
         
         // make redo and undo buttons visiable only if a redo/undo action can be done.
-        [self allowRedo];
-        [self allowUndo];
+//        [self allowRedo];
+//        [self allowUndo];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self.tableView reloadData];
-    if(self.tableView.isEditing) {
-        [self allowUndo];
-        [self allowRedo];
-    }
+//    if(self.tableView.isEditing) {
+//        [self allowUndo];
+//        [self allowRedo];
+//    }
 }
 
 
@@ -109,6 +109,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [self.dataManager deleteProductAtIndex:indexPath.row forCompany:self.currentCompany];
+
         // [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         self.currentCompany = [self.dataManager.companyList objectAtIndex:self.dataManager.currentIndexofCompany];
         if(self.tableView.isEditing) {
@@ -116,6 +117,15 @@
             [self allowRedo];
         }
         [self.tableView reloadData];
+
+        //DO i want the next line of code?
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+//        if(self.tableView.isEditing) {
+//            [self allowUndo];
+//            [self allowRedo];
+//        }
+
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -129,10 +139,10 @@
     [self.products removeObjectAtIndex:fromIndexPath.row];
     [self.products insertObject:productToMove atIndex:toIndexPath.row];
     
-    if(self.tableView.isEditing) {
-        [self allowUndo];
-        [self allowRedo];
-    }
+//    if(self.tableView.isEditing) {
+//        [self allowUndo];
+//        [self allowRedo];
+//    }
 }
 
 // Override to support conditional rearranging of the table view.
@@ -172,8 +182,8 @@ return YES;
 
 - (void)dealloc {
     [_tableView release];
-    [_redoButton release];
-    [_undoButton release];
+//    [_redoButton release];
+//    [_undoButton release];
     [super dealloc];
 }
 
@@ -213,5 +223,6 @@ return YES;
     if(self.dataManager.managedObjectContext.undoManager.canRedo == YES)
         self.redoButton.hidden = NO;
 }
+
 
 @end
