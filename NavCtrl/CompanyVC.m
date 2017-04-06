@@ -67,7 +67,7 @@
 }
 
 - (void)toggleInsertMode {
-    if (self.tableView.isEditing) {
+    if (self.tableView.isEditing == NO) {
         [self.tableView setEditing:NO animated:YES];
         self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemAdd;
     }

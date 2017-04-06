@@ -184,7 +184,7 @@
             
             
             [mutableArray removeLastObject];
-            self.dataArray = [[NSMutableArray alloc] init];
+            self.dataArray = [[[NSMutableArray alloc] init] autorelease];
             
             for (NSString *element in mutableArray) {
                 NSArray *sortingArray = [element componentsSeparatedByString:@","];
@@ -220,8 +220,7 @@
                     index++;
                 }
                 [self.delegate receivedNamesAndPrices];
-                
-                
+                [session release];
             });
         }
     }] resume];
