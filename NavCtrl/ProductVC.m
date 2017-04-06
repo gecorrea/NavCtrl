@@ -11,8 +11,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
+    
+    //[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
     self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
+    self.navigationItem.leftBarButtonItem = backButton;
     self.navigationItem.rightBarButtonItems = @[addButton, self.editButton];
     
     self.dataManager = [DAO sharedInstance];
@@ -56,6 +60,16 @@
         [self allowRedo];
         [self allowUndo];
     }
+}
+
+- (void)backButtonPressed {
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromLeft; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

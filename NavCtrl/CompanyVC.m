@@ -181,7 +181,7 @@
         self.currentCompany = self.dataManager.companyList[indexPath.row];
         productViewController.currentCompany = self.currentCompany;
         productViewController.products = self.currentCompany.products;
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
+//        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
         CATransition* transition = [CATransition animation];
         transition.duration = 0.5;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
