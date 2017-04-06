@@ -67,7 +67,7 @@
 }
 
 - (void)toggleInsertMode {
-    if (self.tableView.isEditing == NO) {
+    if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
         self.navigationItem.rightBarButtonItem.style = UIBarButtonSystemItemAdd;
     }
@@ -75,7 +75,13 @@
         InsertVC *insertViewController = [[InsertVC alloc] init];
         insertViewController.title = @"New Company";
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController pushViewController:insertViewController animated:YES];
+        CATransition* transition = [CATransition animation];
+        transition.duration = 0.5;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+        transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:insertViewController animated:NO];
     }
 }
 
@@ -176,7 +182,13 @@
         productViewController.currentCompany = self.currentCompany;
         productViewController.products = self.currentCompany.products;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController pushViewController:productViewController animated:YES];
+        CATransition* transition = [CATransition animation];
+        transition.duration = 0.5;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionMoveIn; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+        transition.subtype = kCATransitionFromRight; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:productViewController animated:NO];
     }
     else {
         EditVC *editViewController = [[EditVC alloc] init];
@@ -187,7 +199,13 @@
         editViewController.imgeURL = self.currentCompany.logoURLString;
         editViewController.editURL.hidden = YES;
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        [self.navigationController pushViewController:editViewController animated:YES];
+        CATransition* transition = [CATransition animation];
+        transition.duration = 0.5;
+        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+        transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+        [self.navigationController.view.layer addAnimation:transition forKey:nil];
+        [self.navigationController pushViewController:editViewController animated:NO];
     }
 }
 

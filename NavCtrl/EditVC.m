@@ -48,7 +48,13 @@
     else {
         [self.dataManager editProduct:self.editName.text andImageURL:self.editImageURL.text andURL:self.editURL.text forCurrentCompany:self.currentCompany forCurrentProduct:self.currentProduct];
     }
-    [self.navigationController popViewControllerAnimated:true];
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (void)keyboardWillShow:(NSNotification*)aNotification {
@@ -104,10 +110,4 @@
 }
 */
 
-//- (void)dealloc {
-//    [_editName release];
-//    [_editImageURL release];
-//    [_editURL release];
-//    [super dealloc];
-//}
 @end
