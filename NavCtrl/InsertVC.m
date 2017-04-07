@@ -11,16 +11,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // Call shared instance of data manager from DAO
     self.dataManager = [DAO sharedInstance];
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    
+    // Create and set the custom back arrow button
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
+    self.navigationItem.leftBarButtonItem = backButton;
+    
+    // Create and set the save button
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveInfo)];
     self.navigationItem.rightBarButtonItem = saveButton;
     
+    // Set the text alignment to the center of each text field
     self.insertName.textAlignment = NSTextAlignmentCenter;
     self.insertURL.textAlignment = NSTextAlignmentCenter;
     self.insertImageURL.textAlignment = NSTextAlignmentCenter;
+    
+    // Determine which text fields to show based on Nav Ctrl title and set isComapny
+    // Add placeholder text to text fields
     if ([self.title isEqualToString:@"Add Product"]) {
         self.insertName.placeholder = @"Insert Product Name";
         self.insertImageURL.placeholder = @"Insert Image URL";
@@ -30,15 +39,28 @@
     else {
         self.insertName.placeholder = @"Insert Company Stock Symbol";
         self.insertImageURL.placeholder = @"Insert Company Logo URL";
-        self.insertURL.hidden = YES;
+        [self.insertURL setHidden:YES];
         self.isCompany = YES;
     }
     
+    // Allows keyboard to show or be hidden if touch in text field or touch outside text field.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardDidShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
 
+// Method to go back to previous VC
+- (void)backButtonPressed {
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromLeft; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+// Method to start checking if info can be saved
 - (void)saveInfo {
     BOOL isDuplicate = NO;
     if (self.isCompany == YES) {
@@ -62,6 +84,7 @@
     [self.navigationController popViewControllerAnimated:NO];
 }
 
+// Method to check if company is a duplicate
 - (BOOL)checkIfDuplicateCompany:(NSString *)name {
     BOOL returnValue = NO;
     for (Company *company in self.dataManager.companyList) {
@@ -77,6 +100,7 @@
     return returnValue;
 }
 
+// Method to check if product is a duplicate
 - (BOOL)checkIfDuplicateProduct:(NSString *)name forCompany:(Company *)company {
     BOOL returnValue = NO;
     for (Product *product in company.products) {
@@ -92,10 +116,12 @@
     return returnValue;
 }
 
+// Method to save company
 - (void)saveCompany {
     [self.dataManager addCompany:self.insertName.text andImageURL:self.insertImageURL.text];
 }
 
+// Method to save product
 - (void)saveProduct {
     [self.dataManager addProduct:self.insertName.text andImageURL:self.insertImageURL.text andURL:self.insertURL.text forCurrentCompany:self.currentCompany];
 }
@@ -109,7 +135,7 @@
     [UIView animateWithDuration:0.25 animations:^
      {
          CGRect newFrame = [self.view frame];
-         newFrame.origin.y = -50; // tweak here to adjust the moving position
+         newFrame.origin.y = -50; // Tweak here to adjust the moving position
          [self.view setFrame:newFrame];
          
      }completion:^(BOOL finished)
@@ -122,7 +148,7 @@
     [UIView animateWithDuration:0.25 animations:^
      {
          CGRect newFrame = [self.view frame];
-         newFrame.origin.y = 0; // tweak here to adjust the moving position
+         newFrame.origin.y = 0; // Tweak here to adjust the moving position
          [self.view setFrame:newFrame];
          
      }completion:^(BOOL finished)
@@ -136,6 +162,7 @@
     [self.view endEditing:YES];
 }
 
+// Alert that is show if info entered is a duplicate
 - (void)showSimpleAlert {
     NSString *title = NSLocalizedString(@"ERROR", nil);
     NSString *message = NSLocalizedString(@"Company or product was not added because it already exist.", nil);

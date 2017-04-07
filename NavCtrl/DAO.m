@@ -114,12 +114,12 @@
 - (void)editCompany:(NSString *)stockSymbol andImageURL:(NSString *)imageURL forCurrentCompany:(Company *)currentCompany {
     for (ManagedCompany *mC in self.managedCompanies) {
         if (mC.stockSymbol == currentCompany.stockSymbol) {
-            // set stockSymbol and logoURLString for NSObject (currentCompany)
+            // Set stockSymbol and logoURLString for NSObject (currentCompany)
             currentCompany.stockSymbol = stockSymbol;
             currentCompany.logoURLString = imageURL;
-            // call getCompanyData to get name and price for currentComapny
+            // Call getCompanyData to get name and price for currentComapny
             [self getCompanyData];
-            // set name, stockSymbol, logoURLString and price to ManagedCompany (mC) from currentCompany
+            // Set name, stockSymbol, logoURLString and price to ManagedCompany (mC) from currentCompany
             mC.name = currentCompany.name;
             mC.stockSymbol = currentCompany.stockSymbol;
             mC.logoURL = currentCompany.logoURLString;
@@ -220,8 +220,8 @@
                     index++;
                 }
                 [self.delegate receivedNamesAndPrices];
-                [session release];
             });
+            [session release];
         }
     }] resume];
 }
@@ -235,12 +235,9 @@
     NSAssert(mom != nil, @"Error initializing Managed Object Model");
     
     NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
-//    [mom release];
     NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [moc setPersistentStoreCoordinator:psc];
-//    [psc release];
     [self setManagedObjectContext:moc];
-//    [moc release];
     self.managedObjectContext.undoManager = [[NSUndoManager alloc]init];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *documentsURL = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -313,7 +310,6 @@
 
 
 - (void)dealloc {
-    // Should never be called, but just here for clarity really.
     [_companyList release];
     [_products release];
     [_managedCompanies release];
@@ -322,6 +318,5 @@
     [_delegate release];
     [super dealloc];
 }
-
     
 @end

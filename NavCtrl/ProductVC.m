@@ -11,21 +11,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
     
-    //[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:self.navigationItem.backBarButtonItem.style target:nil action:nil];
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
-    self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
+    // Create and set the custom back arrow button
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
     self.navigationItem.leftBarButtonItem = backButton;
+    
+    // Create and set custom add button and add edit button
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navAdd.png"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleInsertMode)];
+    self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItems = @[addButton, self.editButton];
     
+    // Call shared instance of data manager from DAO
     self.dataManager = [DAO sharedInstance];
+    // Initialize undoManager for managed objects
     self.dataManager.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
-    // make undo and redo buttons hidden
+    // Make undo and redo buttons hidden
     self.redoButton.hidden = YES;
     self.undoButton.hidden = YES;
 }
 
+// Method called when addButton is pressed
 - (void)toggleInsertMode {
     if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
@@ -46,6 +51,7 @@
     }
 }
 
+// Method called when edit button is pressed
 - (void)toggleEditMode {
     if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
@@ -62,6 +68,7 @@
     }
 }
 
+// Method to go back to previous VC
 - (void)backButtonPressed {
     CATransition* transition = [CATransition animation];
     transition.duration = 0.5;
@@ -72,6 +79,7 @@
     [self.navigationController popViewControllerAnimated:NO];
 }
 
+// Will allow undo/redo if available and view is in edit mode
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self.tableView reloadData];
@@ -126,22 +134,13 @@
         // Delete the row from the data source
         [self.dataManager deleteProductAtIndex:indexPath.row forCompany:self.currentCompany];
 
-        // [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         self.currentCompany = [self.dataManager.companyList objectAtIndex:self.dataManager.currentIndexofCompany];
         if(self.tableView.isEditing) {
             [self allowUndo];
             [self allowRedo];
         }
         [self.tableView reloadData];
-
-        //DO i want the next line of code?
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
-//        if(self.tableView.isEditing) {
-//            [self allowUndo];
-//            [self allowRedo];
-//        }
-
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -172,40 +171,23 @@ return YES;
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here, for example:
-    // Create the next view controller.
-    if(self.tableView.isEditing == false) {
-        DetailVC *detailViewController = [[DetailVC alloc] initWithNibName:@"DetailVC" bundle:nil];
-        // Pass the selected object to the new view controller.
-        self.product = [self.products objectAtIndex:[indexPath row]];
-        NSURL *url = [NSURL URLWithString:self.product.url];
-        detailViewController.url = url;
-        // Push the view controller.
-        CATransition* transition = [CATransition animation];
-        transition.duration = 0.5;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        transition.type = kCATransitionPush; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
-        transition.subtype = kCATransitionFromRight; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
-        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-        [self.navigationController pushViewController:detailViewController animated:NO];
-    }
-    else {
-        EditVC *editViewController = [[EditVC alloc] init];
-        editViewController.title = @"Edit Product";
-        self.product = [self.products objectAtIndex:[indexPath row]];
-        editViewController.currentCompany = self.currentCompany;
-        editViewController.currentProduct = self.product;
-        editViewController.name = self.product.name;
-        editViewController.imgeURL = self.product.imageURL;
-        editViewController.url = self.product.url;
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
-        CATransition* transition = [CATransition animation];
-        transition.duration = 0.5;
-        transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        transition.type = kCATransitionReveal; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
-        transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
-        [self.navigationController.view.layer addAnimation:transition forKey:nil];
-        [self.navigationController pushViewController:editViewController animated:NO];
-    }
+    // Create the next detailVC
+    DetailVC *detailViewController = [[DetailVC alloc] initWithNibName:@"DetailVC" bundle:nil];
+    // Pass the selected object to the new view controller.
+    self.product = [self.products objectAtIndex:[indexPath row]];
+    NSURL *url = [NSURL URLWithString:self.product.url];
+    detailViewController.url = url;
+    detailViewController.currentCompany = self.currentCompany;
+    self.product =[self.products objectAtIndex:[indexPath row]];
+    detailViewController.currentProduct = self.product;
+    // Push the view controller.
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromRight; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:detailViewController animated:NO];
 }
 
 - (void)dealloc {

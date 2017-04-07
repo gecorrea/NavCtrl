@@ -23,13 +23,18 @@
     // Display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.leftBarButtonItem = editButton;
-    UIBarButtonItem *insertButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(toggleInsertMode)];
-    self.navigationItem.rightBarButtonItem = insertButton;
     
+    // Create and set custom add button and add edit button
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navAdd.png"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleInsertMode)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    
+    // Call shared instance of data manager from DAO
     self.dataManager = [DAO sharedInstance];
+    // Set data manager delegate
     self.dataManager.delegate = self;
+    // Initialize undoManager for managed objects
     self.dataManager.managedObjectContext.undoManager = [[[NSUndoManager alloc] init] autorelease];
-    // make undo and redo buttons hidden
+    // Make undo and redo buttons hidden
     self.redoButton.hidden = YES;
     self.undoButton.hidden = YES;
     
@@ -60,12 +65,13 @@
         [self.tableView setAllowsSelectionDuringEditing:true];
         self.navigationItem.leftBarButtonItem.title = @"Done";
         
-        // make redo and undo buttons visiable only if a redo/undo action can be done.
+        // Make redo and undo buttons visiable only if a redo/undo action can be done.
         [self allowRedo];
         [self allowUndo];
     }
 }
 
+// Method for insert mode
 - (void)toggleInsertMode {
     if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
@@ -141,8 +147,6 @@
              [self allowRedo];
          }
          
-         //call that method that hides or shows redo
-         
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
          // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -181,7 +185,7 @@
         self.currentCompany = self.dataManager.companyList[indexPath.row];
         productViewController.currentCompany = self.currentCompany;
         productViewController.products = self.currentCompany.products;
-//        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
+
         CATransition* transition = [CATransition animation];
         transition.duration = 0.5;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];

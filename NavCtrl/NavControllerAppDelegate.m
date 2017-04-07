@@ -18,7 +18,7 @@
                             initWithRootViewController:rootController];
     
     // Set nav controller text color and nav controller bar color.
-    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.4 green:0.8 blue:0.2 alpha:1.0]];
+    [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:0.49 green:0.70 blue:0.22 alpha:1.0]];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     

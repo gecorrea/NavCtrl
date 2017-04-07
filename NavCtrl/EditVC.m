@@ -11,26 +11,39 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // Call shared instance of data manager from DAO
     self.dataManager = [DAO sharedInstance];
+    
+    // Create and set the custom back arrow button
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
+    self.navigationItem.leftBarButtonItem = backButton;
+    
+    // Create and set the save button
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveInfo)];
     self.navigationItem.rightBarButtonItem = saveButton;
     
+    // Set the text alignment to the center of each text field
     self.editName.textAlignment = NSTextAlignmentCenter;
     self.editImageURL.textAlignment = NSTextAlignmentCenter;
     self.editURL.textAlignment = NSTextAlignmentCenter;
     
+    // Set the text for each text field
     self.editName.text = self.name;
     self.editImageURL.text = self.imgeURL;
     self.editURL.text = self.url;
     
+    // Determine which text fields to show based on whether isCompany
     if ([self.title isEqualToString:@"Edit Product"]) {
         self.isCompany = NO;
     }
     else {
+        // Hide editURL text field if isCompany is true
         self.isCompany = YES;
         [self.editURL setHidden:YES];
     }
     
+    // Allows keyboard to show or be hidden if touch in text field or touch outside text field.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardDidShowNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
@@ -41,6 +54,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Method to go back to previous VC
+- (void)backButtonPressed {
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromLeft; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+// Method to save the changes made
 - (void) saveInfo {
     if(self.isCompany == YES) {
         [self.dataManager editCompany:self.editName.text andImageURL:self.editImageURL.text forCurrentCompany:self.currentCompany];
