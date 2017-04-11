@@ -22,29 +22,38 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RSE-py-Ee0">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RSE-py-Ee0">
                     <rect key="frame" x="16" y="158" width="343" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MUB-Wo-IaH">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MUB-Wo-IaH">
+                    <rect key="frame" x="16" y="238" width="343" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9X0-51-Nd0">
                     <rect key="frame" x="16" y="318" width="343" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9X0-51-Nd0">
-                    <rect key="frame" x="16" y="468" width="343" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="9X0-51-Nd0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="4Bl-FK-y3p"/>
+                <constraint firstItem="MUB-Wo-IaH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="GHa-y5-Xlr"/>
+                <constraint firstAttribute="trailing" secondItem="MUB-Wo-IaH" secondAttribute="trailing" constant="16" id="LV2-1g-CKA"/>
+                <constraint firstItem="9X0-51-Nd0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="daX-dg-eYj"/>
+                <constraint firstItem="RSE-py-Ee0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="hAs-x6-Jji"/>
+                <constraint firstAttribute="trailing" secondItem="9X0-51-Nd0" secondAttribute="trailing" constant="16" id="qJI-F2-KVl"/>
+                <constraint firstItem="MUB-Wo-IaH" firstAttribute="top" secondItem="RSE-py-Ee0" secondAttribute="bottom" constant="50" id="rM4-9g-uWs"/>
+                <constraint firstItem="9X0-51-Nd0" firstAttribute="top" secondItem="MUB-Wo-IaH" secondAttribute="bottom" constant="50" id="uLo-Ff-Lve"/>
+                <constraint firstAttribute="trailing" secondItem="RSE-py-Ee0" secondAttribute="trailing" constant="16" id="wzE-20-eQ7"/>
+                <constraint firstItem="9X0-51-Nd0" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="zRe-oM-O0l"/>
+            </constraints>
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>

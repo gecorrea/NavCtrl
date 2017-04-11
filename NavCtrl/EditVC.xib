@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,29 +22,50 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qBu-nT-218">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qBu-nT-218">
+                    <rect key="frame" x="16" y="238" width="343" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ikt-dT-ZhX">
                     <rect key="frame" x="16" y="318" width="343" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ikt-dT-ZhX">
-                    <rect key="frame" x="16" y="468" width="343" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nZV-mh-BwW">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nZV-mh-BwW">
                     <rect key="frame" x="16" y="158" width="343" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="duM-h0-e8E">
+                    <rect key="frame" x="160.5" y="398" width="53" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="Delete">
+                        <color key="titleColor" red="1" green="0.1495500505" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="deleteItem:" destination="-1" eventType="touchUpInside" id="go1-9j-nKC"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ikt-dT-ZhX" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="8eE-4T-JgM"/>
+                <constraint firstItem="ikt-dT-ZhX" firstAttribute="top" secondItem="qBu-nT-218" secondAttribute="bottom" constant="50" id="Wt2-DO-vnZ"/>
+                <constraint firstItem="qBu-nT-218" firstAttribute="top" secondItem="nZV-mh-BwW" secondAttribute="bottom" constant="50" id="Xkb-4z-Lsr"/>
+                <constraint firstItem="ikt-dT-ZhX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="Yzq-SQ-Pb0"/>
+                <constraint firstItem="qBu-nT-218" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="ZDS-WW-YH6"/>
+                <constraint firstAttribute="trailing" secondItem="nZV-mh-BwW" secondAttribute="trailing" constant="16" id="bUK-pm-usH"/>
+                <constraint firstItem="duM-h0-e8E" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="dWo-K5-Kq1"/>
+                <constraint firstItem="ikt-dT-ZhX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jfu-Ro-MCL"/>
+                <constraint firstItem="duM-h0-e8E" firstAttribute="top" secondItem="ikt-dT-ZhX" secondAttribute="bottom" constant="50" id="toh-rf-f65"/>
+                <constraint firstAttribute="trailing" secondItem="qBu-nT-218" secondAttribute="trailing" constant="16" id="uBH-qk-L1Y"/>
+                <constraint firstItem="nZV-mh-BwW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="xZC-Bf-CWd"/>
+                <constraint firstAttribute="trailing" secondItem="ikt-dT-ZhX" secondAttribute="trailing" constant="16" id="y2o-HF-gwA"/>
+            </constraints>
         </view>
     </objects>
 </document>

@@ -10,6 +10,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // Set title for VC
+    self.title = @"Product Link";
+    
     // Create and set the custom back arrow button
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
     self.navigationItem.leftBarButtonItem = backButton;
@@ -48,6 +51,7 @@
     editViewController.name = self.currentProduct.name;
     editViewController.imgeURL = self.currentProduct.imageURL;
     editViewController.url = self.currentProduct.url;
+    editViewController.productIndex = self.productIndex;
     CATransition* transition = [CATransition animation];
     transition.duration = 0.5;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];

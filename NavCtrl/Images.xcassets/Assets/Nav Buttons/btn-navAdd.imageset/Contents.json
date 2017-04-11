@@ -14,12 +14,6 @@
       "idiom" : "universal",
       "filename" : "btn-navAdd@3x.png",
       "scale" : "3x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "btn-navAdd.png",
-      "unassigned" : true,
-      "scale" : "1x"
     }
   ],
   "info" : {

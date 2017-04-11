@@ -10,13 +10,14 @@
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) Company *company;
 @property (nonatomic, retain) Company *currentCompany;
-//@property (nonatomic, retain) ProductVC *productViewController;
-//@property (nonatomic, retain) InsertVC *insertViewController;
-//@property (nonatomic, retain) EditVC *editViewController;
 @property (retain, nonatomic) IBOutlet UIButton *redoButton;
 @property (retain, nonatomic) IBOutlet UIButton *undoButton;
+@property (retain, nonatomic) IBOutlet UILabel *emptyStateLabel;
+@property (retain, nonatomic) IBOutlet UIImageView *emptyStateImage;
+@property (retain, nonatomic) IBOutlet UIButton *emptyStateButton;
 
 - (IBAction)redoChanges:(UIButton *)sender;
 - (IBAction)undoChanges:(UIButton *)sender;
+- (IBAction)addCompany:(UIButton *)sender;
 
 @end

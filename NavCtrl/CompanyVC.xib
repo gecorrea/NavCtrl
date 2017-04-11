@@ -6,12 +6,16 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CompanyVC">
             <connections>
+                <outlet property="emptyStateButton" destination="Wg3-SE-CX4" id="nbC-6D-hpQ"/>
+                <outlet property="emptyStateImage" destination="X8M-U9-whF" id="p3d-z2-xge"/>
+                <outlet property="emptyStateLabel" destination="ON3-Mu-j4o" id="RkP-l7-Aqr"/>
                 <outlet property="redoButton" destination="auI-Bt-9Bh" id="TSA-Bg-2aE"/>
                 <outlet property="tableView" destination="b9s-ce-C0v" id="jhV-HN-9fx"/>
                 <outlet property="undoButton" destination="bFR-Xf-sLd" id="jFq-zL-8TU"/>
@@ -32,7 +36,7 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="auI-Bt-9Bh">
-                    <rect key="frame" x="0.0" y="633.5" width="187.5" height="33.5"/>
+                    <rect key="frame" x="0.0" y="637" width="187.5" height="30"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Redo">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,7 +46,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bFR-Xf-sLd">
-                    <rect key="frame" x="187.5" y="633.5" width="187.5" height="33.5"/>
+                    <rect key="frame" x="187.5" y="637" width="187.5" height="30"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Undo">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -51,23 +55,54 @@
                         <action selector="undoChanges:" destination="-1" eventType="touchUpInside" id="aVX-W3-pDw"/>
                     </connections>
                 </button>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You currently don't have any companies added" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ON3-Mu-j4o">
+                    <rect key="frame" x="15" y="310" width="345" height="47.5"/>
+                    <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="18"/>
+                    <color key="textColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                    <size key="shadowOffset" width="0.0" height="0.0"/>
+                </label>
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptystate-homeView" translatesAutoresizingMaskIntoConstraints="NO" id="X8M-U9-whF">
+                    <rect key="frame" x="151.5" y="207.5" width="72" height="72"/>
+                </imageView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wg3-SE-CX4">
+                    <rect key="frame" x="114" y="387.5" width="148" height="39"/>
+                    <fontDescription key="fontDescription" name="Thonburi" family="Thonburi" pointSize="20"/>
+                    <state key="normal" title="+Add Company">
+                        <color key="titleColor" red="0.22352941176470587" green="0.56470588235294117" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="addCompany:" destination="-1" eventType="touchUpInside" id="fAu-OQ-IWB"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="ON3-Mu-j4o" firstAttribute="top" secondItem="X8M-U9-whF" secondAttribute="bottom" constant="30" id="3OP-UM-Dar"/>
+                <constraint firstItem="ON3-Mu-j4o" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="CYh-ky-jBK"/>
+                <constraint firstItem="Wg3-SE-CX4" firstAttribute="top" secondItem="ON3-Mu-j4o" secondAttribute="bottom" constant="30" id="DnC-YU-iXj"/>
+                <constraint firstAttribute="trailing" secondItem="ON3-Mu-j4o" secondAttribute="trailing" constant="15" id="EgM-HW-y77"/>
                 <constraint firstAttribute="bottom" secondItem="auI-Bt-9Bh" secondAttribute="bottom" id="GbW-M0-vFJ"/>
                 <constraint firstAttribute="trailing" secondItem="bFR-Xf-sLd" secondAttribute="trailing" id="LWo-27-sd5"/>
+                <constraint firstItem="bFR-Xf-sLd" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="1:2" id="LhA-JW-AJ8"/>
+                <constraint firstItem="X8M-U9-whF" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="72:667" id="MVW-SH-9Px"/>
                 <constraint firstItem="auI-Bt-9Bh" firstAttribute="height" secondItem="bFR-Xf-sLd" secondAttribute="height" id="R4w-17-E7F"/>
                 <constraint firstAttribute="bottom" secondItem="bFR-Xf-sLd" secondAttribute="bottom" id="Uhn-H8-Ihs"/>
+                <constraint firstItem="ON3-Mu-j4o" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Uxi-by-EvW"/>
                 <constraint firstItem="b9s-ce-C0v" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bEQ-Zw-aaw"/>
-                <constraint firstItem="bFR-Xf-sLd" firstAttribute="width" secondItem="b9s-ce-C0v" secondAttribute="width" multiplier="1:2" id="eQ4-61-0An"/>
                 <constraint firstAttribute="trailing" secondItem="b9s-ce-C0v" secondAttribute="trailing" id="ebp-qQ-E2j"/>
-                <constraint firstItem="bFR-Xf-sLd" firstAttribute="height" secondItem="b9s-ce-C0v" secondAttribute="height" multiplier="1:20" id="iyn-Ln-Pmh"/>
                 <constraint firstItem="auI-Bt-9Bh" firstAttribute="width" secondItem="bFR-Xf-sLd" secondAttribute="width" id="jxM-lA-TgS"/>
                 <constraint firstItem="auI-Bt-9Bh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kzG-3Z-Z4d"/>
                 <constraint firstAttribute="bottom" secondItem="b9s-ce-C0v" secondAttribute="bottom" id="l6Y-x6-gSp"/>
+                <constraint firstItem="X8M-U9-whF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tzZ-Al-azw"/>
                 <constraint firstItem="b9s-ce-C0v" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="vPr-cD-R1S"/>
+                <constraint firstItem="Wg3-SE-CX4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xPA-SB-htc"/>
+                <constraint firstItem="ON3-Mu-j4o" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="yTp-qP-QMm"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="emptystate-homeView" width="72" height="72"/>
+    </resources>
 </document>

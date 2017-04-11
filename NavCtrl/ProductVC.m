@@ -9,8 +9,12 @@
 
 @implementation ProductVC
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    
+    // Set title of the CompanyVC
+    self.title = self.currentCompany.name;
+
     
     // Create and set the custom back arrow button
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navBack.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
@@ -21,6 +25,13 @@
     self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItems = @[addButton, self.editButton];
     
+    self.currentComapnyLogo.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.currentCompany.logoURLString]]];
+    [self.currentComapnyLogo sizeToFit];
+    self.currentCompanyName.text = self.currentCompany.name;
+    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:@" (" ];
+    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:self.currentCompany.stockSymbol];
+    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:@")"];
+    
     // Call shared instance of data manager from DAO
     self.dataManager = [DAO sharedInstance];
     // Initialize undoManager for managed objects
@@ -28,6 +39,23 @@
     // Make undo and redo buttons hidden
     self.redoButton.hidden = YES;
     self.undoButton.hidden = YES;
+    
+    // Will allow undo/redo if available and view is in edit mode
+    [self.tableView reloadData];
+    if (self.tableView.isEditing == NO) {
+        [self.tableView setEditing:NO animated:YES];
+        [[self.navigationItem.rightBarButtonItems objectAtIndex:[self.navigationItem.rightBarButtonItems indexOfObject:self.editButton]] setTitle:@"Edit"];
+    }
+    else {
+        [self.tableView setEditing:YES animated:YES];
+        [self.tableView setAllowsSelectionDuringEditing:true];
+        [[self.navigationItem.rightBarButtonItems objectAtIndex:[self.navigationItem.rightBarButtonItems indexOfObject:self.editButton]] setTitle:@"Done"];
+        
+        // make redo and undo buttons visiable only if a redo/undo action can be done.
+        [self allowRedo];
+        [self allowUndo];
+    }
+    [self checkForData];
 }
 
 // Method called when addButton is pressed
@@ -40,7 +68,6 @@
         InsertVC *insertViewController = [[InsertVC alloc] init];
         insertViewController.title = @"Add Product";
         insertViewController.currentCompany = self.currentCompany;
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
         CATransition* transition = [CATransition animation];
         transition.duration = 0.5;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -79,13 +106,16 @@
     [self.navigationController popViewControllerAnimated:NO];
 }
 
-// Will allow undo/redo if available and view is in edit mode
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
-    [self.tableView reloadData];
-    if(self.tableView.isEditing) {
-        [self allowUndo];
-        [self allowRedo];
+- (void)checkForData {
+    if(self.currentCompany.products.count == 0) {
+        [self.tableView setHidden:YES];
+        [self.emptyStateLabel setHidden:NO];
+        [self.emptyStateButton setHidden:NO];
+    }
+    else {
+        [self.tableView setHidden:NO];
+        [self.emptyStateLabel setHidden:YES];
+        [self.emptyStateButton setHidden:YES];
     }
 }
 
@@ -141,6 +171,7 @@
             [self allowRedo];
         }
         [self.tableView reloadData];
+        [self checkForData];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -180,6 +211,7 @@ return YES;
     detailViewController.currentCompany = self.currentCompany;
     self.product =[self.products objectAtIndex:[indexPath row]];
     detailViewController.currentProduct = self.product;
+    detailViewController.productIndex = [indexPath row];
     // Push the view controller.
     CATransition* transition = [CATransition animation];
     transition.duration = 0.5;
@@ -199,6 +231,10 @@ return YES;
     [_dataManager release];
     [_product release];
     [_products release];
+    [_currentComapnyLogo release];
+    [_currentCompanyName release];
+    [_emptyStateLabel release];
+    [_emptyStateButton release];
     [super dealloc];
 }
 
@@ -213,6 +249,7 @@ return YES;
         }
     }
     [self allowUndo];
+    [self checkForData];
 }
 
 - (IBAction)undoChanges:(UIButton *)sender {
@@ -227,6 +264,20 @@ return YES;
         }
     }
     [self allowRedo];
+    [self checkForData];
+}
+
+- (IBAction)addProduct:(UIButton *)sender {
+    InsertVC *insertViewController = [[InsertVC alloc] init];
+    insertViewController.title = @"Add Product";
+    insertViewController.currentCompany = self.currentCompany;
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:insertViewController animated:NO];
 }
 
 - (void)allowUndo {

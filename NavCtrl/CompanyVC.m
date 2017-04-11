@@ -16,10 +16,7 @@
 
 @implementation CompanyVC
 
-- (void) viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
+- (void)viewWillAppear:(BOOL)animated {
     // Display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.leftBarButtonItem = editButton;
@@ -30,30 +27,38 @@
     
     // Call shared instance of data manager from DAO
     self.dataManager = [DAO sharedInstance];
-    // Set data manager delegate
+    // Set company delegate to self
     self.dataManager.delegate = self;
     // Initialize undoManager for managed objects
     self.dataManager.managedObjectContext.undoManager = [[[NSUndoManager alloc] init] autorelease];
     // Make undo and redo buttons hidden
     self.redoButton.hidden = YES;
     self.undoButton.hidden = YES;
-    
-    // Title of CompanyVC
-    self.title = @"Mobile device makers";
-}
-
-- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self.dataManager getCompanyData];
     [self.tableView reloadData];
-    if(self.tableView.isEditing) {
-        [self allowUndo];
-        [self allowRedo];
+    if(self.tableView.isEditing == NO) {
+        [self.tableView setEditing:NO animated:YES];
+        self.navigationItem.leftBarButtonItem.title = @"Edit";
+        self.redoButton.hidden = YES;
+        self.undoButton.hidden = YES;
     }
+    else {
+        [self.tableView setEditing:YES animated:YES];
+        [self.tableView setAllowsSelectionDuringEditing:true];
+        self.navigationItem.leftBarButtonItem.title = @"Done";
+        
+        // Make redo and undo buttons visiable only if a redo/undo action can be done.
+        [self allowRedo];
+        [self allowUndo];
+    }
+    [self checkForData];
 }
 
 // Allow toggling of edit mode for CompanyVC.
 - (void)toggleEditMode {
+    // In edit mode, title is stock tracker
+    self.title = @"Stock Tracker";
     if (self.tableView.isEditing) {
         [self.tableView setEditing:NO animated:YES];
         self.navigationItem.leftBarButtonItem.title = @"Edit";
@@ -69,6 +74,26 @@
         [self allowRedo];
         [self allowUndo];
     }
+    [self checkForData];
+}
+
+- (void)checkForData {
+    if(self.dataManager.companyList.count == 0) {
+        // Set title of the CompanyVC
+        self.title = @"Stock Tracker";
+        [self.tableView setHidden:YES];
+        [self.emptyStateImage setHidden:NO];
+        [self.emptyStateLabel setHidden:NO];
+        [self.emptyStateButton setHidden:NO];
+    }
+    else {
+        // Set title of the CompanyVC
+        self.title = @"Watch List";
+        [self.tableView setHidden:NO];
+        [self.emptyStateImage setHidden:YES];
+        [self.emptyStateLabel setHidden:YES];
+        [self.emptyStateButton setHidden:YES];
+    }
 }
 
 // Method for insert mode
@@ -80,7 +105,6 @@
     else {
         InsertVC *insertViewController = [[InsertVC alloc] init];
         insertViewController.title = @"New Company";
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
         CATransition* transition = [CATransition animation];
         transition.duration = 0.5;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -146,7 +170,9 @@
              [self allowUndo];
              [self allowRedo];
          }
+         [self.tableView reloadData];
          
+         [self checkForData];
      }
      else if (editingStyle == UITableViewCellEditingStyleInsert) {
          // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -185,7 +211,6 @@
         self.currentCompany = self.dataManager.companyList[indexPath.row];
         productViewController.currentCompany = self.currentCompany;
         productViewController.products = self.currentCompany.products;
-
         CATransition* transition = [CATransition animation];
         transition.duration = 0.5;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -202,7 +227,6 @@
         editViewController.name = self.currentCompany.stockSymbol;
         editViewController.imgeURL = self.currentCompany.logoURLString;
         editViewController.editURL.hidden = YES;
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]; // Set left bar button item for view being pushed to have no text.
         CATransition* transition = [CATransition animation];
         transition.duration = 0.5;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -234,6 +258,9 @@
     [_dataManager release];
     [_redoButton release];
     [_undoButton release];
+    [_emptyStateLabel release];
+    [_emptyStateImage release];
+    [_emptyStateButton release];
     [super dealloc];
 }
 - (IBAction)redoChanges:(UIButton *)sender {
@@ -243,6 +270,8 @@
     [self allowUndo];
     if (self.dataManager.managedObjectContext.undoManager.canRedo == NO)
         self.redoButton.hidden = YES;
+    [self.tableView reloadData];
+    [self checkForData];
 }
 
 - (IBAction)undoChanges:(UIButton *)sender {
@@ -252,6 +281,20 @@
     [self allowRedo];
     if (self.dataManager.managedObjectContext.undoManager.canUndo == NO)
         self.undoButton.hidden = YES;
+    [self.tableView reloadData];
+    [self checkForData];
+}
+
+- (IBAction)addCompany:(UIButton *)sender {
+    InsertVC *insertViewController = [[InsertVC alloc] init];
+    insertViewController.title = @"New Company";
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:insertViewController animated:NO];
 }
 
 - (void)allowUndo {

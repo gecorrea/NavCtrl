@@ -12,5 +12,8 @@
 @property (nonatomic, retain) Company *currentCompany;
 @property (nonatomic) BOOL isCompany;
 @property (nonatomic, retain) Product *currentProduct;
+@property NSUInteger productIndex;
+
+- (IBAction)deleteItem:(UIButton *)sender;
 
 @end

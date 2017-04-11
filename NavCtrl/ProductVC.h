@@ -13,8 +13,14 @@
 @property (nonatomic, retain) Product *product;
 @property (retain, nonatomic) IBOutlet UIButton *redoButton;
 @property (retain, nonatomic) IBOutlet UIButton *undoButton;
+@property (retain, nonatomic) IBOutlet UIImageView *currentComapnyLogo;
+@property (retain, nonatomic) IBOutlet UILabel *currentCompanyName;
+@property (retain, nonatomic) IBOutlet UILabel *emptyStateLabel;
+@property (retain, nonatomic) IBOutlet UIButton *emptyStateButton;
 
 - (IBAction)redoChanges:(UIButton *)sender;
 - (IBAction)undoChanges:(UIButton *)sender;
+
+- (IBAction)addProduct:(UIButton *)sender;
 
 @end

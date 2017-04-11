@@ -8,5 +8,6 @@
 @property (strong, nonatomic) NSURL *url;
 @property (nonatomic, retain) Company *currentCompany;
 @property (nonatomic, retain) Product *currentProduct;
+@property NSUInteger productIndex;
 
 @end
