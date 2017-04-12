@@ -38,7 +38,7 @@
     self.redoButton.hidden = YES;
     self.undoButton.hidden = YES;
     [super viewWillAppear:YES];
-    [self.dataManager getCompanyData];
+    [NSTimer scheduledTimerWithTimeInterval:60 target:self.dataManager selector:@selector(getCompanyData) userInfo:nil repeats:YES];
     [self.tableView reloadData];
     if(self.tableView.isEditing == NO) {
         [self.tableView setEditing:NO animated:YES];

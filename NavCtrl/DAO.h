@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "Company.h"
 #import <CoreData/CoreData.h>
+
 #import "ManagedCompany+CoreDataClass.h"
 #import "ManagedCompany+CoreDataProperties.h"
 #import "ManagedProduct+CoreDataClass.h"
