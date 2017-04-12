@@ -5,7 +5,7 @@
 #import "InsertVC.h"
 #import "EditVC.h"
 
-@interface ProductVC : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface ProductVC : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *products;

@@ -16,6 +16,15 @@
 
 @implementation CompanyVC
 
+- (void)viewDidLoad {
+    // Call shared instance of data manager from DAO
+    self.dataManager = [DAO sharedInstance];
+    // Set company delegate to self
+    self.dataManager.delegate = self;
+    // Initialize undoManager for managed objects
+    self.dataManager.managedObjectContext.undoManager = [[[NSUndoManager alloc] init] autorelease];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     // Display an Edit button in the navigation bar for this view controller.
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
@@ -25,12 +34,6 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"btn-navAdd.png"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleInsertMode)];
     self.navigationItem.rightBarButtonItem = addButton;
     
-    // Call shared instance of data manager from DAO
-    self.dataManager = [DAO sharedInstance];
-    // Set company delegate to self
-    self.dataManager.delegate = self;
-    // Initialize undoManager for managed objects
-    self.dataManager.managedObjectContext.undoManager = [[[NSUndoManager alloc] init] autorelease];
     // Make undo and redo buttons hidden
     self.redoButton.hidden = YES;
     self.undoButton.hidden = YES;
@@ -113,6 +116,18 @@
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:insertViewController animated:NO];
     }
+}
+
+- (IBAction)addCompany:(UIButton *)sender {
+    InsertVC *insertViewController = [[InsertVC alloc] init];
+    insertViewController.title = @"New Company";
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:insertViewController animated:NO];
 }
 
 - (void) didReceiveMemoryWarning {
@@ -227,6 +242,7 @@
         editViewController.name = self.currentCompany.stockSymbol;
         editViewController.imgeURL = self.currentCompany.logoURLString;
         editViewController.editURL.hidden = YES;
+        editViewController.companyIndex = [indexPath row];
         CATransition* transition = [CATransition animation];
         transition.duration = 0.5;
         transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -251,18 +267,6 @@
 }
 */
 
-- (void) dealloc {
-    [_tableView release];
-    [_company release];
-    [_currentCompany release];
-    [_dataManager release];
-    [_redoButton release];
-    [_undoButton release];
-    [_emptyStateLabel release];
-    [_emptyStateImage release];
-    [_emptyStateButton release];
-    [super dealloc];
-}
 - (IBAction)redoChanges:(UIButton *)sender {
     [self.dataManager.managedObjectContext redo];
     [self.dataManager loadCoreData];
@@ -285,18 +289,6 @@
     [self checkForData];
 }
 
-- (IBAction)addCompany:(UIButton *)sender {
-    InsertVC *insertViewController = [[InsertVC alloc] init];
-    insertViewController.title = @"New Company";
-    CATransition* transition = [CATransition animation];
-    transition.duration = 0.5;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
-    transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
-    [self.navigationController.view.layer addAnimation:transition forKey:nil];
-    [self.navigationController pushViewController:insertViewController animated:NO];
-}
-
 - (void)allowUndo {
     if (self.dataManager.managedObjectContext.undoManager.canUndo == YES)
         self.undoButton.hidden = NO;
@@ -305,6 +297,19 @@
 - (void)allowRedo {
     if (self.dataManager.managedObjectContext.undoManager.canRedo == YES)
         self.redoButton.hidden = NO;
+}
+
+- (void) dealloc {
+    [_tableView release];
+    [_company release];
+    [_currentCompany release];
+    [_dataManager release];
+    [_redoButton release];
+    [_undoButton release];
+    [_emptyStateLabel release];
+    [_emptyStateImage release];
+    [_emptyStateButton release];
+    [super dealloc];
 }
 
 @end

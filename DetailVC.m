@@ -68,6 +68,8 @@
 
 - (void) dealloc {
     [_url release];
+    [_currentCompany release];
+    [_currentProduct release];
     [super dealloc];
 }
 

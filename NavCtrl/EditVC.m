@@ -136,7 +136,12 @@
 */
 
 - (IBAction)deleteItem:(UIButton *)sender {
-    [self.dataManager deleteProductAtIndex:self.productIndex forCompany:self.currentCompany];
+    if([self.title isEqualToString:@"Edit Product"]) {
+        [self.dataManager deleteProductAtIndex:self.productIndex forCompany:self.currentCompany];
+    }
+    else {
+        [self.dataManager deletedCompanyAtIndex:self.companyIndex];
+    }
     CATransition* transition = [CATransition animation];
     transition.duration = 0.5;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];

@@ -3,7 +3,7 @@
 #import "Company.h"
 #import "EditVC.h"
 
-@interface DetailVC : UIViewController<WKNavigationDelegate>
+@interface DetailVC : UIViewController <WKNavigationDelegate>
 
 @property (strong, nonatomic) NSURL *url;
 @property (nonatomic, retain) Company *currentCompany;

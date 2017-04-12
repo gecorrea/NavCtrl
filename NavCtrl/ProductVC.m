@@ -9,6 +9,22 @@
 
 @implementation ProductVC
 
+
+- (void)viewDidLoad {
+    self.currentComapnyLogo.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.currentCompany.logoURLString]]];
+    [self.currentComapnyLogo sizeToFit];
+    
+    self.currentCompanyName.text = self.currentCompany.name;
+    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:@" (" ];
+    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:self.currentCompany.stockSymbol];
+    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:@")"];
+    
+    // Call shared instance of data manager from DAO
+    self.dataManager = [DAO sharedInstance];
+    // Initialize undoManager for managed objects
+    self.dataManager.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
@@ -25,17 +41,6 @@
     self.editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItems = @[addButton, self.editButton];
     
-    self.currentComapnyLogo.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.currentCompany.logoURLString]]];
-    [self.currentComapnyLogo sizeToFit];
-    self.currentCompanyName.text = self.currentCompany.name;
-    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:@" (" ];
-    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:self.currentCompany.stockSymbol];
-    self.currentCompanyName.text = [self.currentCompanyName.text stringByAppendingString:@")"];
-    
-    // Call shared instance of data manager from DAO
-    self.dataManager = [DAO sharedInstance];
-    // Initialize undoManager for managed objects
-    self.dataManager.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
     // Make undo and redo buttons hidden
     self.redoButton.hidden = YES;
     self.undoButton.hidden = YES;
@@ -76,6 +81,19 @@
         [self.navigationController.view.layer addAnimation:transition forKey:nil];
         [self.navigationController pushViewController:insertViewController animated:NO];
     }
+}
+
+- (IBAction)addProduct:(UIButton *)sender {
+    InsertVC *insertViewController = [[InsertVC alloc] init];
+    insertViewController.title = @"Add Product";
+    insertViewController.currentCompany = self.currentCompany;
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+    transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+    [self.navigationController.view.layer addAnimation:transition forKey:nil];
+    [self.navigationController pushViewController:insertViewController animated:NO];
 }
 
 // Method called when edit button is pressed
@@ -222,22 +240,6 @@ return YES;
     [self.navigationController pushViewController:detailViewController animated:NO];
 }
 
-- (void)dealloc {
-    [_tableView release];
-    [_redoButton release];
-    [_undoButton release];
-    [_currentCompany release];
-    [_editButton release];
-    [_dataManager release];
-    [_product release];
-    [_products release];
-    [_currentComapnyLogo release];
-    [_currentCompanyName release];
-    [_emptyStateLabel release];
-    [_emptyStateButton release];
-    [super dealloc];
-}
-
 - (IBAction)redoChanges:(UIButton *)sender {
     [self.dataManager.managedObjectContext redo];
     [self.dataManager loadCoreData];
@@ -267,19 +269,6 @@ return YES;
     [self checkForData];
 }
 
-- (IBAction)addProduct:(UIButton *)sender {
-    InsertVC *insertViewController = [[InsertVC alloc] init];
-    insertViewController.title = @"Add Product";
-    insertViewController.currentCompany = self.currentCompany;
-    CATransition* transition = [CATransition animation];
-    transition.duration = 0.5;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = kCATransitionFade; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
-    transition.subtype = kCATransitionFromBottom; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
-    [self.navigationController.view.layer addAnimation:transition forKey:nil];
-    [self.navigationController pushViewController:insertViewController animated:NO];
-}
-
 - (void)allowUndo {
     if(self.dataManager.managedObjectContext.undoManager.canUndo == YES)
         self.undoButton.hidden = NO;
@@ -290,5 +279,20 @@ return YES;
         self.redoButton.hidden = NO;
 }
 
+- (void)dealloc {
+    [_tableView release];
+    [_redoButton release];
+    [_undoButton release];
+    [_currentCompany release];
+    [_editButton release];
+    [_dataManager release];
+    [_product release];
+    [_products release];
+    [_currentComapnyLogo release];
+    [_currentCompanyName release];
+    [_emptyStateLabel release];
+    [_emptyStateButton release];
+    [super dealloc];
+}
 
 @end

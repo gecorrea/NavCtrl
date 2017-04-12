@@ -10,6 +10,7 @@
 @property (retain, nonatomic) IBOutlet UITextField *editImageURL;
 @property (retain, nonatomic) IBOutlet UITextField *editURL;
 @property (nonatomic, retain) Company *currentCompany;
+@property NSUInteger companyIndex;
 @property (nonatomic) BOOL isCompany;
 @property (nonatomic, retain) Product *currentProduct;
 @property NSUInteger productIndex;
