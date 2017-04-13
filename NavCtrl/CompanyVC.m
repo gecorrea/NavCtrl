@@ -23,6 +23,7 @@
     self.dataManager.delegate = self;
     // Initialize undoManager for managed objects
     self.dataManager.managedObjectContext.undoManager = [[[NSUndoManager alloc] init] autorelease];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -254,6 +255,7 @@
 }
 
 - (void)receivedNamesAndPrices {
+    [self checkForData];
     [self.tableView reloadData];
 }
 

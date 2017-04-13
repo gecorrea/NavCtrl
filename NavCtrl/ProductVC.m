@@ -23,6 +23,7 @@
     self.dataManager = [DAO sharedInstance];
     // Initialize undoManager for managed objects
     self.dataManager.managedObjectContext.undoManager = [[NSUndoManager alloc] init];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
